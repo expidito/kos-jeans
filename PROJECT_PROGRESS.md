@@ -9,7 +9,7 @@
 | Блок | Название | Статус | Дата изменения | Результат / ссылки |
 | --- | --- | --- | --- | --- |
 | 00 | Проверка среды и GitHub-репозиторий | done | 2026-11-23 | [Публичный репозиторий](https://github.com/expidito/kos-jeans), `main`, origin и публикация проверены |
-| 01 | Каркас приложения и инженерные стандарты | done | 2026-11-23 | Next.js, React, TypeScript, Tailwind; локальные проверки пройдены, CI настроен; ветка `feat/block-01-app-scaffold` |
+| 01 | Каркас приложения и инженерные стандарты | done | 2026-11-23 | [PR #1](https://github.com/expidito/kos-jeans/pull/1); локальные проверки и CI пройдены |
 | 02 | Ранний preview на Vercel | todo | 2026-11-23 | — |
 | 03 | UX-анализ Spazio и дизайн-система | todo | 2026-11-23 | — |
 | 04 | Публичная оболочка и главная страница | todo | 2026-11-23 | — |
@@ -92,6 +92,10 @@
 - GitHub Actions: чистая установка `npm ci`, затем lint/typecheck/build на
   Node.js 24 для push/PR. Актуальные запуски доступны во вкладке
   [Actions](https://github.com/expidito/kos-jeans/actions).
+- CI коммита реализации `03eb0fd` завершился успешно:
+  [запуск 45265451226](https://github.com/expidito/kos-jeans/actions/runs/45265451226).
+- Ветка опубликована, создан [PR #1](https://github.com/expidito/kos-jeans/pull/1).
+  Слияние в `main` не выполнено; требуется подтверждение владельца.
 - Бизнес-тестов пока нет; фиктивная команда `npm test` не добавлялась.
 - Supabase и Vercel не подключались. Блок 02 не начат.
 - Следующий блок: **02 — Ранний preview на Vercel**.
