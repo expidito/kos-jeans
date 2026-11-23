@@ -1,0 +1,37 @@
+# Dependencies and generated output
+node_modules/
+.next/
+out/
+build/
+dist/
+coverage/
+*.tsbuildinfo
+next-env.d.ts
+
+# Local secrets; only the empty template belongs in Git
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Hosting and local tooling
+.vercel/
+.supabase/
+supabase/.temp/
+*.log
+.DS_Store
+.idea/
+.vscode/
+
+# Private data and database exports
+backups/
+dumps/
+private-data/
+*.sql.gz
+*.dump
+
+# Local agent and cloud credentials
+.aws/
+.agents/
+.codex/
