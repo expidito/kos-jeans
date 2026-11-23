@@ -10,7 +10,7 @@
 | --- | --- | --- | --- | --- |
 | 00 | Проверка среды и GitHub-репозиторий | done | 2026-11-23 | [Публичный репозиторий](https://github.com/expidito/kos-jeans), `main`, origin и публикация проверены |
 | 01 | Каркас приложения и инженерные стандарты | done | 2026-11-23 | [PR #1](https://github.com/expidito/kos-jeans/pull/1) слит в `main` с разрешения владельца; локальная main синхронизирована |
-| 02 | Ранний preview на Vercel | in_progress | 2026-11-23 | Вход выполнен владельцем; запущен импорт `main` в Vercel, проверяется публикация |
+| 02 | Ранний preview на Vercel | done | 2026-11-23 | [Публичный сайт](https://kos-jeans.vercel.app), GitHub Integration и автоматический preview проверены |
 | 03 | UX-анализ Spazio и дизайн-система | todo | 2026-11-23 | — |
 | 04 | Публичная оболочка и главная страница | todo | 2026-11-23 | — |
 | 05 | Supabase: схема, миграции, RLS, Storage | todo | 2026-11-23 | — |
@@ -103,43 +103,53 @@
 - Supabase и Vercel не подключались. Блок 02 не начат.
 - Следующий блок: **02 — Ранний preview на Vercel**.
 
-## Блок 02 — подключение Vercel
+## Блок 02 — done: ранняя публикация Vercel
 
-- Начат по явному поручению владельца после завершения и слияния блока 01.
-- Ветка `feat/block-02-vercel-preview` создана от синхронизированной `main`
-  (`b6f85896620b92a72d802e8cf90957e6702ebbab`).
-- `git rev-parse main origin/main`: оба SHA совпали; PR #1 проверен перед
-  слиянием — CI успешен, целевая ветка `main`, SHA головы `8256dd4`.
-- CI после слияния в `main` также завершился успешно:
+- Ветка: `feat/block-02-vercel-preview`, создана от синхронизированной `main`
+  (`b6f85896620b92a72d802e8cf90957e6702ebbab`). Блок 03 не начат.
+- Владелец выполнил вход в Vercel и подключил GitHub. Создан проект `kos-jeans`
+  в `Fedir Team`; в настройках Git подтверждено `expidito/kos-jeans`.
+- Первичная форма импорта потребовала дополнительной проверки личности и
+  вернулась с отменённой проверкой. Проект уже был создан, поэтому повторный
+  импорт не выполнялся. Сборка успешно запущена через Create Deployment из `main`.
+- Production: **https://kos-jeans.vercel.app**. Deployment `Ready`, исходный
+  коммит `b6f8589`, окружение Production, ветка `main`:
+  [Vercel deployment](https://vercel.com/fedir-team/kos-jeans/GHrwkuRanYYQzurr1uCjxmJBLo6L).
+- GitHub Integration включена: production связан с `main`, feature-ветки дают
+  Preview Deployments. Настройка подтверждена реальным push `5054ccf` без ручного
+  запуска preview: Vercel автоматически собрал ветку `feat/block-02-vercel-preview`.
+- Preview для `5054ccf`: [deployment](https://vercel.com/fedir-team/kos-jeans/5XPTzEAR4zFRdtVCykrBi18gqL2X),
+  [адрес](https://kos-jeans-o8ujl62md-fedir-team.vercel.app).
+  Статус Vercel в GitHub — `success / Deployment has completed`.
+- Preview сохраняет стандартную защиту Vercel: анонимный запрос получает 302
+  на вход. Production проверен без cookies и доступен публично.
+- Добавлен `vercel.json`: Next.js, `npm ci`, `npm run build`.
+  Конфигурация пока в feature-ветке и применяется к preview; попадёт в `main`
+  после одобренного владельцем слияния PR блока 02.
+- Поле GitHub Website обновлено: https://kos-jeans.vercel.app.
+- README и [инструкция Vercel](docs/VERCEL_SETUP.md) содержат реальные адреса,
+  способ проверки изменений и порядок задания переменных окружения.
+- Supabase не подключался. Платные услуги и пробные подписки не активировались.
+
+### Проверки и результат
+
+- Production HTTP-проверка через системный `curl` без cookies/авторизации:
+  HTTPS с проверкой TLS, главная 200, `lang="uk"`, пометка разработки,
+  `noindex, nofollow`, собранный CSS 200, неизвестный маршрут 404 с украинским текстом.
+- Публичная страница также открыта и визуально проверена в Chrome.
+- Системный curl использован потому, что у локального Python 3.15 отсутствует
+  настроенное хранилище CA; проверка TLS не отключалась.
+- Vercel: production `b6f8589` и автоматический preview `5054ccf` — `success`.
+- CI preview-коммита прошёл: [запуск 45269255394](https://github.com/expidito/kos-jeans/actions/runs/45269255394),
+  `npm ci`, lint, typecheck и build.
+- CI main после слияния блока 01 также успешен:
   [запуск 45267882901](https://github.com/expidito/kos-jeans/actions/runs/45267882901).
-- Проверены доступные инструменты: отдельного Vercel-коннектора и установленного
-  Vercel CLI нет. Открыт dashboard Vercel в Chrome; он перенаправил на вход.
-  «Continue with GitHub» привёл к форме входа GitHub — активной браузерной
-  сессии для этой авторизации нет. Доступ CLI к GitHub не авторизует Vercel.
-- Создана [инструкция Vercel](docs/VERCEL_SETUP.md): GitHub Integration,
-  production из `main`, preview из feature-веток, переменные и приёмочные проверки.
-- Владелец выполнил вход и предоставил Vercel доступ к `expidito/kos-jeans`.
-  Это подтверждено в интерфейсе Vercel, аккаунт `expidito`, команда `Fedir Team`.
-- В форме импорта выбраны существующий репозиторий, `main`, Next.js, корень `./`,
-  имя `kos-jeans`, текущая команда Hobby; платные тарифы не активировались.
-- Нажатие Deploy потребовало дополнительной проверки Verify Your Identity.
-  Запрошен код на почту владельца; завершение проверки возможно только в Vercel.
-  После запроса форма импорта показала `Sudo mode challenge canceled`.
-- Проект успешно появился в Vercel, повторный импорт не выполнялся.
-  В настройках Git подтверждено подключение к `expidito/kos-jeans`.
-- Через Create Deployment запущена production-сборка из `main`, SHA `b6f8589`;
-  [deployment](https://vercel.com/fedir-team/kos-jeans/GHrwkuRanYYQzurr1uCjxmJBLo6L)
-  находится на этапе Building. Дополнительного кода не потребовалось.
-- Добавлен `vercel.json`: Next.js, чистая установка `npm ci`, `npm run build`.
-  Готовится push feature-ветки для проверки автоматического preview.
-- Платные услуги не подключались; поле GitHub Website не менялось,
-  поскольку действительного адреса сайта ещё нет.
-- Продолжить этот же блок после авторизации: импорт репозитория → deployment
-  `main` → проверка публичного URL → проверка автоматического preview после push
-  → обновление README, GitHub Website и этого журнала.
-- Блок 03 не начат.
-- Проверки документации: `git diff --check` без ошибок; локальные ссылки
-  README и журнала существуют, блоки 03–16 остаются `todo`.
+- `git diff --check` и проверка локальных ссылок документации — успешно.
+- Первая публикация production была запущена вручную из Git reference `main`;
+  автоматический запуск подтверждён для feature-ветки. Следующее одобренное
+  слияние в `main` станет первой проверкой production-триггера на новом push.
+- Это стартовая тестовая страница, не готовый коммерческий магазин.
+- Следующий блок: **03 — UX-анализ Spazio и дизайн-система**. Не начат.
 
 После отчёта остановиться. Переход к следующему блоку — только после
 сообщения владельца **«Работу над блоком окончено»**.
