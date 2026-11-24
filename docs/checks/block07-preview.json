@@ -1,0 +1,25 @@
+{
+  "date": "2026-11-24",
+  "implementation_commit": "64a9e78",
+  "url": "https://kos-jeans-git-feat-block-07-product-detail-fedir-team.vercel.app/product/test-catalog-1",
+  "environment": "Preview only / kos-jeans-dev",
+  "checks": {
+    "title_sku_price": true,
+    "noindex_nofollow": true,
+    "loaded_images": 8,
+    "white_30_variant": "90000000-0000-4000-8000-000000000100",
+    "color_change_resets_size": true,
+    "blue_28_zero_stock_disabled": true,
+    "blue_30_missing_disabled": true,
+    "blue_26_variant": "90000000-0000-4000-8000-000000000101",
+    "cart_disabled": true,
+    "thumbnail_3_switches": true,
+    "zoom_width": 704,
+    "zoom_scroll_width": 1408,
+    "fit_scroll_width": 704,
+    "escape_closes_and_restores_focus": true,
+    "closed_zoom_image_not_rendered": true
+  },
+  "responsive_local_evidence": "../previews/product/responsive.json",
+  "production_dev_connection": false
+}

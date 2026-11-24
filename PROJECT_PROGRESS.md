@@ -15,7 +15,7 @@
 | 04 | Публичная оболочка и главная страница | done | 2026-11-24 | [PR #4](https://github.com/expidito/kos-jeans/pull/4), адаптивная главная, успешные проверки и Vercel Preview |
 | 05 | Supabase: схема, миграции, RLS, Storage | done | 2026-11-24 | [PR #5](https://github.com/expidito/kos-jeans/pull/5), миграции применены к dev, реальные JWT/RLS/Storage проверки пройдены |
 | 06 | Настоящий каталог и динамические категории | done | 2026-11-24 | [PR #6](https://github.com/expidito/kos-jeans/pull/6), [рабочий Preview-каталог](https://kos-jeans-git-feat-block-06-real-catalog-fedir-team.vercel.app/catalog), Supabase и обновления без деплоя подтверждены |
-| 07 | Страница товара и варианты | in_progress | 2026-11-24 | /product/[slug], галерея и реальные варианты проверены; готовится PR/Preview |
+| 07 | Страница товара и варианты | done | 2026-11-24 | [PR #7](https://github.com/expidito/kos-jeans/pull/7), [товар в Preview](https://kos-jeans-git-feat-block-07-product-detail-fedir-team.vercel.app/product/test-catalog-1), CI и проверки пройдены |
 | 08 | Защищённый вход администратора и каркас `/admin` | todo | 2026-11-23 | — |
 | 09 | Админка: категории и подкатегории | todo | 2026-11-23 | — |
 | 10 | Админка: товары, фото, цены, варианты и склад | todo | 2026-11-23 | — |
@@ -532,6 +532,17 @@
 - Карточка Spazio повторно открыта в Chrome; использованы общие UX-паттерны,
   свой дизайн блока 03 и ранее лицензированные иллюстрации. Ассеты Spazio не копировались.
 - [Документация](docs/PRODUCT_DETAIL.md). Блок 08 не начат.
+
+### Завершение блока 07
+
+- Реализация `64a9e78` опубликована в [PR #7](https://github.com/expidito/kos-jeans/pull/7). PR не слит.
+- [CI](https://github.com/expidito/kos-jeans/actions/runs/45433730580) успешен, включая стандартный production build.
+- [Vercel Preview](https://vercel.com/fedir-team/kos-jeans/5x3X11t4iJb8QL179xfjcTYmgkva) Ready.
+- В Chrome открыт [конкретный товар](https://kos-jeans-git-feat-block-07-product-detail-fedir-team.vercel.app/product/test-catalog-1): название, SKU TEST-CATALOG-1, 1499 ₴, noindex/nofollow, все 8 изображений загружены.
+- Preview: Білий/30 выбирает реальный variant ...0100; Синій сбрасывает размер, 28 и отсутствующий 30 disabled; Синій/26 выбирает ...0101.
+- Фото 3 переключается; zoom имеет ширину холста 1408/704 px, fit 704/704; Escape закрывает dialog и возвращает фокус. Закрытый zoom не загружает дополнительное изображение.
+- [Обезличенный отчёт Preview](docs/checks/block07-preview.json). Ключи не выводились; Production к dev не подключён.
+- Статус **done**. После финального документационного push повторно дождаться CI/Vercel. Блок 08 не начат.
 
 После отчёта остановиться. Переход к следующему блоку — только после
 сообщения владельца **«Работу над блоком окончено»**.

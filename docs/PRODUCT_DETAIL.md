@@ -95,3 +95,10 @@ productId, variantId, size, color, quantity. Неверный продукт, in
 У KOS JEANS свои радиокнопки цвета/размера, галерея и визуальная система.
 
 Технический источник: [Next metadata и request cache](https://nextjs.org/docs/app/api-reference/functions/generate-metadata).
+
+## Проверенный Preview
+
+[Страница тестового товара](https://kos-jeans-git-feat-block-07-product-detail-fedir-team.vercel.app/product/test-catalog-1).
+[PR #7](https://github.com/expidito/kos-jeans/pull/7) открыт для review, без merge.
+CI и Vercel Ready; данные/изображения/варианты/zoom проверены в опубликованном Preview.
+[Отчёт](checks/block07-preview.json). Ассортимент явно тестовый, покупка недоступна.
