@@ -213,9 +213,22 @@ API smoke, hosted RLS под реальными JWT и проверки загр
 - `npm test` — 21 локальная проверка; `npm run catalog:test:hosted -- --dev-only` — интеграционные проверки.
 - ТЕСТ-набор в dev создан сценарием `npm run catalog:seed -- --dev-only`.
 - Vercel Production к dev не подключается; Preview env настраивается отдельно по инструкции.
-- Страница товара, корзина и оформление заказа остаются следующим блокам.
+- Страница товара реализуется в блоке 07; корзина и оформление заказа остаются следующим блокам.
 
 [PR #6](https://github.com/expidito/kos-jeans/pull/6),
 [Preview каталога](https://kos-jeans-git-feat-block-06-real-catalog-fedir-team.vercel.app/catalog).
 CI прошёл, deployment Ready. Реальные dev-данные на Preview проверены:
 фильтры, изображения и обновления цены/навигации без деплоя работают.
+
+
+## Страница товара (блок 07)
+
+[Архитектура, варианты, галерея и проверки](docs/PRODUCT_DETAIL.md).
+
+- `/product/[slug]` — реальный опубликованный товар из Supabase, RLS и private media.
+- Галерея/zoom, цвет/размер/stock, состав/характеристики, похожие по категории.
+- CartSelection подготовлен; покупка явно недоступна до блока 11.
+- `npm run product:seed -- --dev-only` — расширение ТЕСТ-товара для галереи и вариантов.
+- `npm run product:test:hosted -- --dev-only` — реальные dev/API/HTTP проверки.
+- [Локальный пример](http://127.0.0.1:3005/product/test-catalog-1).
+- 24 локальных теста входят в CI; production Supabase не подключается.

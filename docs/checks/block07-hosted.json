@@ -1,0 +1,39 @@
+{
+  "date": "2026-11-24T16:02:24.846Z",
+  "environment": "kos-jeans-dev",
+  "status": "passed",
+  "checks": [
+    {
+      "check": "Direct product URL shows database name, SKU, price, related section and noindex",
+      "status": "pass"
+    },
+    {
+      "check": "Draft, archived, hidden-category and missing slugs return 404",
+      "status": "pass"
+    },
+    {
+      "check": "Real variants map exact color/size; zero and missing combinations are unavailable",
+      "status": "pass"
+    },
+    {
+      "check": "All three private-gallery photos load through protected no-store media route",
+      "status": "pass"
+    },
+    {
+      "check": "Related category contains real published products under RLS",
+      "status": "pass"
+    },
+    {
+      "check": "Missing photos and variants have honest empty states",
+      "status": "pass"
+    },
+    {
+      "check": "Product price updates without rebuilding or deploying",
+      "status": "pass"
+    },
+    {
+      "check": "Own temporary price/product changes restored",
+      "status": "pass"
+    }
+  ]
+}
