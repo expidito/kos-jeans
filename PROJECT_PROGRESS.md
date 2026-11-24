@@ -13,7 +13,7 @@
 | 02 | Ранний preview на Vercel | done | 2026-11-23 | [Публичный сайт](https://kos-jeans.vercel.app), GitHub Integration и автоматический preview проверены |
 | 03 | UX-анализ Spazio и дизайн-система | done | 2026-11-24 | [PR #3](https://github.com/expidito/kos-jeans/pull/3), UX-документ, токены, UI-примитивы и `/design-system` |
 | 04 | Публичная оболочка и главная страница | done | 2026-11-24 | [PR #4](https://github.com/expidito/kos-jeans/pull/4), адаптивная главная, успешные проверки и Vercel Preview |
-| 05 | Supabase: схема, миграции, RLS, Storage | todo | 2026-11-23 | — |
+| 05 | Supabase: схема, миграции, RLS, Storage | done | 2026-11-24 | [PR #5](https://github.com/expidito/kos-jeans/pull/5), миграции применены к dev, реальные JWT/RLS/Storage проверки пройдены |
 | 06 | Настоящий каталог и динамические категории | todo | 2026-11-23 | — |
 | 07 | Страница товара и варианты | todo | 2026-11-23 | — |
 | 08 | Защищённый вход администратора и каркас `/admin` | todo | 2026-11-23 | — |
@@ -265,6 +265,128 @@
   защищена стандартным входом Vercel: без авторизации HTTP 302 на Vercel SSO,
   x-robots-tag: noindex. Защита не отключалась; публичный production остаётся на блоке 03.
 - Блок 04: `done`. Блок 05: `todo`, не начат.
+
+### Слияние блока 04 — 2026-11-24
+
+- Владелец принял внешний вид и разрешил merge. Проверки PR #4 повторно
+  подтверждены: все SUCCESS; head `83da1a1`.
+- PR #4 слит: merge `908d7f0`. Локальная main обновлена fast-forward до origin/main.
+- Production Deployment автоматически прошёл:
+  [Vercel](https://vercel.com/fedir-team/kos-jeans/DzzVzUACLsh6p3Uo4wqXEF94zd9b).
+- https://kos-jeans.vercel.app вернул HTTP 200; проверены актуальные hero,
+  «Новинки», украинский lang и noindex из main блока 04.
+
+## Блок 05 — blocked: Supabase foundation
+
+- Ветка `feat/block-05-supabase-foundation` создана от main `908d7f0`.
+- Две SQL-миграции: 9 публичных таблиц, private.admin_users, FK/индексы/unique/check,
+  вложенные категории и защита циклов, деньги в копейках, снимки заказов.
+- RLS: публичен только опубликованный каталог с видимыми предками, роль проверяется
+  через закрытую таблицу; нет клиентской записи заказов и публичного чтения заказов.
+- Приватный store-media: admin-only запись, чтение только связанных публичных фото,
+  пути по UUID, JPEG/PNG/WebP и лимит 5 МиБ. Storage API ещё не проверен.
+- Owner-only примитив атомарного списания проверен на успех/отказ/полный rollback;
+  API для заказа не открыт. Полный checkout и конкурентные сессии — будущий блок 12.
+- Официальные SSR-клиенты с publishable key/RLS, server-only и request cookies;
+  refreshSession подготовлен для будущего Auth proxy, пока не подключён.
+- `.env.example`, CLI config, безопасный draft seed, read-only `npm run db:check`,
+  [инструкция владельцу](docs/SUPABASE_SETUP.md). Главная/дизайн-система не изменены.
+
+### Проверки блока 05
+
+- `npm test`: 17/17 успешно, включая 14 PostgreSQL/RLS/Storage SQL тестов
+  на отдельной in-memory PGlite, а не на внешнем Supabase.
+- `npm run lint`, `npm run typecheck` — успешно. Удалены только дубли generated
+  типов `.next/types/* 2.ts`, мешавшие первому typecheck.
+- `NEXT_TELEMETRY_DISABLED=1 npm run build -- --webpack` — успешно.
+- Локальный `npm run build` (Turbopack) ограничен средой: EPERM при открытии
+  служебного порта PostCSS. Даже вне sandbox ошибка повторяется; стандартная
+  сборка будет проверена CI. Код приложения ради этого не менялся.
+- Production-сборка Webpack локально: `/` и `/design-system` — HTTP 200,
+  неизвестный маршрут — 404; украинский lang и noindex сохранены.
+- `git diff --check` — успешно; src/app, components, styles и demo-data не изменены.
+- `npm run db:check` — ожидаемый отказ: отсутствуют `.env.local` и Supabase env.
+- CLI `whoami` — AccessTokenRequiredError. Supabase connector, Docker, psql
+  отсутствуют. Внешний проект/миграции/Storage не создавались и не применялись.
+
+### Публикация подготовленной основы блока 05
+
+- Коммит `f1c1b2a` опубликован в `feat/block-05-supabase-foundation`.
+- [Draft PR #5](https://github.com/expidito/kos-jeans/pull/5) открыт, не слит;
+  draft отражает незавершённые внешние критерии приёмки.
+- [CI 45409186425](https://github.com/expidito/kos-jeans/actions/runs/45409186425)
+  успешно выполнил lint/test/typecheck и стандартный Turbopack build.
+- Vercel — Ready / success:
+  [deployment](https://vercel.com/fedir-team/kos-jeans/GZAUDzjzGbugCY2iZuZVJkRxjWDn),
+  [preview](https://kos-jeans-git-feat-block-05-supabase-foundation-fedir-team.vercel.app)
+  со стандартной защитой Vercel. Это публикация приложения, не доказательство
+  подключённого Supabase. Supabase env в Vercel не добавлялись.
+
+### Что требуется для завершения блока 05
+
+- Dev-проект и `.env.local` подготовлены и проверены. Владельцу осталось
+  завершить `npx --yes supabase@3.3.0 login` в своём терминале.
+- Затем применить миграции только к dev, проверить API/RLS под обычным и admin JWT,
+  настоящие upload/read/delete и отказы MIME/размера/пути Storage API.
+- Пока эти критерии не пройдены, статус **blocked**, а не done.
+- Блок 06 не начат.
+
+### Продолжение блока 05 — проверка доступа
+
+- Владелец сообщил о создании бесплатного `kos-jeans-dev` и разрешил миграции
+  только к тестовому проекту. Production не затрагивается.
+- Фактически найден `.env.local.rtf` вместо plain-text `.env.local`.
+  Выполнена локальная RTF → TXT конвертация в `.env.local` с правами 0600;
+  оригинал сохранён. Оба файла игнорируются Git.
+- Наличие NEXT_PUBLIC_SUPABASE_URL / NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY и
+  формат HTTPS URL / publishable key подтверждены без вывода значений.
+- Реальный Auth API отвечает HTTP 200. Чтение categories — HTTP 404 / PGRST205:
+  таблицы ещё отсутствуют в API schema cache, миграции не применены.
+- CLI `whoami` по-прежнему возвращает AccessTokenRequiredError. Publishable key
+  не предоставляет право DDL; попыток обхода полномочий не выполнялось.
+- Владелец должен выполнить в терминале проекта `npx --yes supabase@3.3.0 login`,
+  самостоятельно завершить вход и сообщить об авторизации. Пароль БД не запрашивается в чате.
+- Текущий блок остаётся **blocked** до CLI-авторизации и hosted-проверок.
+
+### Завершение блока 05 — 2026-11-24
+
+- После сообщения владельца «CLI авторизован» доступ подтверждён. Проект из env
+  сопоставлен с аккаунтом и точным именем kos-jeans-dev до любых изменений.
+- CLI link / dry-run / db push выполнены успешно только для dev. До применения
+  таблицы магазина отсутствовали. История содержит `20261124000100` и `20261124000200`.
+- Созданы все 9 публичных таблиц, private.admin_users, связи/индексы/ограничения,
+  RLS и private bucket store-media. Повторный `npm run db:check` успешен.
+- Публичная регистрация в hosted dev отключена отдельным минимальным config push:
+  изменён только auth.enable_signup; значение подтверждено через Auth API.
+- `database.types.ts` сгенерирован из реальной публичной схемы; SSR-клиенты
+  типизированы. Ключи не выводились, в Git не сохранены; .env.local и RTF-оригинал ignored.
+- `npm run db:test:hosted -- --dev-only`: 10 групп реальных интеграционных проверок.
+  Созданы временные Auth-пользователи ordinary/admin с настоящими JWT.
+  Посетитель/обычный пользователь не добавляет товар, не меняет название/цену,
+  размер/цвет/остаток и не читает заказы; роль admin подтверждается закрытой таблицей.
+- Admin изменяет каталог; отрицательный stock и повторный SKU отвергаются;
+  снимок цены заказа не меняется. Запись orders закрыта даже admin до блока 12.
+- Реальный Storage API: admin upload/read/delete успешен; anon/ordinary upload,
+  чтение draft и raw public URL запрещены; SVG, неподдерживаемый MIME, путь без
+  родителя и файл >5 МиБ отвергаются. Unpublish закрывает новые скачивания.
+- Временные пользователи/заказы/товары/фотографии удалены и cleanup проверен.
+  Dev-каталог и заказы пусты; постоянный администратор не назначался.
+- Обезличенный отчёт: [block05-hosted.json](docs/checks/block05-hosted.json).
+  Тест получает служебный ключ только в памяти процесса, не сохраняет его и не выводит.
+- Локальные `npm test` (17/17), lint, typecheck и Webpack production build успешны.
+  `/` и `/design-system` — 200, неизвестный путь — 404, uk/noindex сохранены.
+- Принятые компоненты главной/дизайн-системы не изменены. Production Supabase и
+  Vercel env не менялись. Полный каталог/admin/checkout не реализуются в этом блоке.
+- Реализация `d40c5d1` опубликована. [PR #5](https://github.com/expidito/kos-jeans/pull/5)
+  обновлён и переведён из draft в готовый к проверке; не слит.
+- CI реализации успешен, включая стандартный Turbopack build:
+  [запуск 45413559795](https://github.com/expidito/kos-jeans/actions/runs/45413559795).
+- Vercel — Ready / success:
+  [deployment](https://vercel.com/fedir-team/kos-jeans/3D852q5dJs4V9JJKs95kgD1FTVVU).
+  Превью приложения сохраняет прежнюю главную; облачная БД проверялась отдельно.
+- Рабочая ветка синхронизирована с GitHub, файлы локальных ключей ignored.
+  Самостоятельного merge не будет.
+- Статус блока **done**. Блок 06 **todo**, не начат.
 
 После отчёта остановиться. Переход к следующему блоку — только после
 сообщения владельца **«Работу над блоком окончено»**.
