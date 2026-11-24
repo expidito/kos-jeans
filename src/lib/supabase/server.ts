@@ -11,6 +11,8 @@ export async function createClient() {
   const { url, key } = getSupabaseConfig();
   const cookieStore = await cookies();
   return createServerClient<Database>(url, key, {
+    cookieOptions: { httpOnly: true, sameSite: 'lax', secure: !!process.env.VERCEL },
+    global: { fetch: (input, init) => fetch(input, { ...init, cache: 'no-store' }) },
     cookies: {
       getAll: () => cookieStore.getAll(),
       setAll: (values) => {

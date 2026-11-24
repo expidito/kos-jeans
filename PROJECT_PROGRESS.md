@@ -16,7 +16,7 @@
 | 05 | Supabase: схема, миграции, RLS, Storage | done | 2026-11-24 | [PR #5](https://github.com/expidito/kos-jeans/pull/5), миграции применены к dev, реальные JWT/RLS/Storage проверки пройдены |
 | 06 | Настоящий каталог и динамические категории | done | 2026-11-24 | [PR #6](https://github.com/expidito/kos-jeans/pull/6), [рабочий Preview-каталог](https://kos-jeans-git-feat-block-06-real-catalog-fedir-team.vercel.app/catalog), Supabase и обновления без деплоя подтверждены |
 | 07 | Страница товара и варианты | done | 2026-11-24 | [PR #7](https://github.com/expidito/kos-jeans/pull/7), [товар в Preview](https://kos-jeans-git-feat-block-07-product-detail-fedir-team.vercel.app/product/test-catalog-1), CI и проверки пройдены |
-| 08 | Защищённый вход администратора и каркас `/admin` | todo | 2026-11-23 | — |
+| 08 | Защищённый вход администратора и каркас `/admin` | blocked | 2026-11-24 | Серверный Auth/RLS, Dashboard, защищённая навигация; ожидается подтверждённый UUID владельца |
 | 09 | Админка: категории и подкатегории | todo | 2026-11-23 | — |
 | 10 | Админка: товары, фото, цены, варианты и склад | todo | 2026-11-23 | — |
 | 11 | Полноценная корзина | todo | 2026-11-23 | — |
@@ -546,3 +546,38 @@
 
 После отчёта остановиться. Переход к следующему блоку — только после
 сообщения владельца **«Работу над блоком окончено»**.
+
+## Слияние блока 07 и начало блока 08 — 2026-11-24
+
+- По разрешению владельца повторно проверены все checks PR #7, затем merge в main: `3401700`.
+- Main синхронизирована fast-forward с origin/main; создана feat/block-08-admin-auth.
+- Production Vercel success: https://vercel.com/fedir-team/kos-jeans/HGXc82zXA8wHNgnzr3XmTCmdBnRA
+  https://kos-jeans.vercel.app отвечает HTTP 200; dev к Production не подключён.
+- Реализованы серверный вход/выход, HttpOnly cookies, refresh Proxy, независимая
+  проверка getUser + is_store_admin в DAL, защита всех разделов и no-store/noindex.
+- Реальный Dashboard: количества и низкие остатки, без персональных полей заказов.
+- Будущие разделы — честные защищённые страницы, без функций блоков 09+.
+- Постоянная роль никому автоматически не назначается. Владельцу отправлена
+  инструкция создать собственную Auth запись и подтвердить полный UUID.
+- [Документация и процедура](docs/ADMIN_AUTH.md). Блок 09 не начат.
+
+### Проверки блока 08 и оставшаяся приёмка
+
+- lint/typecheck, 29 unit/SQL тестов, Webpack production build успешны.
+- 9 hosted-групп успешны: anonymous direct URLs/no-store/no private HTML,
+  CSRF, неверный пароль, ordinary login, metadata/private-role/RLS, refresh и
+  отозванный refresh token, tampered cookie/logout, публичный магазин, cleanup.
+  [Отчёт](docs/checks/block08-hosted.json). Временный ordinary account удалён.
+- Вход Chrome: 320/390/768/1440 px, scrollWidth равен ширине.
+  [Адаптивность](docs/previews/admin/login-responsive.json),
+  [desktop](docs/previews/admin/login-desktop.jpg). Закрытый Dashboard пока не
+  проверен визуально: без роли владельца его невозможно открыть честным способом.
+- **blocked:** требуется подтверждённый UUID постоянного владельца и живой вход.
+  Не проверены настоящий успешный admin login, refresh Dashboard, admin logout
+  и адаптивность закрытой оболочки. Unit/SQL admin-тесты не заменяют эту проверку.
+- Точное действие владельца: kos-jeans-dev → Authentication → Users → Create user
+  (свой email/пароль, подтвердить email), скопировать UID и подтвердить
+  «Назначаю UUID … администратором kos-jeans-dev». Пароль не передавать.
+- Новые Vercel env не нужны; две существующие доступны всем Preview.
+  PR/Preview публикуются для конкретной проверяемой реализации; merge не разрешён.
+- Блок 09 не начат. Продолжить только оставшуюся приёмку блока 08 после ответа.
