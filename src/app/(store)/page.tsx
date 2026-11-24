@@ -1,27 +1,23 @@
-import { DevelopmentNotice } from "@/components/development-notice";
+import type { Metadata } from "next";
+import { StorefrontHome } from "@/components/storefront/storefront-home";
+import { demoCategories, demoCollectionProducts, demoMenuImages, demoNavigation, demoProducts } from "@/data/demo-storefront";
+import photoCredits from "@/data/storefront-photo-credits.json";
+
+export const metadata: Metadata = {
+  metadataBase: new URL(process.env.VERCEL_ENV === "preview" && process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : process.env.NEXT_PUBLIC_SITE_URL || "https://kos-jeans.vercel.app"),
+  title: { absolute: "KOS JEANS — твій ритм, твій денім" },
+  description: "Знайомство з KOS JEANS: денім та повсякденний одяг для неї та для нього. Демонстраційна версія майбутнього магазину.",
+  robots: { index: false, follow: false },
+  openGraph: {
+    title: "KOS JEANS — твій ритм, твій денім",
+    description: "Демонстраційна версія майбутнього магазину. Покупки ще недоступні.",
+    type: "website",
+    locale: "uk_UA",
+    images: [{ url: "/images/storefront/hero.jpg", alt: "Денім / KOS JEANS" }],
+  },
+};
 
 export default function HomePage() {
-  return (
-    <main
-      id="main-content"
-      className="mx-auto flex min-h-svh max-w-6xl flex-col justify-between gap-16 px-6 py-8 sm:px-12 sm:py-12"
-    >
-      <p className="text-xl font-bold tracking-[0.16em]">KOS JEANS</p>
-
-      <div className="max-w-3xl py-12 sm:py-20">
-        <p className="mb-6 text-xs font-semibold tracking-[0.2em] text-zinc-600 uppercase">
-          Сайт у розробці
-        </p>
-        <h1 className="text-5xl leading-[1.05] font-semibold tracking-tight sm:text-7xl">
-          Починаємо з основи.
-        </h1>
-        <p className="mt-8 max-w-xl text-lg leading-8 text-zinc-600">
-          Створюємо інтернет-магазин KOS JEANS. Тут з’являться одяг,
-          улюблений денім та нові колекції.
-        </p>
-      </div>
-
-      <DevelopmentNotice />
-    </main>
-  );
+  // Demo data is isolated here; later blocks replace this adapter with server catalog data.
+  return <StorefrontHome navigation={demoNavigation} menuImages={demoMenuImages} products={demoProducts} categories={demoCategories} collectionProducts={demoCollectionProducts} photoCredits={photoCredits} />;
 }
