@@ -1,0 +1,10 @@
+"use client";
+
+import { createBrowserClient } from "@supabase/ssr";
+import { getSupabaseConfig } from "./config";
+
+// RLS is always enforced with the visitor's session; no privileged key here.
+export function createClient() {
+  const { url, key } = getSupabaseConfig();
+  return createBrowserClient(url, key);
+}

@@ -13,7 +13,7 @@
 | 02 | Ранний preview на Vercel | done | 2026-11-23 | [Публичный сайт](https://kos-jeans.vercel.app), GitHub Integration и автоматический preview проверены |
 | 03 | UX-анализ Spazio и дизайн-система | done | 2026-11-24 | [PR #3](https://github.com/expidito/kos-jeans/pull/3), UX-документ, токены, UI-примитивы и `/design-system` |
 | 04 | Публичная оболочка и главная страница | done | 2026-11-24 | [PR #4](https://github.com/expidito/kos-jeans/pull/4), адаптивная главная, успешные проверки и Vercel Preview |
-| 05 | Supabase: схема, миграции, RLS, Storage | todo | 2026-11-23 | — |
+| 05 | Supabase: схема, миграции, RLS, Storage | blocked | 2026-11-24 | Миграции и клиенты подготовлены, локальные SQL/RLS тесты пройдены; требуется тестовый Supabase и авторизация |
 | 06 | Настоящий каталог и динамические категории | todo | 2026-11-23 | — |
 | 07 | Страница товара и варианты | todo | 2026-11-23 | — |
 | 08 | Защищённый вход администратора и каркас `/admin` | todo | 2026-11-23 | — |
@@ -265,6 +265,58 @@
   защищена стандартным входом Vercel: без авторизации HTTP 302 на Vercel SSO,
   x-robots-tag: noindex. Защита не отключалась; публичный production остаётся на блоке 03.
 - Блок 04: `done`. Блок 05: `todo`, не начат.
+
+### Слияние блока 04 — 2026-11-24
+
+- Владелец принял внешний вид и разрешил merge. Проверки PR #4 повторно
+  подтверждены: все SUCCESS; head `83da1a1`.
+- PR #4 слит: merge `908d7f0`. Локальная main обновлена fast-forward до origin/main.
+- Production Deployment автоматически прошёл:
+  [Vercel](https://vercel.com/fedir-team/kos-jeans/DzzVzUACLsh6p3Uo4wqXEF94zd9b).
+- https://kos-jeans.vercel.app вернул HTTP 200; проверены актуальные hero,
+  «Новинки», украинский lang и noindex из main блока 04.
+
+## Блок 05 — blocked: Supabase foundation
+
+- Ветка `feat/block-05-supabase-foundation` создана от main `908d7f0`.
+- Две SQL-миграции: 9 публичных таблиц, private.admin_users, FK/индексы/unique/check,
+  вложенные категории и защита циклов, деньги в копейках, снимки заказов.
+- RLS: публичен только опубликованный каталог с видимыми предками, роль проверяется
+  через закрытую таблицу; нет клиентской записи заказов и публичного чтения заказов.
+- Приватный store-media: admin-only запись, чтение только связанных публичных фото,
+  пути по UUID, JPEG/PNG/WebP и лимит 5 МиБ. Storage API ещё не проверен.
+- Owner-only примитив атомарного списания проверен на успех/отказ/полный rollback;
+  API для заказа не открыт. Полный checkout и конкурентные сессии — будущий блок 12.
+- Официальные SSR-клиенты с publishable key/RLS, server-only и request cookies;
+  refreshSession подготовлен для будущего Auth proxy, пока не подключён.
+- `.env.example`, CLI config, безопасный draft seed, read-only `npm run db:check`,
+  [инструкция владельцу](docs/SUPABASE_SETUP.md). Главная/дизайн-система не изменены.
+
+### Проверки блока 05
+
+- `npm test`: 17/17 успешно, включая 14 PostgreSQL/RLS/Storage SQL тестов
+  на отдельной in-memory PGlite, а не на внешнем Supabase.
+- `npm run lint`, `npm run typecheck` — успешно. Удалены только дубли generated
+  типов `.next/types/* 2.ts`, мешавшие первому typecheck.
+- `NEXT_TELEMETRY_DISABLED=1 npm run build -- --webpack` — успешно.
+- Локальный `npm run build` (Turbopack) ограничен средой: EPERM при открытии
+  служебного порта PostCSS. Даже вне sandbox ошибка повторяется; стандартная
+  сборка будет проверена CI. Код приложения ради этого не менялся.
+- Production-сборка Webpack локально: `/` и `/design-system` — HTTP 200,
+  неизвестный маршрут — 404; украинский lang и noindex сохранены.
+- `git diff --check` — успешно; src/app, components, styles и demo-data не изменены.
+- `npm run db:check` — ожидаемый отказ: отсутствуют `.env.local` и Supabase env.
+- CLI `whoami` — AccessTokenRequiredError. Supabase connector, Docker, psql
+  отсутствуют. Внешний проект/миграции/Storage не создавались и не применялись.
+
+### Что требуется для завершения блока 05
+
+- Владелец создаёт отдельный бесплатный `kos-jeans-dev`, сохраняет Project URL
+  и Publishable key в `.env.local`, завершает `npx --yes supabase@3.3.0 login`.
+- Затем применить миграции только к dev, проверить API/RLS под обычным и admin JWT,
+  настоящие upload/read/delete и отказы MIME/размера/пути Storage API.
+- Пока эти критерии не пройдены, статус **blocked**, а не done.
+- Блок 06 не начат.
 
 После отчёта остановиться. Переход к следующему блоку — только после
 сообщения владельца **«Работу над блоком окончено»**.
