@@ -16,7 +16,7 @@
 | 05 | Supabase: схема, миграции, RLS, Storage | done | 2026-11-24 | [PR #5](https://github.com/expidito/kos-jeans/pull/5), миграции применены к dev, реальные JWT/RLS/Storage проверки пройдены |
 | 06 | Настоящий каталог и динамические категории | done | 2026-11-24 | [PR #6](https://github.com/expidito/kos-jeans/pull/6), [рабочий Preview-каталог](https://kos-jeans-git-feat-block-06-real-catalog-fedir-team.vercel.app/catalog), Supabase и обновления без деплоя подтверждены |
 | 07 | Страница товара и варианты | done | 2026-11-24 | [PR #7](https://github.com/expidito/kos-jeans/pull/7), [товар в Preview](https://kos-jeans-git-feat-block-07-product-detail-fedir-team.vercel.app/product/test-catalog-1), CI и проверки пройдены |
-| 08 | Защищённый вход администратора и каркас `/admin` | blocked | 2026-11-24 | [Draft PR #8](https://github.com/expidito/kos-jeans/pull/8), [Preview](https://kos-jeans-git-feat-block-08-admin-auth-fedir-team.vercel.app/admin/login); ожидается UUID владельца и приёмка закрытого Dashboard |
+| 08 | Защищённый вход администратора и каркас `/admin` | blocked | 2026-11-24 | [Draft PR #8](https://github.com/expidito/kos-jeans/pull/8), [Preview](https://kos-jeans-git-feat-block-08-admin-auth-fedir-team.vercel.app/admin/login); роль владельца назначена; ожидается живой вход и приёмка Dashboard |
 | 09 | Админка: категории и подкатегории | todo | 2026-11-23 | — |
 | 10 | Админка: товары, фото, цены, варианты и склад | todo | 2026-11-23 | — |
 | 11 | Полноценная корзина | todo | 2026-11-23 | — |
@@ -592,3 +592,18 @@
 - [CI](https://github.com/expidito/kos-jeans/actions/runs/45436999207) и финальный
   документационный push должны быть зелёными перед отчётом.
 - Статус остаётся blocked до подтверждённого UUID и настоящего входа владельца.
+
+### Назначение постоянного администратора — 2026-11-24
+
+- Владелец явно подтвердил полный UUID своей учётной записи.
+- Перед изменением проверены точный проект kos-jeans-dev, совпадение Auth UUID,
+  наличие подтверждённого email и активное состояние записи.
+- В private.admin_users транзакционно назначена роль только подтверждённому UUID;
+  наличие роли проверено отдельным SELECT. Другие роли/аккаунты не изменялись.
+- UUID/email/пароль владельца и ключи в Git и отчёт не включаются. Пароль не
+  запрашивался, не читался и не менялся. Production не затронут.
+- [Обезличенный результат](docs/checks/block08-owner-setup.json).
+- Владельцу передана ссылка на Preview и просьба войти непосредственно на странице.
+- Блок остаётся blocked только по живой проверке: admin login, Dashboard refresh,
+  мобильная оболочка и admin logout. Не выдавать назначение роли за проверенный вход.
+- PR #8 остаётся Draft; блок 09 не начат.

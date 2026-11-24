@@ -121,5 +121,7 @@ Preview-host и локальный `http://127.0.0.1:3008` в Authentication →
 [Вход в Preview](https://kos-jeans-git-feat-block-08-admin-auth-fedir-team.vercel.app/admin/login),
 [Draft PR #8](https://github.com/expidito/kos-jeans/pull/8).
 Прямой /admin и отказ неверным данным проверены в опубликованном Preview.
-Статус blocked: живой admin login/logout/refresh и закрытый Dashboard требуют
-подтверждённой учётной записи владельца. Роль не назначалась автоматически.
+Учётная запись владельца проверена и роль назначена после явного подтверждения
+точного UUID (2026-11-24). Пароль не запрашивался и не менялся.
+Статус blocked: живой admin login/logout/refresh и закрытый Dashboard ожидают
+входа владельца непосредственно на странице Preview.
