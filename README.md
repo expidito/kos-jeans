@@ -11,7 +11,8 @@
 Стартовая страница опубликована: **[kos-jeans.vercel.app](https://kos-jeans.vercel.app)**.
 Vercel связан с GitHub; автоматическая production-публикация merge PR #2 проверена.
 Основа Supabase блока 05 подключена и проверена на отдельном тестовом kos-jeans-dev.
-Настоящий каталог, админка и заказы ещё не реализованы. Проект не готов к торговле.
+Каталог блока 06 получает данные из Supabase на local/Preview. Production изолирован от dev.
+Админка и заказы ещё не реализованы; проект не готов к торговле.
 
 PR #1 слит в `main` с разрешения владельца. Блок 02 выполнен в ветке
 `feat/block-02-vercel-preview`: production из `main`, автоматический preview
@@ -26,7 +27,7 @@ PR #1 слит в `main` с разрешения владельца. Блок 02
 PR #3 слит с разрешения владельца; production проверен. Блок 04 завершён
 в отдельной ветке `feat/block-04-storefront-home`: [PR #4](https://github.com/expidito/kos-jeans/pull/4).
 [Preview главной](https://kos-jeans-git-feat-block-04-storefront-home-fedir-team.vercel.app)
-требует стандартного входа в Vercel. Блок 05 завершён: миграции, RLS и Storage проверены на тестовом проекте. Блок 06 не начат.
+требует стандартного входа в Vercel. Блок 05 завершён: миграции, RLS и Storage проверены на тестовом проекте. Блок 06 выполняется в feat/block-06-real-catalog.
 
 ## Стек
 
@@ -201,3 +202,15 @@ API smoke, hosted RLS под реальными JWT и проверки загр
 через Storage API прошли. `npm run db:test:hosted -- --dev-only` повторяет
 интеграционные проверки только на kos-jeans-dev с временными данными и cleanup.
 Постоянный администратор не назначался. Каталог и админка — следующие блоки.
+
+
+## Каталог (блок 06)
+
+[Архитектура, параметры URL, изображения и Preview setup](docs/CATALOG.md).
+
+- [Локальный каталог](http://127.0.0.1:3005/catalog).
+- Миграция 20261124000300 применена к dev; catalog_search соблюдает RLS.
+- `npm test` — 21 локальная проверка; `npm run catalog:test:hosted -- --dev-only` — интеграционные проверки.
+- ТЕСТ-набор в dev создан сценарием `npm run catalog:seed -- --dev-only`.
+- Vercel Production к dev не подключается; Preview env настраивается отдельно по инструкции.
+- Страница товара, корзина и оформление заказа остаются следующим блокам.
