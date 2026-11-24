@@ -14,7 +14,7 @@
 | 03 | UX-анализ Spazio и дизайн-система | done | 2026-11-24 | [PR #3](https://github.com/expidito/kos-jeans/pull/3), UX-документ, токены, UI-примитивы и `/design-system` |
 | 04 | Публичная оболочка и главная страница | done | 2026-11-24 | [PR #4](https://github.com/expidito/kos-jeans/pull/4), адаптивная главная, успешные проверки и Vercel Preview |
 | 05 | Supabase: схема, миграции, RLS, Storage | done | 2026-11-24 | [PR #5](https://github.com/expidito/kos-jeans/pull/5), миграции применены к dev, реальные JWT/RLS/Storage проверки пройдены |
-| 06 | Настоящий каталог и динамические категории | in_progress | 2026-11-24 | Каталог и категории из Supabase, 21 тест и hosted-проверки; готовится PR/Preview |
+| 06 | Настоящий каталог и динамические категории | blocked | 2026-11-24 | [PR #6](https://github.com/expidito/kos-jeans/pull/6), локальные/hosted проверки пройдены; ожидается настройка и проверка Preview env |
 | 07 | Страница товара и варианты | todo | 2026-11-23 | — |
 | 08 | Защищённый вход администратора и каркас `/admin` | todo | 2026-11-23 | — |
 | 09 | Админка: категории и подкатегории | todo | 2026-11-23 | — |
@@ -437,6 +437,27 @@
 - Для реального Preview нужны только URL/Publishable key в Preview scope ветки
   feat/block-06-real-catalog. Владельцу отправлена инструкция; Vercel CLI не авторизован.
 - Блок 07 не начат.
+
+### Публикация блока 06
+
+- Реализация `2d4aa85` опубликована в feat/block-06-real-catalog.
+- [Draft PR #6](https://github.com/expidito/kos-jeans/pull/6) открыт, не слит.
+- CI реализации прошёл, включая стандартный Turbopack build:
+  [запуск 45426217282](https://github.com/expidito/kos-jeans/actions/runs/45426217282).
+- Vercel Preview — Ready / success:
+  [deployment](https://vercel.com/fedir-team/kos-jeans/DKWb4GqhYrgh4mcmYovPiC8GJ8ct),
+  [каталог Preview](https://kos-jeans-git-feat-block-06-real-catalog-fedir-team.vercel.app/catalog).
+- Дополнительно проверен локальный VERCEL_ENV=production при наличии dev env:
+  /catalog не содержит ни одной dev-карточки и показывает сообщение об отсутствии подключения.
+- Рабочий локальный каталог: http://127.0.0.1:3005/catalog, реальные dev-данные.
+- Показ реальных данных на Vercel Preview **пока не подтверждён**. Vercel CLI
+  не авторизован; подтверждения настройки веточных env от владельца ещё нет.
+- Чтобы завершить блок: добавить NEXT_PUBLIC_SUPABASE_URL и
+  NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY из .env.local только в Preview scope
+  ветки feat/block-06-real-catalog, затем Redeploy и сообщить о готовности.
+  Production не выбирать. После этого проверить реальный Preview-каталог.
+- До выполнения внешнего шага статус **blocked**; локальная реализация проверена.
+  Блок 07 не начат, PR остаётся draft.
 
 После отчёта остановиться. Переход к следующему блоку — только после
 сообщения владельца **«Работу над блоком окончено»**.

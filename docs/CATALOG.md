@@ -1,5 +1,10 @@
 # Каталог KOS JEANS — блок 06
 
+Локальная реализация и hosted-проверки завершены. Статус блока **blocked**:
+ожидается подтверждение веточных env и проверка реального Vercel Preview.
+[PR #6](https://github.com/expidito/kos-jeans/pull/6),
+[Preview каталога](https://kos-jeans-git-feat-block-06-real-catalog-fedir-team.vercel.app/catalog).
+
 Маршруты: `/catalog`, `/catalog/<slug>`, `/media/<image UUID>`.
 Украинский интерфейс, UAH, noindex. Детальная страница товара — блок 07;
 карточки пока не выдают несуществующую ссылку или кнопку покупки.
@@ -75,3 +80,6 @@ draft/archived/hidden примеры и варианты для проверки
 Технические источники: [Supabase functions/RLS](https://supabase.com/docs/guides/database/functions),
 [Next fetch no-store](https://nextjs.org/docs/app/api-reference/functions/fetch).
 UX — [наблюдения блока 03](REFERENCE_AND_UX.md); повторный web-доступ к Spazio дал 403.
+
+Возможность ограничить Preview переменные конкретной Git-веткой описана в
+[официальной документации Vercel](https://vercel.com/docs/environment-variables).

@@ -204,7 +204,7 @@ API smoke, hosted RLS под реальными JWT и проверки загр
 Постоянный администратор не назначался. Каталог и админка — следующие блоки.
 
 
-## Каталог (блок 06)
+## Каталог (блок 06 — ожидает Preview env)
 
 [Архитектура, параметры URL, изображения и Preview setup](docs/CATALOG.md).
 
@@ -214,3 +214,7 @@ API smoke, hosted RLS под реальными JWT и проверки загр
 - ТЕСТ-набор в dev создан сценарием `npm run catalog:seed -- --dev-only`.
 - Vercel Production к dev не подключается; Preview env настраивается отдельно по инструкции.
 - Страница товара, корзина и оформление заказа остаются следующим блокам.
+
+[Draft PR #6](https://github.com/expidito/kos-jeans/pull/6),
+[Preview каталога](https://kos-jeans-git-feat-block-06-real-catalog-fedir-team.vercel.app/catalog).
+CI прошёл, deployment Ready; реальные данные на Preview требуют веточных env.
