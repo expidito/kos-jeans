@@ -12,7 +12,7 @@
 | 01 | Каркас приложения и инженерные стандарты | done | 2026-11-23 | [PR #1](https://github.com/expidito/kos-jeans/pull/1) слит в `main` с разрешения владельца; локальная main синхронизирована |
 | 02 | Ранний preview на Vercel | done | 2026-11-23 | [Публичный сайт](https://kos-jeans.vercel.app), GitHub Integration и автоматический preview проверены |
 | 03 | UX-анализ Spazio и дизайн-система | done | 2026-11-24 | [PR #3](https://github.com/expidito/kos-jeans/pull/3), UX-документ, токены, UI-примитивы и `/design-system` |
-| 04 | Публичная оболочка и главная страница | in_progress | 2026-11-24 | Главная и навигация проверены локально; ожидаются PR, CI и preview |
+| 04 | Публичная оболочка и главная страница | done | 2026-11-24 | [PR #4](https://github.com/expidito/kos-jeans/pull/4), адаптивная главная, успешные проверки и Vercel Preview |
 | 05 | Supabase: схема, миграции, RLS, Storage | todo | 2026-11-23 | — |
 | 06 | Настоящий каталог и динамические категории | todo | 2026-11-23 | — |
 | 07 | Страница товара и варианты | todo | 2026-11-23 | — |
@@ -253,6 +253,18 @@
   [mobile menu](docs/previews/storefront/mobile-menu.jpg).
   Размеры: [responsive-checks.json](docs/previews/storefront/responsive-checks.json).
 - Архитектура и границы: [STOREFRONT_HOME.md](docs/STOREFRONT_HOME.md).
+
+### Публикация блока 04
+
+- Реализация: `17ffb35`, feature-ветка опубликована; [PR #4](https://github.com/expidito/kos-jeans/pull/4)
+  открыт в main, не слит. Merge требует отдельного разрешения владельца.
+- CI реализации прошёл: [запуск 45406176781](https://github.com/expidito/kos-jeans/actions/runs/45406176781).
+- Vercel Preview — Ready / success:
+  [deployment](https://vercel.com/fedir-team/kos-jeans/3KR3vLJ3F5mJdCrezJV5SpzxVKSR).
+- [Главная Preview](https://kos-jeans-git-feat-block-04-storefront-home-fedir-team.vercel.app)
+  защищена стандартным входом Vercel: без авторизации HTTP 302 на Vercel SSO,
+  x-robots-tag: noindex. Защита не отключалась; публичный production остаётся на блоке 03.
+- Блок 04: `done`. Блок 05: `todo`, не начат.
 
 После отчёта остановиться. Переход к следующему блоку — только после
 сообщения владельца **«Работу над блоком окончено»**.
