@@ -1,0 +1,23 @@
+import assert from 'node:assert/strict';
+import {mkdir,writeFile} from 'node:fs/promises';
+import {devContext,fixtureId} from './catalog-dev-fixtures.mjs';
+import {findVariant,variantSizes} from '../src/lib/product/variants.ts';
+const checks=[];const record=check=>{checks.push({check,status:'pass'});console.log('PASS: '+check);};
+let stage='target check',ctx,failure=false;const product=fixtureId('8',1),emptyProduct=fixtureId('8',107),base='http://127.0.0.1:3005';
+try{
+ assert(process.argv.includes('--dev-only'));ctx=await devContext();
+ stage='public product';const response=await fetch(base+'/product/test-catalog-1');assert.equal(response.status,200);const html=await response.text();
+ assert(html.includes('ТЕСТ · Джинси Straight 1'));assert(html.includes('TEST-CATALOG-1'));assert(html.includes('1 499 ₴'));assert(html.includes('noindex'));assert(html.includes('Вам також може сподобатися'));record('Direct product URL shows database name, SKU, price, related section and noindex');
+ stage='protected products';for(const slug of ['test-catalog-14','test-catalog-15','test-catalog-16','nonexistent-product'])assert.equal((await fetch(base+'/product/'+slug)).status,404);record('Draft, archived, hidden-category and missing slugs return 404');
+ stage='variant data';const result=await ctx.visitor.from('product_variants').select('*').eq('product_id',product);assert(!result.error);
+ assert.equal(findVariant(result.data,'Синій','28'),null);assert.equal(findVariant(result.data,'Синій','30'),null);
+ assert.equal(findVariant(result.data,'Білий','30').id,fixtureId('9',100));assert.equal(findVariant(result.data,'Синій','26').id,fixtureId('9',101));
+ assert.equal(variantSizes(result.data,'Білий').find(s=>s.value==='32').available,false);record('Real variants map exact color/size; zero and missing combinations are unavailable');
+ stage='gallery';const images=await ctx.visitor.from('product_images').select('id').eq('product_id',product);assert(!images.error);assert.equal(images.data.length,3);for(const i of images.data){const r=await fetch(base+'/media/'+i.id);assert.equal(r.status,200);assert.match(r.headers.get('content-type'),/^image\//);assert.match(r.headers.get('cache-control'),/no-store/);}record('All three private-gallery photos load through protected no-store media route');
+ stage='related';const related=await ctx.visitor.rpc('catalog_search',{category_id:fixtureId('7',4)});assert(!related.error);assert(related.data.items.filter(p=>p.id!==product).length>0);assert(related.data.items.every(p=>p.status==='published'));const members=await ctx.visitor.from('product_categories').select('product_id').eq('category_id',fixtureId('7',4));assert(!members.error);const memberIds=new Set(members.data.map(m=>m.product_id));const displayed=[...html.matchAll(/data-product="([^"]+)"/g)].map(m=>m[1]);assert(displayed.length>0&&displayed.length<=4);assert(displayed.every(id=>id!==product&&memberIds.has(id)));record('Related category contains real published products under RLS');
+ stage='missing gallery and variants';await ctx.sql(`begin;insert into public.products(id,slug,sku,name,price_kopecks,status,published_at) values('${emptyProduct}','test-detail-empty','TEST-DETAIL-EMPTY','ТЕСТ · Товар без фото',10000,'published',now());insert into public.product_categories values('${emptyProduct}','${fixtureId('7',4)}');commit;select true as ready;`);const empty=await(await fetch(base+'/product/test-detail-empty')).text();assert(empty.includes('Фотографії товару ще готуються.'));assert(empty.includes('Варіанти товару поки недоступні.'));record('Missing photos and variants have honest empty states');
+ stage='live price';await ctx.sql(`update public.products set price_kopecks=150200 where id='${product}';select true as changed;`);const changed=await(await fetch(base+'/product/test-catalog-1')).text();assert(changed.includes('1 502 ₴'));record('Product price updates without rebuilding or deploying');
+}catch{failure=true;console.error('FAIL: '+stage+'; credential-bearing details withheld');}
+finally{if(ctx){try{await ctx.sql(`update public.products set price_kopecks=149900 where id='${product}' and price_kopecks=150200;delete from public.products where id='${emptyProduct}' and sku='TEST-DETAIL-EMPTY';select true as restored;`);record('Own temporary price/product changes restored');}catch{failure=true;console.error('FAIL: restoring temporary price; details withheld');}}
+ await mkdir('docs/checks',{recursive:true});await writeFile('docs/checks/block07-hosted.json',JSON.stringify({date:new Date().toISOString(),environment:'kos-jeans-dev',status:failure?'failed':'passed',checks},null,2)+'\n');}
+if(failure)process.exitCode=1;
