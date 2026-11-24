@@ -1,0 +1,60 @@
+{
+  "executedAt": "2026-11-24T14:21:43.321Z",
+  "environment": "kos-jeans-dev",
+  "status": "passed",
+  "checks": [
+    {
+      "check": "Public signup is disabled in the hosted development project",
+      "status": "pass"
+    },
+    {
+      "check": "Target is the explicitly named development project",
+      "status": "pass"
+    },
+    {
+      "check": "Real Auth JWT: ordinary user false / assigned admin true",
+      "status": "pass"
+    },
+    {
+      "check": "Anon and ordinary JWT see published data only; hidden ancestors and orders are protected",
+      "status": "pass"
+    },
+    {
+      "check": "Anon/ordinary cannot add products or change product prices, sizes, colors or stock",
+      "status": "pass"
+    },
+    {
+      "check": "Admin catalog edit succeeds; negative stock/duplicate SKU fail; order snapshot is stable",
+      "status": "pass"
+    },
+    {
+      "check": "Storage: admin image upload/read succeeds; anon/ordinary upload and draft/public-URL access fail",
+      "status": "pass"
+    },
+    {
+      "check": "Storage API rejects SVG, disallowed MIME, unknown parent path and files larger than 5 MiB",
+      "status": "pass"
+    },
+    {
+      "check": "Unpublishing a product revokes new public image downloads",
+      "status": "pass"
+    },
+    {
+      "check": "Own temporary database fixtures, Auth users and Storage objects removed",
+      "status": "pass"
+    }
+  ],
+  "migrationVersions": [
+    "20261124000100",
+    "20261124000200"
+  ],
+  "publicTablesWithRls": 9,
+  "cleanupCounts": {
+    "ownFixtureRows": 0,
+    "ownMediaObjects": 0,
+    "ownAuthUsers": 0
+  },
+  "limitations": [
+    "Full checkout and concurrent order sessions are reserved for block 12."
+  ]
+}

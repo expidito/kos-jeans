@@ -3,13 +3,14 @@ import "server-only";
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 import { getSupabaseConfig } from "./config";
+import type { Database } from "./database.types";
 
 // Foundation for the Auth proxy in block 08. Not wired into the storefront yet.
 // Keep both request and response cookies in sync and never cache this response.
 export async function refreshSession(request: NextRequest) {
   const { url, key } = getSupabaseConfig();
   let response = NextResponse.next({ request });
-  const supabase = createServerClient(url, key, {
+  const supabase = createServerClient<Database>(url, key, {
     cookies: {
       getAll: () => request.cookies.getAll(),
       setAll: (values) => {

@@ -3,13 +3,14 @@ import "server-only";
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 import { getSupabaseConfig } from "./config";
+import type { Database } from "./database.types";
 
 // Request scoped, using the same publishable key and RLS as the browser.
 // Auth session refresh must run in a writable Route Handler / Server Action.
 export async function createClient() {
   const { url, key } = getSupabaseConfig();
   const cookieStore = await cookies();
-  return createServerClient(url, key, {
+  return createServerClient<Database>(url, key, {
     cookies: {
       getAll: () => cookieStore.getAll(),
       setAll: (values) => {

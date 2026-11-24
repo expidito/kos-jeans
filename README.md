@@ -10,7 +10,7 @@
 адаптивную главную, навигацию, footer и явно помеченные демоподборки.
 Стартовая страница опубликована: **[kos-jeans.vercel.app](https://kos-jeans.vercel.app)**.
 Vercel связан с GitHub; автоматическая production-публикация merge PR #2 проверена.
-Основа Supabase подготовлена в блоке 05, но внешняя БД ещё не подключена: статус blocked.
+Основа Supabase блока 05 подключена и проверена на отдельном тестовом kos-jeans-dev.
 Настоящий каталог, админка и заказы ещё не реализованы. Проект не готов к торговле.
 
 PR #1 слит в `main` с разрешения владельца. Блок 02 выполнен в ветке
@@ -26,7 +26,7 @@ PR #1 слит в `main` с разрешения владельца. Блок 02
 PR #3 слит с разрешения владельца; production проверен. Блок 04 завершён
 в отдельной ветке `feat/block-04-storefront-home`: [PR #4](https://github.com/expidito/kos-jeans/pull/4).
 [Preview главной](https://kos-jeans-git-feat-block-04-storefront-home-fedir-team.vercel.app)
-требует стандартного входа в Vercel. Блок 05 ожидает CLI-авторизацию Supabase и применение миграций к dev-проекту.
+требует стандартного входа в Vercel. Блок 05 завершён: миграции, RLS и Storage проверены на тестовом проекте. Блок 06 не начат.
 
 ## Стек
 
@@ -34,7 +34,7 @@ Next.js 16.4.6 (App Router), React 19.3.1, TypeScript 6.0.3, Tailwind CSS 4.3.5,
 ESLint 9.39.5 и GitHub Actions. Версии закреплены в `package.json` и
 `package-lock.json`. TypeScript 7 и ESLint 10 пока не используются из-за
 ограничений совместимости линтеров.
-Vercel подключён. Для Supabase подготовлены SQL-миграции, RLS, Storage и SSR-клиенты; внешний доступ ожидается. Zod будет добавлен вместе с валидацией форм.
+Vercel подключён. Для Supabase применены SQL-миграции, RLS, Storage и типизированные SSR-клиенты; hosted dev проверен. Zod будет добавлен вместе с валидацией форм.
 
 ## Локальная работа
 
@@ -177,11 +177,11 @@ Server page передаёт данные через props; подключени
 Фотографии хранятся локально и оптимизируются Next/Image.
 
 
-## Supabase: блок 05 — blocked
+## Supabase: блок 05 — done
 
 [Полная инструкция подключения, схема, роли и границы тестов](docs/SUPABASE_SETUP.md).
-[Draft PR #5](https://github.com/expidito/kos-jeans/pull/5): подготовленная основа,
-внешние критерии ещё не пройдены.
+[PR #5](https://github.com/expidito/kos-jeans/pull/5): миграции применены в dev,
+[hosted-проверки](docs/checks/block05-hosted.json) пройдены.
 
 - `supabase/migrations/` — две транзакционные миграции: таблицы/RLS и private Storage.
 - `supabase/config.toml` — локальный CLI-проект, регистрация отключена.
@@ -192,11 +192,12 @@ Server page передаёт данные через props; подключени
   таблицы тестового harness находятся в tests/helpers и не применяются в Supabase.
 
 Тестовый `kos-jeans-dev` создан владельцем; URL/Publishable key в локальном
-`.env.local` проверены без вывода значений. Для применения миграций остаётся
-авторизация `npx --yes supabase@3.3.0 login`.
+`.env.local` проверены без вывода значений. CLI авторизован, миграции применены
+к этому тестовому проекту.
 Ключи/пароль не отправлять в чат и не коммитить. Production-БД не изменялась.
 
 После применения миграций: `npm run db:check` — read-only API smoke.
-До применения миграций проверка таблиц API не проходит; categories ещё отсутствует.
-Отдельно остаются hosted RLS под реальными JWT и проверки загрузки/размера/MIME
-через Storage API. Каталог и админка в этом блоке не реализуются.
+API smoke, hosted RLS под реальными JWT и проверки загрузки/размера/MIME
+через Storage API прошли. `npm run db:test:hosted -- --dev-only` повторяет
+интеграционные проверки только на kos-jeans-dev с временными данными и cleanup.
+Постоянный администратор не назначался. Каталог и админка — следующие блоки.
