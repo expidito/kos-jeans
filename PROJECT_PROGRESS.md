@@ -17,7 +17,7 @@
 | 06 | Настоящий каталог и динамические категории | done | 2026-11-24 | [PR #6](https://github.com/expidito/kos-jeans/pull/6), [рабочий Preview-каталог](https://kos-jeans-git-feat-block-06-real-catalog-fedir-team.vercel.app/catalog), Supabase и обновления без деплоя подтверждены |
 | 07 | Страница товара и варианты | done | 2026-11-24 | [PR #7](https://github.com/expidito/kos-jeans/pull/7), [товар в Preview](https://kos-jeans-git-feat-block-07-product-detail-fedir-team.vercel.app/product/test-catalog-1), CI и проверки пройдены |
 | 08 | Защищённый вход администратора и каркас `/admin` | done | 2026-11-24 | [PR #8](https://github.com/expidito/kos-jeans/pull/8), [Preview](https://kos-jeans-git-feat-block-08-admin-auth-fedir-team.vercel.app/admin/login); роль владельца, живой вход, Dashboard, выход и защита проверены |
-| 09 | Админка: категории и подкатегории | in_progress | 2026-11-24 | Ветка feat/block-09-admin-categories; CRUD/Storage/history готовы, локальные проверки пройдены; готовится живой Preview |
+| 09 | Админка: категории и подкатегории | blocked | 2026-11-24 | [Draft PR #9](https://github.com/expidito/kos-jeans/pull/9), [Preview](https://kos-jeans-git-feat-block-09-admin-categories-fedir-team.vercel.app/admin/categories); требуется живой вход владельца и разрешение ручной публикации main |
 | 10 | Админка: товары, фото, цены, варианты и склад | todo | 2026-11-23 | — |
 | 11 | Полноценная корзина | todo | 2026-11-23 | — |
 | 12 | Оформление заказа и атомарные остатки | todo | 2026-11-23 | — |
@@ -669,3 +669,19 @@
   она не сочла разрешение проверить Production после merge разрешением отдельного
   ручного deploy. Владельцу задан точный вопрос; повторный запуск не выполняется
   до ответа. Подготовленные main/CI/целевой commit проверяемы и готовы к запуску.
+
+### Состояние перед ручной приёмкой блока 09
+
+- Код/миграция/отчёты опубликованы в feat/block-09-admin-categories.
+- Локально 37 тестов, lint, typecheck и Webpack build успешны; CI также проверил
+  стандартный production build. 8 hosted-групп успешны.
+- Preview открывает /admin/login для анонимного посетителя: защита подтверждена.
+- **blocked**: требуется войти своей постоянной учётной записью в новой Preview-ветке
+  и сообщить «Вошёл в Preview блока 09». Пароль в чат не передавать.
+- До входа не подтверждены реальные UI create/upload/edit/archive, появление новой
+  категории из формы без деплоя и responsive 320/390/768/1440. Не подменять их SQL-тестами.
+- Отдельно ожидается ответ владельца на запрос ручного Production Deployment
+  main c571bfd; автоматическая проверка отклонила действие, повторных попыток нет.
+  Production пока main 3401700, тестовая база к нему не подключена.
+- PR #9 остаётся Draft. Блок 10 не начат; после ответа продолжить только оставшуюся
+  приёмку блока 09 и разрешённую публикацию main.

@@ -1,0 +1,14 @@
+{
+  "implementation_commit": "ac5b294",
+  "url": "https://kos-jeans-git-feat-block-09-admin-categories-fedir-team.vercel.app/admin/categories",
+  "anonymous_redirect_to_login": true,
+  "live_admin_form_creation_verified": false,
+  "live_image_upload_verified": false,
+  "responsive_verified": false,
+  "owner_private_sign_in_required": true,
+  "production_main_merge": "c571bfd",
+  "production_served_commit": "3401700",
+  "manual_production_deploy": "auto-review rejected; waiting for explicit owner approval; no retry",
+  "dev_connected_to_production": false,
+  "status": "blocked"
+}
