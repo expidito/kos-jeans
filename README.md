@@ -252,3 +252,9 @@ Production изолирован. Каркас будущих разделов н
 сохраняет старые ссылки; данные меняются без commit/push/deploy.
 [Инструкция, миграция и ограничения](docs/ADMIN_CATEGORIES.md).
 Фото JPEG/PNG/WebP до 3 MiB. Новых env не требуется; работа только с kos-jeans-dev.
+
+Живая приёмка категорий пройдена в [Preview](https://kos-jeans-git-feat-block-09-admin-categories-fedir-team.vercel.app/admin/categories):
+создание с фото, вложенность, редактирование/slug/порядок, скрытие, архив и восстановление.
+[Отчёт](docs/checks/block09-acceptance.json). PR #9 ожидает review.
+Отдельный ручной Production deploy уже слитой main c571bfd ожидает разрешения
+владельца после отказа автоматической проверки. Dev к Production не подключён.
