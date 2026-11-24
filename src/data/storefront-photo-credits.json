@@ -1,0 +1,56 @@
+[
+  {
+    "file": "public/images/storefront/hero.jpg",
+    "source": "https://unsplash.com/photos/woman-wearing-blue-denim-jacket-emlKHDEydhg",
+    "image": "https://images.unsplash.com/photo-1485811661309-ab85183a729c?auto=format&fit=max&w=1800&q=85",
+    "license": "https://unsplash.com/license"
+  },
+  {
+    "file": "public/images/storefront/women.jpg",
+    "source": "https://unsplash.com/photos/woman-wearing-blue-denim-jacket-and-jeans-NBEIdcXh2sU",
+    "image": "https://images.unsplash.com/photo-1559475464-ffe519cfb9f1?auto=format&fit=max&w=1000&q=85",
+    "license": "https://unsplash.com/license"
+  },
+  {
+    "file": "public/images/storefront/men.jpg",
+    "source": "https://unsplash.com/photos/man-in-blue-denim-jacket-_3iI0mADqho",
+    "image": "https://images.unsplash.com/photo-1578100044626-110806c15b00?auto=format&fit=max&w=1000&q=85",
+    "license": "https://unsplash.com/license"
+  },
+  {
+    "file": "public/images/storefront/jeans.jpg",
+    "source": "https://unsplash.com/photos/blue-denim-RDZZs9F53LE",
+    "image": "https://images.unsplash.com/photo-1541840031508-326b77c9a17e?auto=format&fit=max&w=900&q=85",
+    "license": "https://unsplash.com/license"
+  },
+  {
+    "file": "public/images/storefront/detail.jpg",
+    "source": "https://unsplash.com/photos/person-in-blue-denim-jeans-OtgxvtVYKB4",
+    "image": "https://images.unsplash.com/photo-1616411598297-e0053c6ee59d?auto=format&fit=max&w=1200&q=85",
+    "license": "https://unsplash.com/license"
+  },
+  {
+    "file": "public/images/storefront/straight.jpg",
+    "source": "https://unsplash.com/photos/woman-wearing-blue-jeans-HqyvjcU1uTc",
+    "image": "https://images.unsplash.com/photo-1551496008-222740e743df?auto=format&fit=max&w=800&q=85",
+    "license": "https://unsplash.com/license"
+  },
+  {
+    "file": "public/images/storefront/tee.jpg",
+    "source": "https://unsplash.com/photos/a-white-t-shirt-hanging-on-a-white-wall-fiA7sq2PdnQ",
+    "image": "https://images.unsplash.com/photo-1722310752951-4d459d28c678?auto=format&fit=max&w=1000&q=85",
+    "license": "https://unsplash.com/license"
+  },
+  {
+    "file": "public/images/storefront/shirt.jpg",
+    "source": "https://unsplash.com/photos/man-in-white-button-up-shirt-GDebkNryTd4",
+    "image": "https://images.unsplash.com/photo-1603252109612-24fa03d145c8?auto=format&fit=max&w=1000&q=85",
+    "license": "https://unsplash.com/license"
+  },
+  {
+    "file": "public/images/storefront/folded.jpg",
+    "source": "https://unsplash.com/photos/piles-of-folded-jeans-ready-for-sale-nR5tvPZgNlY",
+    "image": "https://images.unsplash.com/photo-1746824245185-c060b365162e?auto=format&fit=max&w=1000&q=85",
+    "license": "https://unsplash.com/license"
+  }
+]
