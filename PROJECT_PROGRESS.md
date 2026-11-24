@@ -11,7 +11,7 @@
 | 00 | Проверка среды и GitHub-репозиторий | done | 2026-11-23 | [Публичный репозиторий](https://github.com/expidito/kos-jeans), `main`, origin и публикация проверены |
 | 01 | Каркас приложения и инженерные стандарты | done | 2026-11-23 | [PR #1](https://github.com/expidito/kos-jeans/pull/1) слит в `main` с разрешения владельца; локальная main синхронизирована |
 | 02 | Ранний preview на Vercel | done | 2026-11-23 | [Публичный сайт](https://kos-jeans.vercel.app), GitHub Integration и автоматический preview проверены |
-| 03 | UX-анализ Spazio и дизайн-система | done | 2026-11-24 | UX-документ, токены, UI-примитивы и `/design-system`; локальные проверки пройдены |
+| 03 | UX-анализ Spazio и дизайн-система | done | 2026-11-24 | [PR #3](https://github.com/expidito/kos-jeans/pull/3), UX-документ, токены, UI-примитивы и `/design-system` |
 | 04 | Публичная оболочка и главная страница | todo | 2026-11-23 | — |
 | 05 | Supabase: схема, миграции, RLS, Storage | todo | 2026-11-23 | — |
 | 06 | Настоящий каталог и динамические категории | todo | 2026-11-23 | — |
@@ -196,6 +196,13 @@
 - `git diff --check`, локальные ссылки документов — успешно; `AGENTS.md` не изменён.
 - Собственные screenshots сохранены: [desktop](docs/previews/design-system-desktop.jpg),
   [mobile](docs/previews/design-system-mobile.jpg).
+- Реализация: `0b1ca03`, опубликована отдельная ветка; [PR #3](https://github.com/expidito/kos-jeans/pull/3)
+  открыт, не слит в `main`.
+- CI реализации успешен: [запуск 45400323357](https://github.com/expidito/kos-jeans/actions/runs/45400323357).
+- Vercel Preview — Ready: [deployment](https://vercel.com/fedir-team/kos-jeans/83pa2NjQeNY8hGYiasN7HzVMbzkU).
+  [Живая дизайн-система](https://kos-jeans-git-feat-block-03-ux-design-system-fedir-team.vercel.app/design-system)
+  использует стандартную авторизацию Vercel Preview. Защита не отключалась.
+
 
 После отчёта остановиться. Переход к следующему блоку — только после
 сообщения владельца **«Работу над блоком окончено»**.

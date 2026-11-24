@@ -23,7 +23,7 @@ PR #1 слит в `main` с разрешения владельца. Блок 02
 
 Разработка выполняется строго по одному блоку за команду. После отчёта
 работа останавливается до сообщения владельца «Работу над блоком окончено».
-Блок 03 добавляет собственную дизайн-систему. Следующий блок — 04,
+Блок 03 добавляет собственную дизайн-систему ([PR #3](https://github.com/expidito/kos-jeans/pull/3), пока не слит). Следующий блок — 04,
 публичная оболочка и главная страница; он не начат.
 
 ## Стек
@@ -92,6 +92,8 @@ src/
 - `src/styles/tokens.css` — семантические Tailwind/CSS-токены.
 - `src/components/ui/` — Button, Badge, TextField, SizeSelector, Price, Breadcrumbs и Accordion.
 - `/design-system` — украинская адаптивная библиотека с рабочими образцами.
+- [Vercel Preview дизайн-системы](https://kos-jeans-git-feat-block-03-ux-design-system-fedir-team.vercel.app/design-system) (может потребоваться вход в Vercel).
+- Превью в репозитории: [desktop](docs/previews/design-system-desktop.jpg), [mobile](docs/previews/design-system-mobile.jpg).
 
 Шрифт Manrope поставляется локально через `@fontsource-variable/manrope`
 (лицензия OFL-1.1, кириллица), не требует доступа к Google Fonts при сборке.
