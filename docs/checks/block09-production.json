@@ -1,0 +1,34 @@
+{
+  "date": "2026-11-24",
+  "deployment": "https://vercel.com/fedir-team/kos-jeans/9JKnH6NFAP8LPLX9zh1b53JStzdG",
+  "production_url": "https://kos-jeans.vercel.app",
+  "commit": "c571bfdb73ecafc41f0d7dea0e57d96f7b641532",
+  "environment": "Production",
+  "vercel_ready_current_observed": true,
+  "explicit_owner_approval": true,
+  "environment_variables_changed": false,
+  "dev_connected_to_production": false,
+  "checks": [
+    {
+      "check": "Production home HTTP 200, KOS JEANS and noindex",
+      "status": "pass"
+    },
+    {
+      "check": "New main admin/login HTTP 200; dev Auth disabled in Production",
+      "status": "pass"
+    },
+    {
+      "check": "Production admin redirects without private data and is not cached",
+      "status": "pass"
+    },
+    {
+      "check": "Production catalog isolated from kos-jeans-dev",
+      "status": "pass"
+    },
+    {
+      "check": "Dev product and private image unavailable on Production",
+      "status": "pass"
+    }
+  ],
+  "status": "pass"
+}

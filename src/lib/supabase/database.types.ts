@@ -64,6 +64,32 @@ export type Database = {
           },
         ]
       }
+      category_slug_history: {
+        Row: {
+          category_id: string
+          created_at: string
+          slug: string
+        }
+        Insert: {
+          category_id: string
+          created_at?: string
+          slug: string
+        }
+        Update: {
+          category_id?: string
+          created_at?: string
+          slug?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "category_slug_history_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "categories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       homepage_banners: {
         Row: {
           alt_text: string
@@ -428,6 +454,16 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      admin_category_write: {
+        Args: {
+          p_category_id: string
+          p_command?: string
+          p_expected_version?: string
+          p_request_id: string
+          p_values: Json
+        }
+        Returns: string
+      }
       catalog_search: {
         Args: {
           category_id?: string

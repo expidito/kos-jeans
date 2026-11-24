@@ -5,6 +5,7 @@ const nextConfig: NextConfig = {
   agentRules: false,
   reactStrictMode: true,
   poweredByHeader: false,
+  experimental: { serverActions: { bodySizeLimit: '4mb' } },
 };
 
 export default nextConfig;

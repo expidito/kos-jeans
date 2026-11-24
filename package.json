@@ -18,7 +18,8 @@
     "catalog:test:hosted": "node --env-file=.env.local scripts/test-catalog-hosted.mjs",
     "product:seed": "node --env-file=.env.local scripts/product-dev-fixtures.mjs",
     "product:test:hosted": "node --env-file=.env.local scripts/test-product-hosted.mjs",
-    "admin:test:hosted": "node --env-file=.env.local scripts/test-admin-hosted.mjs"
+    "admin:test:hosted": "node --env-file=.env.local scripts/test-admin-hosted.mjs",
+    "categories:test:hosted": "node --env-file=.env.local scripts/test-categories-hosted.mjs"
   },
   "dependencies": {
     "@fontsource-variable/manrope": "5.3.0",

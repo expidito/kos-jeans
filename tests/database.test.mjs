@@ -33,7 +33,7 @@ after(async () => { await db?.close(); });
 
 test('migrations enable RLS on every public table and restrict private functions', async () => {
   const { rows } = await db.query("select relname, relrowsecurity from pg_class join pg_namespace n on n.oid=relnamespace where n.nspname='public' and relkind='r'");
-  assert.equal(rows.length, 9);
+  assert.equal(rows.length, 10);
   assert(rows.every(r => r.relrowsecurity));
   assert.equal((await db.query("select relrowsecurity from pg_class where oid='private.admin_users'::regclass")).rows[0].relrowsecurity,true);
   for (const role of ['anon','authenticated']) {
