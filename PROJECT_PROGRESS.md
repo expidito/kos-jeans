@@ -16,7 +16,7 @@
 | 05 | Supabase: схема, миграции, RLS, Storage | done | 2026-11-24 | [PR #5](https://github.com/expidito/kos-jeans/pull/5), миграции применены к dev, реальные JWT/RLS/Storage проверки пройдены |
 | 06 | Настоящий каталог и динамические категории | done | 2026-11-24 | [PR #6](https://github.com/expidito/kos-jeans/pull/6), [рабочий Preview-каталог](https://kos-jeans-git-feat-block-06-real-catalog-fedir-team.vercel.app/catalog), Supabase и обновления без деплоя подтверждены |
 | 07 | Страница товара и варианты | done | 2026-11-24 | [PR #7](https://github.com/expidito/kos-jeans/pull/7), [товар в Preview](https://kos-jeans-git-feat-block-07-product-detail-fedir-team.vercel.app/product/test-catalog-1), CI и проверки пройдены |
-| 08 | Защищённый вход администратора и каркас `/admin` | blocked | 2026-11-24 | [Draft PR #8](https://github.com/expidito/kos-jeans/pull/8), [Preview](https://kos-jeans-git-feat-block-08-admin-auth-fedir-team.vercel.app/admin/login); роль владельца назначена; ожидается живой вход и приёмка Dashboard |
+| 08 | Защищённый вход администратора и каркас `/admin` | done | 2026-11-24 | [PR #8](https://github.com/expidito/kos-jeans/pull/8), [Preview](https://kos-jeans-git-feat-block-08-admin-auth-fedir-team.vercel.app/admin/login); роль владельца, живой вход, Dashboard, выход и защита проверены |
 | 09 | Админка: категории и подкатегории | todo | 2026-11-23 | — |
 | 10 | Админка: товары, фото, цены, варианты и склад | todo | 2026-11-23 | — |
 | 11 | Полноценная корзина | todo | 2026-11-23 | — |
@@ -607,3 +607,26 @@
 - Блок остаётся blocked только по живой проверке: admin login, Dashboard refresh,
   мобильная оболочка и admin logout. Не выдавать назначение роли за проверенный вход.
 - PR #8 остаётся Draft; блок 09 не начат.
+
+### Завершение блока 08 — живая приёмка владельца
+
+- Владелец вошёл своим паролем непосредственно в Preview; пароль не передавался Codex.
+- Успешный /admin подтверждён в Chrome; reload и новый Preview не теряют сессию.
+- Dashboard сверён с SQL агрегатами dev: 16 товаров, 14 опубликованных, 5 категорий,
+  0 заказов, 4 активных варианта с остатком 0–3. Личные поля заказов не запрашиваются.
+- 320/390/768/1440 px: scrollWidth равен ширине. Мобильное меню открывается,
+  ведёт в защищённые разделы, автоматически закрывается; активный пункт правильный.
+- Исправлены автозакрытие mobile меню и нейтральная подпись «Всього: 4» (`cba8a1a`).
+- Enter на «Вийти» завершил сессию; показано подтверждение выхода. Back не возвращает
+  приватные данные; прямой /admin/orders после выхода перенаправляет на вход.
+- [Живой отчёт](docs/checks/block08-acceptance.json),
+  [адаптивность](docs/previews/admin/dashboard-responsive.json),
+  [desktop](docs/previews/admin/dashboard-desktop.jpg),
+  [mobile](docs/previews/admin/dashboard-mobile.jpg). Снимки обрезаны ниже email сессии.
+- lint/typecheck, 29 unit/SQL tests и локальный Webpack production build успешны
+  после исправлений. CI выполняет стандартный production build.
+- [Preview исправлений](https://vercel.com/fedir-team/kos-jeans/2cBkL6MK44221oSV1tpg42hABmFL) Ready;
+  после финального документационного push дождаться CI/Vercel перед отчётом.
+- Статус **done**; внешний блокер снят. PR #8 готов к review, без merge.
+  Постоянная роль сохранена; текущая сессия завершена в рамках проверки выхода.
+- Production к dev не подключён. Блок 09 не начат; остановиться до подтверждения владельца.

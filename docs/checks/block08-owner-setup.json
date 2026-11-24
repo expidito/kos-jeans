@@ -9,6 +9,6 @@
   "other_accounts_modified": false,
   "password_read_or_changed": false,
   "production_touched": false,
-  "positive_admin_login_verified": false,
-  "remaining": "Owner private sign-in; protected Dashboard/refresh/responsive/logout acceptance"
+  "positive_admin_login_verified": true,
+  "remaining": null
 }

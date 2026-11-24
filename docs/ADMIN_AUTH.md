@@ -119,9 +119,12 @@ Preview-host и локальный `http://127.0.0.1:3008` в Authentication →
 ## Адрес для приёмки
 
 [Вход в Preview](https://kos-jeans-git-feat-block-08-admin-auth-fedir-team.vercel.app/admin/login),
-[Draft PR #8](https://github.com/expidito/kos-jeans/pull/8).
+[PR #8](https://github.com/expidito/kos-jeans/pull/8).
 Прямой /admin и отказ неверным данным проверены в опубликованном Preview.
 Учётная запись владельца проверена и роль назначена после явного подтверждения
 точного UUID (2026-11-24). Пароль не запрашивался и не менялся.
-Статус blocked: живой admin login/logout/refresh и закрытый Dashboard ожидают
-входа владельца непосредственно на странице Preview.
+Статус done: владелец вошёл непосредственно в Preview; Dashboard, reload,
+320/390/768/1440 px, мобильная навигация и logout проверены. После выхода
+Back и прямой закрытый URL возвращают на вход, приватных данных нет.
+Сессия завершена при проверке выхода; постоянная роль остаётся назначенной.
+[Отчёт приёмки](checks/block08-acceptance.json). PR готов к review, merge не выполнялся.

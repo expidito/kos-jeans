@@ -1,0 +1,23 @@
+[
+  {
+    "h1": "Dashboard",
+    "menuVisible": true,
+    "scrollWidth": 320,
+    "width": 320
+  },
+  {
+    "h1": "Dashboard",
+    "scrollWidth": 390,
+    "width": 390
+  },
+  {
+    "h1": "Dashboard",
+    "scrollWidth": 768,
+    "width": 768
+  },
+  {
+    "h1": "Dashboard",
+    "scrollWidth": 1440,
+    "width": 1440
+  }
+]
