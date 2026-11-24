@@ -1,0 +1,38 @@
+{
+  "date": "2026-11-24",
+  "environment": "Preview / kos-jeans-dev only",
+  "implementation_commit": "cba8a1a",
+  "url": "https://kos-jeans-git-feat-block-08-admin-auth-fedir-team.vercel.app/admin",
+  "checks": {
+    "owner_entered_password_privately": true,
+    "live_admin_login": true,
+    "dashboard_reload": true,
+    "session_survives_preview_update": true,
+    "dashboard_matches_database": {
+      "products": 16,
+      "published": 14,
+      "categories": 5,
+      "orders": 0,
+      "low_stock_variants": 4
+    },
+    "responsive_widths": [
+      320,
+      390,
+      768,
+      1440
+    ],
+    "horizontal_overflow": false,
+    "mobile_menu_navigation": true,
+    "mobile_menu_closes_after_navigation": true,
+    "active_navigation": true,
+    "future_sections_honest_placeholders": true,
+    "keyboard_logout": true,
+    "logout_notice": true,
+    "back_after_logout_private_data_absent": true,
+    "direct_orders_after_logout_redirects_to_login": true,
+    "noindex_nofollow": true
+  },
+  "credentials_or_owner_identifiers_in_evidence": false,
+  "production_changed": false,
+  "status": "pass"
+}

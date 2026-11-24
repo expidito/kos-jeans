@@ -1,0 +1,43 @@
+{
+  "checks": [
+    {
+      "check": "All private URLs redirect anonymous visitors, no dashboard data and private/no-store",
+      "status": "pass"
+    },
+    {
+      "check": "Login/logout reject cross-origin requests; malformed credentials rejected",
+      "status": "pass"
+    },
+    {
+      "check": "Incorrect password rejected with generic message",
+      "status": "pass"
+    },
+    {
+      "check": "Valid ordinary account cannot login as admin, metadata role ignored",
+      "status": "pass"
+    },
+    {
+      "check": "Direct ordinary session, forged metadata and private role write cannot bypass server/RLS",
+      "status": "pass"
+    },
+    {
+      "check": "Stale session refreshes without elevating ordinary role; revoked refresh returns to login",
+      "status": "pass"
+    },
+    {
+      "check": "Tampered session rejected; logout clears session cookies and private access stays closed",
+      "status": "pass"
+    },
+    {
+      "check": "Public catalog and product remain available with anonymous RLS",
+      "status": "pass"
+    },
+    {
+      "check": "Only the temporary ordinary test account was removed; no administrator assigned",
+      "status": "pass"
+    }
+  ],
+  "status": "pass",
+  "permanentAdminAssigned": false,
+  "adminSuccessRequiresOwnerLogin": true
+}

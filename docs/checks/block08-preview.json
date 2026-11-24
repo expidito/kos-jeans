@@ -1,0 +1,13 @@
+{
+  "url": "https://kos-jeans-git-feat-block-08-admin-auth-fedir-team.vercel.app/admin/login",
+  "implementation_commit": "cba8a1a",
+  "anonymous_admin_redirect": true,
+  "invalid_credentials_rejected": true,
+  "form_enabled": true,
+  "robots": "noindex, nofollow",
+  "admin_success_tested": true,
+  "dashboard_responsive_tested": true,
+  "required_owner_action": null,
+  "production_dev_connected": false,
+  "owner_password_handled_by_agent": false
+}
