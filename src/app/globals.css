@@ -1,22 +1,30 @@
 @import "tailwindcss";
-
-@theme inline {
-  --font-sans: Arial, Helvetica, sans-serif;
-}
+@import "../styles/tokens.css";
 
 body {
   margin: 0;
-  background: #fafaf9;
-  color: #18181b;
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
 }
 
 ::selection {
-  background: #d4d4d8;
-  color: #18181b;
+  background: var(--color-denim-wash);
+  color: var(--color-ink);
 }
 
 :focus-visible {
-  outline: 2px solid #18181b;
-  outline-offset: 4px;
+  outline: 2px solid var(--color-denim);
+  outline-offset: 3px;
+}
+
+button:not(:disabled), summary, select { cursor: pointer; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

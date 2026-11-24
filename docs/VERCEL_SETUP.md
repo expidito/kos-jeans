@@ -30,8 +30,9 @@ Vercel Git Integration связан с `expidito/kos-jeans`.
 reference `main`, поскольку создание проекта не запустило её автоматически.
 Для автоматического preview выполнен настоящий push `5054ccf`, без ручного
 создания deployment; Vercel и GitHub Actions завершились успешно.
-Первый production-триггер на новом push будет проверен при следующем
-одобренном слиянии в `main`.
+2026-11-24 PR #2 слит с разрешения владельца. Production-триггер проверен:
+[deployment](https://vercel.com/fedir-team/kos-jeans/CJdmemxArsgyXqSYkDcv7bpCmaxC)
+Ready / Current / Production, исходный SHA main `dfa91d6`, домен `kos-jeans.vercel.app`.
 
 ## Настройки сборки
 
@@ -39,7 +40,7 @@ reference `main`, поскольку создание проекта не зап
 - Framework: Next.js; Root Directory: корень (`./`).
 - Production Branch: `main`; остальные feature-ветки — Preview.
 - `vercel.json`: `installCommand: npm ci`, `buildCommand: npm run build`.
-  Конфигурация проверена в preview и попадёт в production после merge PR блока 02.
+  Конфигурация проверена в preview и production после merge PR #2.
 - Output Directory: стандартный для Next.js.
 - В настройках Vercel сейчас Node.js 26.x; диапазон `engines.node` приложения
   `>=24 <27` его поддерживает. CI использует Node.js 24 из `.nvmrc`.
