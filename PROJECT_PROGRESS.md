@@ -653,3 +653,19 @@
 - 37 тестов, lint, typecheck и Webpack production build проходят.
   Реальная приёмка UI/Preview ещё не выполнена; done пока не ставить.
 - Блок 10 не начат.
+
+### Первые опубликованные проверки блока 09
+
+- Реализация `ac5b294` в [Draft PR #9](https://github.com/expidito/kos-jeans/pull/9).
+- [Preview Ready](https://vercel.com/fedir-team/kos-jeans/389QytvXoNbKgeMKhF4yRuZJNBmf),
+  [категории](https://kos-jeans-git-feat-block-09-admin-categories-fedir-team.vercel.app/admin/categories).
+- CI успешен, включая стандартный production build.
+- 8 hosted-групп пройдены: private media, RPC/RLS/ordinary upload denial, 308/query,
+  скрытый предок и история URL/фото, detach, private admin HTTP, ассортимент, cleanup.
+- [Отчёт](docs/checks/block09-hosted.json). Существующие 16 товаров не удалялись;
+  свои служебные категории архивированы, временный ordinary account удалён.
+- Владельцу отправлена просьба войти в новую Preview-ветку для реальной UI-приёмки.
+- Ручной Production deploy main c571bfd был отклонён автоматической проверкой:
+  она не сочла разрешение проверить Production после merge разрешением отдельного
+  ручного deploy. Владельцу задан точный вопрос; повторный запуск не выполняется
+  до ответа. Подготовленные main/CI/целевой commit проверяемы и готовы к запуску.

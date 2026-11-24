@@ -70,3 +70,13 @@ idempotent request, история URL, MIME/signature/validation и сущес�
 
 Источники: [Next.js Server Actions security](https://nextjs.org/docs/app/guides/data-security),
 [Supabase upload](https://supabase.com/docs/reference/javascript/file-buckets-upload).
+
+## Hosted-проверки
+
+`npm run categories:test:hosted -- --dev-only` при production-сборке на 3009:
+реальные anonymous/ordinary RLS/RPC, Storage upload denial, private category photos,
+308 с query, hidden ancestry, detach, protected HTTP и неизменность количества товаров.
+Создаются только собственные ТЕСТ-категории (по окончании архивируются), временный
+ordinary Auth account удаляется. Это отрицательные/инфраструктурные проверки;
+положительная приёмка выполняется через интерфейс администратора.
+[Обезличенный отчёт](checks/block09-hosted.json).
