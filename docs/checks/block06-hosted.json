@@ -1,0 +1,39 @@
+{
+  "executedAt": "2026-11-24T15:24:02.004Z",
+  "environment": "kos-jeans-dev",
+  "status": "passed",
+  "checks": [
+    {
+      "check": "Published catalog excludes drafts, archives and hidden ancestry",
+      "status": "pass"
+    },
+    {
+      "check": "Search/category/size/color/price/stock work together on one variant",
+      "status": "pass"
+    },
+    {
+      "check": "Price/newest sorting and pagination use real database rows",
+      "status": "pass"
+    },
+    {
+      "check": "Public category/images load; hidden/missing categories and draft images return 404",
+      "status": "pass"
+    },
+    {
+      "check": "Price change appears in server HTML without deployment",
+      "status": "pass"
+    },
+    {
+      "check": "New database category appears in public navigation without deployment",
+      "status": "pass"
+    },
+    {
+      "check": "No-match catalog has a real empty state",
+      "status": "pass"
+    },
+    {
+      "check": "Temporary price/category changes restored; only marked dev fixtures remain",
+      "status": "pass"
+    }
+  ]
+}

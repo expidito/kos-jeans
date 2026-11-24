@@ -1,3 +1,6 @@
+import {getCategories,categoryTree,publicCatalogClient} from "@/lib/catalog/data";
+import {HomeCollection} from "@/components/catalog/home-collection";
+export const dynamic="force-dynamic";
 import type { Metadata } from "next";
 import { StorefrontHome } from "@/components/storefront/storefront-home";
 import { demoCategories, demoCollectionProducts, demoMenuImages, demoNavigation, demoProducts } from "@/data/demo-storefront";
@@ -17,7 +20,8 @@ export const metadata: Metadata = {
   },
 };
 
-export default function HomePage() {
+export default async function HomePage() {
+  if(publicCatalogClient())return <StorefrontHome liveCatalog catalogContent={<HomeCollection/>} navigation={categoryTree(await getCategories())} menuImages={{}} products={[]} categories={[]} collectionProducts={{}} photoCredits={photoCredits}/>;
   // Demo data is isolated here; later blocks replace this adapter with server catalog data.
   return <StorefrontHome navigation={demoNavigation} menuImages={demoMenuImages} products={demoProducts} categories={demoCategories} collectionProducts={demoCollectionProducts} photoCredits={photoCredits} />;
 }

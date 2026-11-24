@@ -14,7 +14,7 @@
 | 03 | UX-анализ Spazio и дизайн-система | done | 2026-11-24 | [PR #3](https://github.com/expidito/kos-jeans/pull/3), UX-документ, токены, UI-примитивы и `/design-system` |
 | 04 | Публичная оболочка и главная страница | done | 2026-11-24 | [PR #4](https://github.com/expidito/kos-jeans/pull/4), адаптивная главная, успешные проверки и Vercel Preview |
 | 05 | Supabase: схема, миграции, RLS, Storage | done | 2026-11-24 | [PR #5](https://github.com/expidito/kos-jeans/pull/5), миграции применены к dev, реальные JWT/RLS/Storage проверки пройдены |
-| 06 | Настоящий каталог и динамические категории | todo | 2026-11-23 | — |
+| 06 | Настоящий каталог и динамические категории | done | 2026-11-24 | [PR #6](https://github.com/expidito/kos-jeans/pull/6), [рабочий Preview-каталог](https://kos-jeans-git-feat-block-06-real-catalog-fedir-team.vercel.app/catalog), Supabase и обновления без деплоя подтверждены |
 | 07 | Страница товара и варианты | todo | 2026-11-23 | — |
 | 08 | Защищённый вход администратора и каркас `/admin` | todo | 2026-11-23 | — |
 | 09 | Админка: категории и подкатегории | todo | 2026-11-23 | — |
@@ -387,6 +387,107 @@
 - Рабочая ветка синхронизирована с GitHub, файлы локальных ключей ignored.
   Самостоятельного merge не будет.
 - Статус блока **done**. Блок 06 **todo**, не начат.
+
+### Слияние блока 05 — 2026-11-24
+
+- Владелец разрешил merge PR #5 при успешных проверках. Проверки повторно
+  подтверждены SUCCESS; head `3ae1e9a`.
+- PR #5 слит: `ac094a3`. Локальная main обновлена fast-forward и совпала с origin/main.
+- Автоматический Production Deployment успешен:
+  [Vercel](https://vercel.com/fedir-team/kos-jeans/7jFiEBrwSKuBRiWMtUWVvXZfcREo).
+- Публичная https://kos-jeans.vercel.app вернула HTTP 200.
+
+## Блок 06 — каталог и динамические категории
+
+- Ветка `feat/block-06-real-catalog` создана от main `ac094a3`.
+- `/catalog`, `/catalog/[slug]`, дерево навигации и хлебные крошки получают
+  опубликованные данные из Supabase через stateless publishable client без admin cookie.
+- Миграция `20261124000300` применена только к dev после dry-run: catalog_search
+  SECURITY INVOKER, RLS, совместные фильтры по одному варианту, сортировка и пагинация.
+- Состояние q/category/size/color/min/max/stock/sort/page/new/sale хранится в URL;
+  native GET-формы, мобильный dialog, reset и состояния loading/error/empty.
+- Карточки 3:4, цена/скидка/новизна. Фальшивых покупок и несуществующих product-ссылок нет.
+- `/media/[id]` повторно проверяет RLS и читает приватный Storage; byte response
+  private/no-store, без публичного bucket и публичного кеша оптимизатора изображений.
+- В подключённом режиме главная получает реальные опубликованные карточки и
+  категории вместо статических демотоваров; editorial hero/denim/about сохранены.
+- Production намеренно изолирован от dev: publicCatalogClient в VERCEL_ENV=production
+  выключен даже при случайном наличии env. Каталог там показывает честное пустое состояние.
+- Dev-only fixture script проверяет точное имя kos-jeans-dev. Оставлены 13
+  опубликованных ТЕСТ-товаров и 3 негативных примера (draft/archived/hidden);
+  фото — ранее лицензированные иллюстрации из репозитория. Никаких заказов.
+
+### Проверки блока 06
+
+- `npm test`: 21/21, SQL/RLS + совместные фильтры, сортировка, пагинация и URL.
+- lint, typecheck и production build Webpack — успешно; стандартный build проверяется CI.
+- Hosted-тест: 8 групп пройдены. Проверены реальный каталог, скрытые категории,
+  draft/archived, комбинации фильтров, сортировка/страницы, HTTP фото/404, пустое состояние.
+- Изменение цены и создание категории отражаются в публичном HTML/навигации без
+  деплоя. Временные изменения цены/категории восстановлены, ТЕСТ-набор оставлен для просмотра.
+- [Hosted report](docs/checks/block06-hosted.json).
+- Браузер Codex: 320/390/768/1440 px без переполнения, один h1; все 12 фотографий
+  текущей страницы загружены. Фильтры одновременно применены через mobile-форму;
+  URL и один правильный результат подтверждены. Вложенное меню ведёт в категорию.
+- ArrowDown/Escape в desktop, цикл Tab/Shift+Tab mobile dialog, возврат фокуса и
+  восстановление прокрутки подтверждены. [Размеры](docs/previews/catalog/responsive.json),
+  [desktop](docs/previews/catalog/desktop.jpg), [mobile](docs/previews/catalog/mobile.jpg).
+- Повторный доступ к Spazio-категории через web вернул 403; использованы ранее
+  проверенные наблюдения блока 03 и существующая дизайн-система, конкретика не выдумывалась.
+- Для реального Preview нужны только URL/Publishable key в Preview scope ветки
+  feat/block-06-real-catalog. Владельцу отправлена инструкция; Vercel CLI не авторизован.
+- Блок 07 не начат.
+
+### Публикация блока 06
+
+- Реализация `2d4aa85` опубликована в feat/block-06-real-catalog.
+- [Draft PR #6](https://github.com/expidito/kos-jeans/pull/6) открыт, не слит.
+- CI реализации прошёл, включая стандартный Turbopack build:
+  [запуск 45426217282](https://github.com/expidito/kos-jeans/actions/runs/45426217282).
+- Vercel Preview — Ready / success:
+  [deployment](https://vercel.com/fedir-team/kos-jeans/DKWb4GqhYrgh4mcmYovPiC8GJ8ct),
+  [каталог Preview](https://kos-jeans-git-feat-block-06-real-catalog-fedir-team.vercel.app/catalog).
+- Дополнительно проверен локальный VERCEL_ENV=production при наличии dev env:
+  /catalog не содержит ни одной dev-карточки и показывает сообщение об отсутствии подключения.
+- Рабочий локальный каталог: http://127.0.0.1:3005/catalog, реальные dev-данные.
+- Показ реальных данных на Vercel Preview **пока не подтверждён**. Vercel CLI
+  не авторизован; подтверждения настройки веточных env от владельца ещё нет.
+- Чтобы завершить блок: добавить NEXT_PUBLIC_SUPABASE_URL и
+  NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY из .env.local только в Preview scope
+  ветки feat/block-06-real-catalog, затем Redeploy и сообщить о готовности.
+  Production не выбирать. После этого проверить реальный Preview-каталог.
+- До выполнения внешнего шага статус **blocked**; локальная реализация проверена.
+  Блок 07 не начат, PR остаётся draft.
+
+### Продолжение блока 06 — обновлённые Preview env
+
+- Владелец подтвердил добавление обоих Supabase env только в Preview, без изменений Production.
+- Ветка/PR проверены: рабочее дерево чистое, CI head 09cdf9d успешен.
+- Новый push этой записи запускает Preview Deployment через существующую GitHub Integration,
+  чтобы сборка получила обновлённые переменные. Значения env не читаются из Vercel и не выводятся.
+- Затем проверить опубликованный каталог, фильтры и фотографии; до проверки статус не меняется на done.
+
+### Завершение блока 06 — реальный Vercel Preview
+
+- Новый push `d96cd67` запустил Preview с обновлёнными env. Deployment Ready / success:
+  [Vercel](https://vercel.com/fedir-team/kos-jeans/Fxyo4hPJ5DyC1PSqHDhwsWmQDpkw).
+- [CI нового Preview](https://github.com/expidito/kos-jeans/actions/runs/45427970597)
+  прошёл: lint, 21 тест, typecheck и стандартный Turbopack production build.
+- [Каталог](https://kos-jeans-git-feat-block-06-real-catalog-fedir-team.vercel.app/catalog)
+  открыт в авторизованном Chrome. 13 публикаций из dev, 12 карточек на первой странице,
+  украинский интерфейс, UAH и noindex/nofollow подтверждены.
+- Совместно применены поиск, категория, размер, цвет, диапазон цены и наличие:
+  один правильный результат, условия сохранены в URL.
+- Сортировка по возрастанию цены проверена; вторая страница содержит один оставшийся
+  товар и сохраняет сортировку. Все 12 фотографий проверенной страницы загрузились.
+- Скрытая дочерняя категория показывает 404; поиск без совпадений — корректное пустое состояние.
+- Связь именно с kos-jeans-dev доказана временной ценой 1501 ₴ и новой тестовой
+  категорией: оба изменения появились в Preview без деплоя. Исходная цена 1499 ₴
+  восстановлена, созданная категория удалена; восстановление видно в Preview.
+- Значения ключей не выводились и не включались в Git. Production env/main не менялись.
+- [Обезличенный отчёт Preview](docs/checks/block06-preview.json).
+- Статус **done**, внешний блокер снят. PR #6 готовится к review, merge не выполняется.
+  Блок 07 остаётся todo; остановиться до подтверждения владельца.
 
 После отчёта остановиться. Переход к следующему блоку — только после
 сообщения владельца **«Работу над блоком окончено»**.

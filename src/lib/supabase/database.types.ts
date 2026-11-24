@@ -428,6 +428,23 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      catalog_search: {
+        Args: {
+          category_id?: string
+          colors?: string[]
+          in_stock?: boolean
+          max_price?: number
+          min_price?: number
+          only_new?: boolean
+          only_sale?: boolean
+          page_number?: number
+          page_size?: number
+          query_text?: string
+          sizes?: string[]
+          sort_order?: string
+        }
+        Returns: Json
+      }
       is_store_admin: { Args: never; Returns: boolean }
     }
     Enums: {

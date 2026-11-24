@@ -1,0 +1,27 @@
+[
+  {
+    "cards": 12,
+    "h1": 1,
+    "scrollWidth": 320,
+    "width": 320
+  },
+  {
+    "cards": 12,
+    "h1": 1,
+    "scrollWidth": 390,
+    "width": 390
+  },
+  {
+    "cards": 12,
+    "h1": 1,
+    "scrollWidth": 768,
+    "width": 768
+  },
+  {
+    "brokenImages": 0,
+    "cards": 12,
+    "h1": 1,
+    "scrollWidth": 1440,
+    "width": 1440
+  }
+]

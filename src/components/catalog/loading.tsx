@@ -1,0 +1,1 @@
+export default function Loading(){return <main id="main-content" className="mx-auto max-w-store px-page py-16" aria-busy="true"><h1 className="text-heading">Завантажуємо колекцію…</h1><div className="mt-10 grid grid-cols-2 gap-5 lg:grid-cols-4">{Array.from({length:4},(_,i)=><div key={i} className="aspect-[3/4] animate-pulse bg-canvas motion-reduce:animate-none"/>)}</div></main>;}
