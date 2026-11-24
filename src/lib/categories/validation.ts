@@ -4,7 +4,7 @@ export function categorySlug(value:string){return [...value.toLowerCase()].map(c
 export type TreeCategory={id:string;parent_id:string|null;name:string;sort_order:number;is_visible:boolean;archived_at:string|null};
 export function categoryRows<T extends TreeCategory>(categories:T[]){
  const rows:{category:T;depth:number;path:string;effectiveVisible:boolean}[]=[];const seen=new Set<string>();
- const children=(parent:string|null)=>categories.filter(c=>c.parent_id===parent).sort((a,b)=>a.sort_order-b.sort_order||a.name.localeCompare(b.name,'uk')||a.id.localeCompare(b.id));
+ const children=(parent:string|null)=>categories.filter(c=>c.parent_id===parent).sort((a,b)=>Number(!!a.archived_at)-Number(!!b.archived_at)||a.sort_order-b.sort_order||a.name.localeCompare(b.name,'uk')||a.id.localeCompare(b.id));
  const stack=children(null).reverse().map(category=>({category,depth:0,path:category.name,effectiveVisible:category.is_visible&&!category.archived_at}));
  while(stack.length){const row=stack.pop()!;if(seen.has(row.category.id))continue;seen.add(row.category.id);rows.push(row);for(const category of children(row.category.id).reverse())stack.push({category,depth:row.depth+1,path:row.path+' / '+category.name,effectiveVisible:row.effectiveVisible&&category.is_visible&&!category.archived_at});}
  return rows;
