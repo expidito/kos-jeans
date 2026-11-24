@@ -256,5 +256,7 @@ Production изолирован. Каркас будущих разделов н
 Живая приёмка категорий пройдена в [Preview](https://kos-jeans-git-feat-block-09-admin-categories-fedir-team.vercel.app/admin/categories):
 создание с фото, вложенность, редактирование/slug/порядок, скрытие, архив и восстановление.
 [Отчёт](docs/checks/block09-acceptance.json). PR #9 ожидает review.
-Отдельный ручной Production deploy уже слитой main c571bfd ожидает разрешения
-владельца после отказа автоматической проверки. Dev к Production не подключён.
+Ручной Production deploy уже слитой main c571bfd выполнен по отдельному
+разрешению владельца: Ready / Current, [сайт](https://kos-jeans.vercel.app).
+Dev к Production не подключён; управление категориями PR #9 остаётся в Preview
+до отдельного подтверждения слияния. Блок 09 done, блок 10 не начат.

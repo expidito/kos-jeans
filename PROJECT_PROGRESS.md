@@ -17,7 +17,7 @@
 | 06 | Настоящий каталог и динамические категории | done | 2026-11-24 | [PR #6](https://github.com/expidito/kos-jeans/pull/6), [рабочий Preview-каталог](https://kos-jeans-git-feat-block-06-real-catalog-fedir-team.vercel.app/catalog), Supabase и обновления без деплоя подтверждены |
 | 07 | Страница товара и варианты | done | 2026-11-24 | [PR #7](https://github.com/expidito/kos-jeans/pull/7), [товар в Preview](https://kos-jeans-git-feat-block-07-product-detail-fedir-team.vercel.app/product/test-catalog-1), CI и проверки пройдены |
 | 08 | Защищённый вход администратора и каркас `/admin` | done | 2026-11-24 | [PR #8](https://github.com/expidito/kos-jeans/pull/8), [Preview](https://kos-jeans-git-feat-block-08-admin-auth-fedir-team.vercel.app/admin/login); роль владельца, живой вход, Dashboard, выход и защита проверены |
-| 09 | Админка: категории и подкатегории | blocked | 2026-11-24 | [Draft PR #9](https://github.com/expidito/kos-jeans/pull/9), [Preview](https://kos-jeans-git-feat-block-09-admin-categories-fedir-team.vercel.app/admin/categories); живая UI-приёмка пройдена; ожидается только разрешение ручной публикации main |
+| 09 | Админка: категории и подкатегории | done | 2026-11-24 | [PR #9](https://github.com/expidito/kos-jeans/pull/9), [Preview](https://kos-jeans-git-feat-block-09-admin-categories-fedir-team.vercel.app/admin/categories); живая приёмка пройдена, Production main c571bfd опубликована с разрешения владельца |
 | 10 | Админка: товары, фото, цены, варианты и склад | todo | 2026-11-23 | — |
 | 11 | Полноценная корзина | todo | 2026-11-23 | — |
 | 12 | Оформление заказа и атомарные остатки | todo | 2026-11-23 | — |
@@ -730,3 +730,23 @@
 - После документационного push дождаться финальных CI/Preview и оставить PR #9
   готовым к review без merge. Статус blocked только по ожидающему разрешению
   ручного Production deploy main c571bfd. Блок 10 не начат.
+
+### Завершение публикации main и снятие блокера блока 09
+
+- Владелец явно разрешил ручной Production deploy **main c571bfd**.
+- До запуска проверены полный SHA c571bfdb73ecafc41f0d7dea0e57d96f7b641532,
+  GitHub main, локальные main/origin/main и успешный CI main. Все совпадают.
+- Через Vercel Create Deployment выбран main, Production, c571bfd; выполнен
+  только этот deploy. PR #9 не сливался, его код остаётся в Preview.
+- [Production Deployment](https://vercel.com/fedir-team/kos-jeans/9JKnH6NFAP8LPLX9zh1b53JStzdG)
+  имеет Ready / Production / Current, домен https://kos-jeans.vercel.app.
+- HTTP: главная 200/noindex, /admin/login 200 с отключённым dev Auth, /admin
+  перенаправляет на unavailable без приватных данных с private/no-store,
+  /catalog не подключён к dev, test-catalog-1 и приватное тестовое фото дают 404.
+- Переменные Production и базы данных не менялись. Ключи/пароли не выводились.
+  [Отчёт](docs/checks/block09-production.json),
+  [снимок сайта](docs/previews/production/main-c571bfd.jpg).
+- **Блок 09 done**, внешний блокер снят. Финальный документационный push в PR #9
+  должен пройти CI/Preview перед отчётом. PR #9 остаётся ready for review, без merge.
+- Следующий блок 10 — админка товаров/фото/вариантов/склада. Не приступать
+  до отдельного подтверждения владельца.

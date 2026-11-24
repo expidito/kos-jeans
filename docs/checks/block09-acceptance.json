@@ -37,8 +37,10 @@
     "admin_and_public_tie_order_match": true
   },
   "password_or_owner_identifiers_in_report": false,
-  "production_modified": false,
+  "production_modified": true,
   "ui_status": "pass",
-  "remaining": "Owner approval for manually deploying already-merged main c571bfd",
-  "presentation_commit": "47afe64"
+  "remaining": null,
+  "presentation_commit": "47afe64",
+  "production_change_scope": "Owner-approved deployment of already-merged main c571bfd; no environment/database changes",
+  "overall_status": "pass"
 }
