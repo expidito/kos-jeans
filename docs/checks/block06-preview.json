@@ -1,0 +1,25 @@
+{
+  "date": "2026-11-24",
+  "environment": "kos-jeans-dev / Vercel Preview",
+  "status": "passed",
+  "deployment": "https://vercel.com/fedir-team/kos-jeans/Fxyo4hPJ5DyC1PSqHDhwsWmQDpkw",
+  "validatedCommit": "d96cd67",
+  "catalogUrl": "https://kos-jeans-git-feat-block-06-real-catalog-fedir-team.vercel.app/catalog",
+  "browser": "Chrome, existing Vercel session",
+  "publishedProducts": 13,
+  "pageSize": 12,
+  "loadedImagesOnCheckedPage": 12,
+  "checks": [
+    "Combined search/category/size/color/price/stock yields one expected product",
+    "Filters persist in URL",
+    "Ascending price order and second page verified",
+    "Hidden child category renders 404",
+    "No-match search renders empty state",
+    "Temporary dev price change appears on Preview without deployment",
+    "Temporary dev category appears in Preview navigation without deployment",
+    "Own temporary price/category changes restored",
+    "Ukrainian language, UAH and noindex/nofollow preserved"
+  ],
+  "productionChanged": false,
+  "keysLogged": false
+}

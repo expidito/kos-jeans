@@ -27,7 +27,7 @@ PR #1 слит в `main` с разрешения владельца. Блок 02
 PR #3 слит с разрешения владельца; production проверен. Блок 04 завершён
 в отдельной ветке `feat/block-04-storefront-home`: [PR #4](https://github.com/expidito/kos-jeans/pull/4).
 [Preview главной](https://kos-jeans-git-feat-block-04-storefront-home-fedir-team.vercel.app)
-требует стандартного входа в Vercel. Блок 05 завершён: миграции, RLS и Storage проверены на тестовом проекте. Блок 06 выполняется в feat/block-06-real-catalog.
+требует стандартного входа в Vercel. Блок 05 завершён: миграции, RLS и Storage проверены на тестовом проекте. Блок 06 завершён в feat/block-06-real-catalog; Preview с данными проверен.
 
 ## Стек
 
@@ -204,7 +204,7 @@ API smoke, hosted RLS под реальными JWT и проверки загр
 Постоянный администратор не назначался. Каталог и админка — следующие блоки.
 
 
-## Каталог (блок 06 — ожидает Preview env)
+## Каталог (блок 06 — done)
 
 [Архитектура, параметры URL, изображения и Preview setup](docs/CATALOG.md).
 
@@ -215,6 +215,7 @@ API smoke, hosted RLS под реальными JWT и проверки загр
 - Vercel Production к dev не подключается; Preview env настраивается отдельно по инструкции.
 - Страница товара, корзина и оформление заказа остаются следующим блокам.
 
-[Draft PR #6](https://github.com/expidito/kos-jeans/pull/6),
+[PR #6](https://github.com/expidito/kos-jeans/pull/6),
 [Preview каталога](https://kos-jeans-git-feat-block-06-real-catalog-fedir-team.vercel.app/catalog).
-CI прошёл, deployment Ready; реальные данные на Preview требуют веточных env.
+CI прошёл, deployment Ready. Реальные dev-данные на Preview проверены:
+фильтры, изображения и обновления цены/навигации без деплоя работают.

@@ -1,7 +1,7 @@
 # Каталог KOS JEANS — блок 06
 
-Локальная реализация и hosted-проверки завершены. Статус блока **blocked**:
-ожидается подтверждение веточных env и проверка реального Vercel Preview.
+Статус блока **done**. Локальная реализация, hosted-проверки и реальный Vercel Preview
+проверены. Env добавлены владельцем только для Preview; Production не подключён к dev.
 [PR #6](https://github.com/expidito/kos-jeans/pull/6),
 [Preview каталога](https://kos-jeans-git-feat-block-06-real-catalog-fedir-team.vercel.app/catalog).
 
@@ -83,3 +83,12 @@ UX — [наблюдения блока 03](REFERENCE_AND_UX.md); повторн
 
 Возможность ограничить Preview переменные конкретной Git-веткой описана в
 [официальной документации Vercel](https://vercel.com/docs/environment-variables).
+
+
+## Проверка опубликованного Preview
+
+Новая сборка d96cd67 получила обновлённые env. В авторизованном Chrome проверены
+13 публикаций, 12 загруженных фото, совместные фильтры, URL, сортировка/пагинация,
+скрытая категория и пустой поиск. Временное изменение цены и новая категория
+в kos-jeans-dev появились на Preview без деплоя, затем были восстановлены.
+[Отчёт](checks/block06-preview.json). Стандартная Vercel Authentication сохраняется.
