@@ -180,6 +180,8 @@ Server page передаёт данные через props; подключени
 ## Supabase: блок 05 — blocked
 
 [Полная инструкция подключения, схема, роли и границы тестов](docs/SUPABASE_SETUP.md).
+[Draft PR #5](https://github.com/expidito/kos-jeans/pull/5): подготовленная основа,
+внешние критерии ещё не пройдены.
 
 - `supabase/migrations/` — две транзакционные миграции: таблицы/RLS и private Storage.
 - `supabase/config.toml` — локальный CLI-проект, регистрация отключена.

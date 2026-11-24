@@ -309,6 +309,19 @@
 - CLI `whoami` — AccessTokenRequiredError. Supabase connector, Docker, psql
   отсутствуют. Внешний проект/миграции/Storage не создавались и не применялись.
 
+### Публикация подготовленной основы блока 05
+
+- Коммит `f1c1b2a` опубликован в `feat/block-05-supabase-foundation`.
+- [Draft PR #5](https://github.com/expidito/kos-jeans/pull/5) открыт, не слит;
+  draft отражает незавершённые внешние критерии приёмки.
+- [CI 45409186425](https://github.com/expidito/kos-jeans/actions/runs/45409186425)
+  успешно выполнил lint/test/typecheck и стандартный Turbopack build.
+- Vercel — Ready / success:
+  [deployment](https://vercel.com/fedir-team/kos-jeans/GZAUDzjzGbugCY2iZuZVJkRxjWDn),
+  [preview](https://kos-jeans-git-feat-block-05-supabase-foundation-fedir-team.vercel.app)
+  со стандартной защитой Vercel. Это публикация приложения, не доказательство
+  подключённого Supabase. Supabase env в Vercel не добавлялись.
+
 ### Что требуется для завершения блока 05
 
 - Владелец создаёт отдельный бесплатный `kos-jeans-dev`, сохраняет Project URL
