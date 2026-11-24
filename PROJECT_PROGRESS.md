@@ -16,7 +16,7 @@
 | 05 | Supabase: схема, миграции, RLS, Storage | done | 2026-11-24 | [PR #5](https://github.com/expidito/kos-jeans/pull/5), миграции применены к dev, реальные JWT/RLS/Storage проверки пройдены |
 | 06 | Настоящий каталог и динамические категории | done | 2026-11-24 | [PR #6](https://github.com/expidito/kos-jeans/pull/6), [рабочий Preview-каталог](https://kos-jeans-git-feat-block-06-real-catalog-fedir-team.vercel.app/catalog), Supabase и обновления без деплоя подтверждены |
 | 07 | Страница товара и варианты | done | 2026-11-24 | [PR #7](https://github.com/expidito/kos-jeans/pull/7), [товар в Preview](https://kos-jeans-git-feat-block-07-product-detail-fedir-team.vercel.app/product/test-catalog-1), CI и проверки пройдены |
-| 08 | Защищённый вход администратора и каркас `/admin` | blocked | 2026-11-24 | Серверный Auth/RLS, Dashboard, защищённая навигация; ожидается подтверждённый UUID владельца |
+| 08 | Защищённый вход администратора и каркас `/admin` | blocked | 2026-11-24 | [Draft PR #8](https://github.com/expidito/kos-jeans/pull/8), [Preview](https://kos-jeans-git-feat-block-08-admin-auth-fedir-team.vercel.app/admin/login); ожидается UUID владельца и приёмка закрытого Dashboard |
 | 09 | Админка: категории и подкатегории | todo | 2026-11-23 | — |
 | 10 | Админка: товары, фото, цены, варианты и склад | todo | 2026-11-23 | — |
 | 11 | Полноценная корзина | todo | 2026-11-23 | — |
@@ -581,3 +581,14 @@
 - Новые Vercel env не нужны; две существующие доступны всем Preview.
   PR/Preview публикуются для конкретной проверяемой реализации; merge не разрешён.
 - Блок 09 не начат. Продолжить только оставшуюся приёмку блока 08 после ответа.
+
+### Опубликованный Preview блока 08
+
+- Реализация `5d3076c` в [Draft PR #8](https://github.com/expidito/kos-jeans/pull/8).
+- [Vercel Ready](https://vercel.com/fedir-team/kos-jeans/4nanz3oejKkt4aFc9kDaF4qgkSA8).
+- [Вход](https://kos-jeans-git-feat-block-08-admin-auth-fedir-team.vercel.app/admin/login)
+  проверен в Chrome: прямой /admin перенаправляет на вход, форма активна,
+  неверные учётные данные дают общее сообщение; noindex/nofollow присутствует.
+- [CI](https://github.com/expidito/kos-jeans/actions/runs/45436999207) и финальный
+  документационный push должны быть зелёными перед отчётом.
+- Статус остаётся blocked до подтверждённого UUID и настоящего входа владельца.

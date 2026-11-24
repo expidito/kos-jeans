@@ -115,3 +115,11 @@ Preview-host и локальный `http://127.0.0.1:3008` в Authentication →
 
 Источники: [Supabase SSR](https://supabase.com/docs/guides/auth/server-side/creating-a-client),
 [Next.js authentication](https://nextjs.org/docs/app/guides/authentication).
+
+## Адрес для приёмки
+
+[Вход в Preview](https://kos-jeans-git-feat-block-08-admin-auth-fedir-team.vercel.app/admin/login),
+[Draft PR #8](https://github.com/expidito/kos-jeans/pull/8).
+Прямой /admin и отказ неверным данным проверены в опубликованном Preview.
+Статус blocked: живой admin login/logout/refresh и закрытый Dashboard требуют
+подтверждённой учётной записи владельца. Роль не назначалась автоматически.
