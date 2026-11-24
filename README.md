@@ -26,7 +26,7 @@ PR #1 слит в `main` с разрешения владельца. Блок 02
 PR #3 слит с разрешения владельца; production проверен. Блок 04 завершён
 в отдельной ветке `feat/block-04-storefront-home`: [PR #4](https://github.com/expidito/kos-jeans/pull/4).
 [Preview главной](https://kos-jeans-git-feat-block-04-storefront-home-fedir-team.vercel.app)
-требует стандартного входа в Vercel. Блок 05 ожидает тестовый проект и авторизацию Supabase.
+требует стандартного входа в Vercel. Блок 05 ожидает CLI-авторизацию Supabase и применение миграций к dev-проекту.
 
 ## Стек
 
