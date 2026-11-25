@@ -98,8 +98,25 @@ dev-БД/Storage и HTTP: публикацию, немедленную смен�
 [баннеры](https://kos-jeans-git-feat-block-14-content-seo-fedir-team.vercel.app/admin/banners),
 [настройки](https://kos-jeans-git-feat-block-14-content-seo-fedir-team.vercel.app/admin/settings).
 
-Ожидается вход владельца в новую Preview-ветку. До сквозного теста редактирования
-через браузер блок blocked, PR #14 Draft. Пароль в чат не передавать.
+Сквозная административная Preview-приёмка завершена после входа владельца:
+создание и загрузка фото → приватный черновик → публикация → изменение заголовка →
+скрытие → архив. Контакт и social URL из формы сразу появились в footer.
+Все изменения контента проверены без deploy, на сборке 7ea0598.
+Баннер/редактор/настройки прошли 320/390/768/1440 px и клавиатурную проверку.
+[UI](checks/block14-preview-ui.json), [страницы](checks/block14-preview-pages.json),
+[desktop](previews/content/banner-desktop.jpg), [mobile](previews/content/banner-mobile.jpg).
+
+Баннер архивирован через UI. `content:cleanup:ui -- --dev-only` с приватным исходным
+снимком `/tmp/kos-block14-ui-baseline.json` восстанавливает только собственные
+контактные/social изменения. Запущено дважды; исходные значения и is_public
+совпадают, фото архива недоступно посетителю, история сохранена.
+[Восстановление](checks/block14-ui-restored.json),
+[финальный Preview](checks/block14-preview-final.json),
+[экранирование текста](checks/block14-text-escaping.json).
+Снимок исходных данных не публикуется и не хранится в Git.
+
+74 теста, lint/typecheck, production build, hosted и Preview прошли проверки.
+Блок 14 завершён, PR #14 не сливается до подтверждения владельца.
 Новых переменных окружения для админки не требуется. Блок 15 не начат.
 
 Просмотрены публичные [доставка Spazio](https://spazio.ua/ua/help/?tab=delivery),

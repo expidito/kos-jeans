@@ -1,0 +1,10 @@
+{
+  "status": "pass",
+  "originalContactAndSocialSettingsRestored": true,
+  "testBannerArchived": true,
+  "photoRetainedPrivately": true,
+  "publicPhotoAccessDenied": true,
+  "existingAssortmentRemoved": false,
+  "repeatSafe": true,
+  "cleanupRunTwice": true
+}

@@ -18,6 +18,17 @@ const fieldLabels: Record<string, string> = {
   other: "Інша сторінка (HTTPS)",
   text: "Текст українською",
 };
+const saveLabels: Record<ContentKey, string> = {
+  brand: "назву магазину",
+  contacts: "контакти",
+  social_links: "соціальні мережі",
+  about: "інформацію про магазин",
+  delivery_template: "умови доставки",
+  payment_template: "умови оплати",
+  returns_template: "умови обміну й повернення",
+  privacy_template: "політику конфіденційності",
+  terms_template: "умови користування",
+};
 export function SettingForm({
   settingKey,
   initial,
@@ -32,6 +43,7 @@ export function SettingForm({
   const { save, busy, error, success } = useContentRequest();
   return (
     <form
+      aria-label={contentLabels[settingKey]}
       className="min-w-0 border border-line bg-paper p-5 sm:p-8"
       onSubmit={async (e) => {
         e.preventDefault();
@@ -46,7 +58,7 @@ export function SettingForm({
       }}
     >
       <h2 className="mb-6 text-2xl font-medium">{contentLabels[settingKey]}</h2>
-      <div className="space-y-5">
+      <fieldset disabled={busy} className="space-y-5">
         {Object.entries(values).map(([k, v]) =>
           typeof v === "boolean" ? (
             <label key={k} className="flex items-start gap-3 text-sm leading-6">
@@ -91,7 +103,7 @@ export function SettingForm({
             </label>
           ),
         )}
-      </div>
+      </fieldset>
       <p className="mt-5 text-xs leading-6 text-muted">
         Лише звичайний текст, без HTML. Не додавайте паролі, ключі, приватні
         дані чи неперевірені реквізити. Публікація контактів потребує
@@ -101,9 +113,7 @@ export function SettingForm({
         disabled={busy}
         className="mt-6 min-h-12 bg-ink px-5 text-sm text-paper disabled:opacity-50"
       >
-        {busy
-          ? "Збереження…"
-          : "Зберегти " + contentLabels[settingKey].toLowerCase()}
+        {busy ? "Збереження…" : "Зберегти " + saveLabels[settingKey]}
       </button>
       {error && (
         <p role="alert" className="mt-4 text-sm text-red-800">

@@ -24,7 +24,7 @@ export function useContentRequest() {
       const data = await r.json();
       if (!r.ok) throw Error(data.error || "Не вдалося зберегти.");
       pending.current = null;
-      setSuccess("Збережено. Публічні сторінки оновляться без деплоя.");
+      setSuccess("Збережено. Зміни доступні на сторінках магазину.");
       return data as { id: string; version: string };
     } catch (e) {
       setError(

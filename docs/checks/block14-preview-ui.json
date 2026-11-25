@@ -1,0 +1,73 @@
+{
+  "status": "pass",
+  "bannerCreatedThroughUI": true,
+  "photoUploadedThroughUI": true,
+  "categoryLink": "/catalog/test-jeans",
+  "publicationWithoutDeployment": true,
+  "textUpdatedWithoutDeployment": true,
+  "hiddenBannerRemoved": true,
+  "bannerArchived": true,
+  "testContactVisibleInFooter": true,
+  "testSocialURLVisibleInFooter": true,
+  "keyboard": "title input -> subtitle input by Tab",
+  "banner": [
+    {
+      "bannerLoaded": true,
+      "scrollWidth": 320,
+      "width": 320
+    },
+    {
+      "bannerLoaded": true,
+      "scrollWidth": 390,
+      "width": 390
+    },
+    {
+      "bannerLoaded": true,
+      "scrollWidth": 768,
+      "width": 768
+    },
+    {
+      "bannerLoaded": true,
+      "scrollWidth": 1440,
+      "width": 1440
+    }
+  ],
+  "editor": [
+    {
+      "scrollWidth": 320,
+      "width": 320
+    },
+    {
+      "scrollWidth": 390,
+      "width": 390
+    },
+    {
+      "scrollWidth": 768,
+      "width": 768
+    },
+    {
+      "scrollWidth": 1440,
+      "width": 1440
+    }
+  ],
+  "settings": [
+    {
+      "scrollWidth": 320,
+      "width": 320
+    },
+    {
+      "scrollWidth": 390,
+      "width": 390
+    },
+    {
+      "scrollWidth": 768,
+      "width": 768
+    },
+    {
+      "scrollWidth": 1440,
+      "width": 1440
+    }
+  ],
+  "testedDeploymentHead": "7ea0598",
+  "contentChangesRequiredNoDeploy": true
+}
