@@ -1,0 +1,31 @@
+{
+  "commit": "42591a5",
+  "deployment": "https://vercel.com/fedir-team/kos-jeans/HBBr4wWVPTS4D9VU47612gnWqXSs",
+  "checks": [
+    {
+      "path": "/",
+      "status": 200,
+      "location": null,
+      "cache": "private, no-cache, no-store, max-age=0, must-revalidate"
+    },
+    {
+      "path": "/admin",
+      "status": 307,
+      "location": "/admin/login?error=unavailable",
+      "cache": "private, no-cache, no-store, max-age=0, must-revalidate"
+    },
+    {
+      "path": "/catalog",
+      "status": 200,
+      "location": null,
+      "cache": "private, no-cache, no-store, max-age=0, must-revalidate"
+    },
+    {
+      "path": "/product/test-wide-leg-blue",
+      "status": 404,
+      "location": null,
+      "cache": "private, no-cache, no-store, max-age=0, must-revalidate"
+    }
+  ],
+  "productionEnvironmentChanged": false
+}

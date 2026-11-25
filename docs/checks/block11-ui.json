@@ -1,0 +1,33 @@
+{
+  "status": "pass",
+  "environment": "kos-jeans-dev",
+  "previewHead": "9b4de8b",
+  "initial": {
+    "size26": 1,
+    "size27": 2,
+    "lines": 2,
+    "count": 3,
+    "totalKopecks": 389700
+  },
+  "keyboardIncrementDecrement": true,
+  "reloadPersisted": true,
+  "tabCloseReopenPersisted": true,
+  "duplicateVariantMerged": true,
+  "priceChangeViaAdmin": {
+    "before": 129900,
+    "temporary": 139900,
+    "restored": 129900,
+    "totalDuringChange": 419700
+  },
+  "stockChangeViaAdmin": {
+    "size": "27",
+    "before": 5,
+    "temporary": 1,
+    "warning": true,
+    "explicitCorrection": true,
+    "restored": 5
+  },
+  "sourceChangesOrDeployDuringDataChecks": false,
+  "removeAndClear": true,
+  "checkoutDisabled": true
+}
