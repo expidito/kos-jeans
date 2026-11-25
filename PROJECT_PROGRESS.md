@@ -19,7 +19,7 @@
 | 08 | Защищённый вход администратора и каркас `/admin` | done | 2026-11-24 | [PR #8](https://github.com/expidito/kos-jeans/pull/8), [Preview](https://kos-jeans-git-feat-block-08-admin-auth-fedir-team.vercel.app/admin/login); роль владельца, живой вход, Dashboard, выход и защита проверены |
 | 09 | Админка: категории и подкатегории | done | 2026-11-24 | [PR #9](https://github.com/expidito/kos-jeans/pull/9), [Preview](https://kos-jeans-git-feat-block-09-admin-categories-fedir-team.vercel.app/admin/categories); живая приёмка пройдена, Production main c571bfd опубликована с разрешения владельца |
 | 10 | Админка: товары, фото, цены, варианты и склад | done | 2026-11-25 | [PR #10](https://github.com/expidito/kos-jeans/pull/10), [Preview](https://kos-jeans-git-feat-block-10-admin-products-fedir-team.vercel.app/admin/products); UI/hosted приёмка пройдена |
-| 11 | Полноценная корзина | in_progress | 2026-11-25 | Ветка feat/block-11-shopping-cart |
+| 11 | Полноценная корзина | done | 2026-11-25 | [PR #11](https://github.com/expidito/kos-jeans/pull/11), [Preview](https://kos-jeans-git-feat-block-11-shopping-cart-fedir-team.vercel.app/cart) |
 | 12 | Оформление заказа и атомарные остатки | todo | 2026-11-23 | — |
 | 13 | Админка: заказы и статусы | todo | 2026-11-23 | — |
 | 14 | Баннеры, настройки, контентные страницы и SEO | todo | 2026-11-23 | — |
@@ -811,3 +811,34 @@
 - Владелец принял блок 10. Зелёный PR #10 слит, main синхронизирована до 42591a5.
 - Создана feat/block-11-shopping-cart. Реализуется корзина с localStorage и анонимной RLS-сверкой цен/остатков.
 - Заказы, платежи, доставка и списание остатков не реализуются. Блок 12 не начат.
+
+### Блок 11 — приёмка, 2026-11-25
+
+- PR #10 слит по разрешению владельца после зелёных CI; main/origin/main 42591a5.
+  [Production Ready](https://vercel.com/fedir-team/kos-jeans/HBBr4wWVPTS4D9VU47612gnWqXSs),
+  главная/каталог 200, admin закрыт, dev-товар 404. Vercel Production не менялся.
+- В feat/block-11-shopping-cart добавлены /cart и read-only /api/cart, добавление
+  с реальной страницы товара, счётчик шапки, ID+quantity в localStorage, актуальная
+  RLS-сверка, суммы в копейках, предупреждения нехватки/недоступности и retry.
+- Preview 9b4de8b: 26 × 1 и 27 × 2, две позиции, всего 3 и 3897 ₴. Проверены
+  плюс/минус с Enter, обновление страницы, закрытие/новое открытие вкладки,
+  повторный вариант без дубликата, удаление одной позиции, полная очистка.
+- Через существующую сессию админки блока 10 временно изменены TEST Wide Leg Blue:
+  цена 1399 ₴, stock 27=1. Корзина без deploy показала 4197 ₴, нехватку и явную
+  коррекцию количества. Через форму восстановлены цена 1299 ₴ и stock 27=5.
+  SQL подтвердил исходные остатки 3/5/0/2/4, публикацию и пять фото.
+- Hosted API не доверяет подставленной цене; скрытые/черновые/архивные и неизвестные
+  UUID не раскрывают имена/фото/цены. Недопустимые количества и большой запрос
+  отклоняются. Корзина не создала заказов и не изменила ни одного остатка.
+- Корзина проверена на фактических 320/390/768/1440 px, overflow и broken images 0.
+  [Responsive](docs/previews/cart/responsive.json), [desktop](docs/previews/cart/desktop.jpg),
+  [mobile](docs/previews/cart/mobile.jpg), [нехватка](docs/previews/cart/shortage.jpg).
+- [UI](docs/checks/block11-ui.json), [hosted](docs/checks/block11-hosted.json),
+  [восстановление данных](docs/checks/block11-restored.json),
+  [инструкция](docs/SHOPPING_CART.md). Ключи/пароли/данные владельца не публиковались.
+- 52 локальных теста, lint/typecheck и Webpack build успешны; оба CI и Vercel Preview
+  функционального head 9b4de8b успешны. Финальное оформление проходит повторные проверки.
+- Ограничения: localStorage относится к конкретному браузеру/origin; весь пользовательский
+  браузер не закрывался, проверено закрытие вкладки. Checkout явно отключён; корзина
+  не резервирует товар. Все тестовые изменения dev восстановлены, Production изолирован.
+- **Блок 11 done**, PR #11 без merge до подтверждения владельца. Блок 12 не начат.

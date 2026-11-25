@@ -59,7 +59,9 @@ export async function verifyCart(
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ items }),
     cache: "no-store",
-    signal: signal ? AbortSignal.any([signal, AbortSignal.timeout(15000)]) : AbortSignal.timeout(15000),
+    signal: signal
+      ? AbortSignal.any([signal, AbortSignal.timeout(15000)])
+      : AbortSignal.timeout(15000),
   });
   if (!response.ok)
     throw Error("Не вдалося звірити ціни та залишки. Спробуйте ще раз.");
