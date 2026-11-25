@@ -3,5 +3,5 @@
   "productionGuardTested": true,
   "customerDataInURL": false,
   "publicOrderReadDenied": true,
-  "previewConfigured": false
+  "previewConfigured": true
 }

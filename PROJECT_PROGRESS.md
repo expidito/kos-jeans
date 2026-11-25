@@ -20,7 +20,7 @@
 | 09 | Админка: категории и подкатегории | done | 2026-11-24 | [PR #9](https://github.com/expidito/kos-jeans/pull/9), [Preview](https://kos-jeans-git-feat-block-09-admin-categories-fedir-team.vercel.app/admin/categories); живая приёмка пройдена, Production main c571bfd опубликована с разрешения владельца |
 | 10 | Админка: товары, фото, цены, варианты и склад | done | 2026-11-25 | [PR #10](https://github.com/expidito/kos-jeans/pull/10), [Preview](https://kos-jeans-git-feat-block-10-admin-products-fedir-team.vercel.app/admin/products); UI/hosted приёмка пройдена |
 | 11 | Полноценная корзина | done | 2026-11-25 | [PR #11](https://github.com/expidito/kos-jeans/pull/11), [Preview](https://kos-jeans-git-feat-block-11-shopping-cart-fedir-team.vercel.app/cart) |
-| 12 | Оформление заказа и атомарные остатки | in_progress | 2026-11-25 | [PR #12](https://github.com/expidito/kos-jeans/pull/12); повторная Preview-приёмка после настройки секрета |
+| 12 | Оформление заказа и атомарные остатки | done | 2026-11-25 | [PR #12](https://github.com/expidito/kos-jeans/pull/12); local/hosted/Preview приняты, merge после подтверждения |
 | 13 | Админка: заказы и статусы | todo | 2026-11-23 | — |
 | 14 | Баннеры, настройки, контентные страницы и SEO | todo | 2026-11-23 | — |
 | 15 | Полное тестирование и защита | todo | 2026-11-23 | — |
@@ -892,3 +892,30 @@
 - Владелец сообщил «Preview-секрет добавлен». Значение не запрашивалось и не выводилось.
 - Документационный push запускает новый Preview Deployment с текущими переменными.
 - После Ready проверить реальное оформление, приватное подтверждение и восстановить только собственные UI-PREVIEW тесты. Блок 13 не начат.
+
+### Блок 12 — финальная Preview-приёмка, 2026-11-25
+
+- После сообщения владельца «Preview-секрет добавлен» создана новая сборка cca7697.
+  [Vercel Ready](https://vercel.com/fedir-team/kos-jeans/7jb2KtJUq3TuNV61d9xhLahnevDR),
+  [checkout](https://kos-jeans-git-feat-block-12-checkout-fedir-team.vercel.app/checkout).
+  Прежнее ограничение отсутствующей конфигурации снято, Production env не менялся.
+- Реальный Preview: 26 × 1 и 27 × 2; уменьшение stock 27 до 1 отклонило заказ.
+  После возврата stock=5 цена изменена с 1299 на 1399 ₴: сервер вернул новую сумму
+  4197 ₴, согласие сброшено. Повторное согласие и двойное нажатие создали ровно
+  один заказ №12. Reload сохранил тот же номер, корзина очистилась.
+- SQL подтвердил один заказ, два snapshots по 139900 копеек и сумму 419700.
+  Цена возвращена через админку, точный тестовый заказ cancelled, teardown выполнен
+  дважды без двойного возврата. Цена 1299, old price 1499, stocks 3/5/0/2/4,
+  исходные UUID вариантов, статус published и пять фотографий сохранены.
+- [Preview UI](docs/checks/block12-preview-ui.json),
+  [SQL](docs/checks/block12-preview-data.json),
+  [восстановление](docs/checks/block12-preview-restored.json),
+  [responsive](docs/previews/checkout/preview-responsive.json).
+  Проверены 320/390/768/1440, отсутствие overflow и broken images, клавиатура.
+- Локальные lint/typecheck/62 теста/Webpack production build успешны; hosted:
+  параллельная покупка последней единицы только одним запросом, полный rollback
+  после принудительной ошибки, идемпотентность, RLS, приватность и HTTP 429.
+  Функциональный код прошёл оба CI на cca7697. README и инструкция актуализированы.
+- **Блок 12 done**. PR #12 подготовлен к review, без слияния до подтверждения владельца.
+  Только kos-jeans-dev; оплаты/API доставки нет; Preview требует доступ Vercel.
+  Блок 13 (админка заказов и статусы) не начат.

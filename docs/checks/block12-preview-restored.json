@@ -1,0 +1,32 @@
+{
+  "status": "pass",
+  "priceMinor": 129900,
+  "oldPriceMinor": 149900,
+  "publication": "published",
+  "stocks": [
+    {
+      "size": "26",
+      "stock": 3
+    },
+    {
+      "size": "27",
+      "stock": 5
+    },
+    {
+      "size": "28",
+      "stock": 0
+    },
+    {
+      "size": "29",
+      "stock": 2
+    },
+    {
+      "size": "30",
+      "stock": 4
+    }
+  ],
+  "photos": 5,
+  "ordersCancelled": 1,
+  "cleanupRunTwice": true,
+  "originalProductAndVariantIdsUnchanged": true
+}
