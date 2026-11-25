@@ -836,8 +836,11 @@
 - [UI](docs/checks/block11-ui.json), [hosted](docs/checks/block11-hosted.json),
   [восстановление данных](docs/checks/block11-restored.json),
   [инструкция](docs/SHOPPING_CART.md). Ключи/пароли/данные владельца не публиковались.
-- 52 локальных теста, lint/typecheck и Webpack build успешны; оба CI и Vercel Preview
-  функционального head 9b4de8b успешны. Финальное оформление проходит повторные проверки.
+- 52 локальных теста, lint/typecheck и Webpack build успешны. Финальный код bd70293
+  прошёл [push CI](https://github.com/expidito/kos-jeans/actions/runs/45627201024) и
+  [PR CI](https://github.com/expidito/kos-jeans/actions/runs/45627208964).
+  [Vercel Preview Ready](https://vercel.com/fedir-team/kos-jeans/5ydKaEdgxVKknek91MCv4em4BKoA).
+  После этой сборки пустая корзина открылась корректно, ошибок гидратации 0.
 - Ограничения: localStorage относится к конкретному браузеру/origin; весь пользовательский
   браузер не закрывался, проверено закрытие вкладки. Checkout явно отключён; корзина
   не резервирует товар. Все тестовые изменения dev восстановлены, Production изолирован.
