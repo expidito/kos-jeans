@@ -795,8 +795,11 @@
   Временные обычные Auth-пользователи удалены, административных назначений не было.
 - [Hosted](docs/checks/block10-hosted.json), [данные](docs/checks/block10-data.json),
   [очистка фото](docs/checks/block10-media.json), [инструкция](docs/ADMIN_PRODUCTS.md).
-- CI и Preview функционального head 0733578 успешны. После форматирования повторные
-  lint/typecheck/48 тестов/Webpack production build успешны. Финальные CI/Preview проверяются перед отчётом.
+- Финальный код 553dbb1 прошёл повторные lint/typecheck/48 тестов/Webpack production build.
+  Оба CI успешны: [push](https://github.com/expidito/kos-jeans/actions/runs/45622857102),
+  [PR](https://github.com/expidito/kos-jeans/actions/runs/45622867680).
+  [Vercel Preview Ready](https://vercel.com/fedir-team/kos-jeans/4zqhxHcxx2NXuMPLkyVHszETKtEC).
+  После этой сборки повторно подтверждены карточка в категории Джинси, 1299 ₴ и disabled 28.
 - Ограничения: товар явно ТЕСТ, фотоиллюстрации не реальный ассортимент; Preview защищён
   входом Vercel. Старые product slug не перенаправляются автоматически. Очередь удаления
   файлов обрабатывается при следующем сохранении/загрузке, постоянный cron не добавлен.
