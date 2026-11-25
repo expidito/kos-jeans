@@ -20,7 +20,7 @@
 | 09 | Админка: категории и подкатегории | done | 2026-11-24 | [PR #9](https://github.com/expidito/kos-jeans/pull/9), [Preview](https://kos-jeans-git-feat-block-09-admin-categories-fedir-team.vercel.app/admin/categories); живая приёмка пройдена, Production main c571bfd опубликована с разрешения владельца |
 | 10 | Админка: товары, фото, цены, варианты и склад | done | 2026-11-25 | [PR #10](https://github.com/expidito/kos-jeans/pull/10), [Preview](https://kos-jeans-git-feat-block-10-admin-products-fedir-team.vercel.app/admin/products); UI/hosted приёмка пройдена |
 | 11 | Полноценная корзина | done | 2026-11-25 | [PR #11](https://github.com/expidito/kos-jeans/pull/11), [Preview](https://kos-jeans-git-feat-block-11-shopping-cart-fedir-team.vercel.app/cart) |
-| 12 | Оформление заказа и атомарные остатки | blocked | 2026-11-25 | [PR #12](https://github.com/expidito/kos-jeans/pull/12); нужна серверная Preview-переменная и UI-приёмка |
+| 12 | Оформление заказа и атомарные остатки | in_progress | 2026-11-25 | [PR #12](https://github.com/expidito/kos-jeans/pull/12); повторная Preview-приёмка после настройки секрета |
 | 13 | Админка: заказы и статусы | todo | 2026-11-23 | — |
 | 14 | Баннеры, настройки, контентные страницы и SEO | todo | 2026-11-23 | — |
 | 15 | Полное тестирование и защита | todo | 2026-11-23 | — |
@@ -886,3 +886,9 @@
   передавать в чат. После сообщения «Preview-секрет добавлен» создать новый Preview
   deploy, пройти реальный UI заказ/повтор/цена/склад и teardown UI-PREVIEW.
 - PR #12 остаётся Draft; не merge. Блок 13 не начат. [Инструкция](docs/CHECKOUT.md).
+
+### Продолжение блока 12 после настройки Preview
+
+- Владелец сообщил «Preview-секрет добавлен». Значение не запрашивалось и не выводилось.
+- Документационный push запускает новый Preview Deployment с текущими переменными.
+- После Ready проверить реальное оформление, приватное подтверждение и восстановить только собственные UI-PREVIEW тесты. Блок 13 не начат.
