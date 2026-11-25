@@ -2,8 +2,12 @@
 import { useSyncExternalStore } from "react";
 import { storedCart, increased, type CartItem, type CartRow } from "./model";
 export const CART_KEY = "kos-jeans-cart-v1";
-type Snapshot = { items: CartItem[]; storageError: boolean };
-const empty: Snapshot = { items: [], storageError: false };
+type Snapshot = {
+  items: CartItem[];
+  storageError: boolean;
+  completed: string[];
+};
+const empty: Snapshot = { items: [], storageError: false, completed: [] };
 let snapshot: Snapshot | null = null;
 const listeners = new Set<() => void>();
 let queue = Promise.resolve();
@@ -11,10 +15,11 @@ function read(): Snapshot {
   try {
     return {
       items: storedCart(localStorage.getItem(CART_KEY)),
+      completed: completedKeys(localStorage.getItem(CART_KEY)),
       storageError: false,
     };
   } catch {
-    return { items: [], storageError: true };
+    return { items: [], storageError: true, completed: [] };
   }
 }
 function current() {
@@ -23,14 +28,29 @@ function current() {
 function emit() {
   for (const l of listeners) l();
 }
-function write(items: CartItem[]) {
+function completedKeys(raw: string | null): string[] {
+  try {
+    const v = JSON.parse(raw ?? "{}").completedCheckouts;
+    return Array.isArray(v)
+      ? v
+          .filter((x) => typeof x === "string" && /^[a-f0-9-]{36}$/.test(x))
+          .slice(-20)
+      : [];
+  } catch {
+    return [];
+  }
+}
+function write(items: CartItem[], completed = current().completed) {
   let storageError = false;
   try {
-    localStorage.setItem(CART_KEY, JSON.stringify({ version: 1, items }));
+    localStorage.setItem(
+      CART_KEY,
+      JSON.stringify({ version: 1, items, completedCheckouts: completed }),
+    );
   } catch {
     storageError = true;
   }
-  snapshot = { items, storageError };
+  snapshot = { items, storageError, completed };
   emit();
 }
 function subscribe(listener: () => void) {
@@ -93,4 +113,20 @@ export function removeCartItem(variantId: string) {
 }
 export function clearCart() {
   write([]);
+}
+
+export function consumePurchased(key: string, purchased: CartItem[]) {
+  const c = current();
+  if (c.completed.includes(key)) return;
+  const items = c.items
+    .map((i) => ({
+      ...i,
+      quantity: Math.max(
+        0,
+        i.quantity -
+          (purchased.find((p) => p.variantId === i.variantId)?.quantity ?? 0),
+      ),
+    }))
+    .filter((i) => i.quantity > 0);
+  write(items, [...c.completed.slice(-19), key]);
 }

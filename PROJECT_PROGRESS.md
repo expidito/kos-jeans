@@ -20,7 +20,7 @@
 | 09 | Админка: категории и подкатегории | done | 2026-11-24 | [PR #9](https://github.com/expidito/kos-jeans/pull/9), [Preview](https://kos-jeans-git-feat-block-09-admin-categories-fedir-team.vercel.app/admin/categories); живая приёмка пройдена, Production main c571bfd опубликована с разрешения владельца |
 | 10 | Админка: товары, фото, цены, варианты и склад | done | 2026-11-25 | [PR #10](https://github.com/expidito/kos-jeans/pull/10), [Preview](https://kos-jeans-git-feat-block-10-admin-products-fedir-team.vercel.app/admin/products); UI/hosted приёмка пройдена |
 | 11 | Полноценная корзина | done | 2026-11-25 | [PR #11](https://github.com/expidito/kos-jeans/pull/11), [Preview](https://kos-jeans-git-feat-block-11-shopping-cart-fedir-team.vercel.app/cart) |
-| 12 | Оформление заказа и атомарные остатки | todo | 2026-11-23 | — |
+| 12 | Оформление заказа и атомарные остатки | in_progress | 2026-11-25 | Ветка feat/block-12-checkout |
 | 13 | Админка: заказы и статусы | todo | 2026-11-23 | — |
 | 14 | Баннеры, настройки, контентные страницы и SEO | todo | 2026-11-23 | — |
 | 15 | Полное тестирование и защита | todo | 2026-11-23 | — |
@@ -845,3 +845,9 @@
   браузер не закрывался, проверено закрытие вкладки. Checkout явно отключён; корзина
   не резервирует товар. Все тестовые изменения dev восстановлены, Production изолирован.
 - **Блок 11 done**, PR #11 без merge до подтверждения владельца. Блок 12 не начат.
+
+### Блок 12 — начало
+
+- Владелец принял блок 11; зелёный PR #11 слит, main синхронизирована до 91abada.
+- Создана feat/block-12-checkout. Реализуется только тестовое оформление kos-jeans-dev.
+- Production env не меняется, блок 13 не начат.

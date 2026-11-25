@@ -286,15 +286,24 @@ export function ShoppingCart() {
                     не включено до суми.
                   </p>
                 )}
-                <button
-                  disabled
-                  className="min-h-12 w-full border border-line bg-paper px-3 text-sm text-muted"
-                >
-                  Оформлення ще недоступне
-                </button>
+                {blocked ? (
+                  <button
+                    disabled
+                    className="min-h-12 w-full border border-line bg-paper px-3 text-sm text-muted"
+                  >
+                    Перевірте кошик перед оформленням
+                  </button>
+                ) : (
+                  <Link
+                    href="/checkout"
+                    className="flex min-h-12 w-full items-center justify-center bg-ink px-3 text-sm text-paper"
+                  >
+                    Перейти до оформлення ↗
+                  </Link>
+                )}
                 <p className="mt-4 text-xs leading-6 text-muted">
                   Ціни звірено з каталогом. Кошик не резервує товари на складі.
-                  Доставка та оформлення з’являться пізніше.
+                  Оформлення тестове, без онлайн-оплати.
                 </p>
               </aside>
             </div>

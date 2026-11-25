@@ -204,6 +204,7 @@ export type Database = {
       }
       orders: {
         Row: {
+          checkout_session_hash: string | null
           city: string
           comment: string
           created_at: string
@@ -222,6 +223,7 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          checkout_session_hash?: string | null
           city: string
           comment?: string
           created_at?: string
@@ -240,6 +242,7 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          checkout_session_hash?: string | null
           city?: string
           comment?: string
           created_at?: string
@@ -512,6 +515,15 @@ export type Database = {
         }
         Returns: Json
       }
+      checkout_status: {
+        Args: { p_key: string; p_session: string }
+        Returns: Json
+      }
+      checkout_submit: {
+        Args: { p_key: string; p_session: string; p_values: Json }
+        Returns: Json
+      }
+      checkout_throttle: { Args: { p_keys: string[] }; Returns: boolean }
       is_store_admin: { Args: never; Returns: boolean }
     }
     Enums: {
