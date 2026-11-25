@@ -21,7 +21,7 @@
 | 10 | Админка: товары, фото, цены, варианты и склад | done | 2026-11-25 | [PR #10](https://github.com/expidito/kos-jeans/pull/10), [Preview](https://kos-jeans-git-feat-block-10-admin-products-fedir-team.vercel.app/admin/products); UI/hosted приёмка пройдена |
 | 11 | Полноценная корзина | done | 2026-11-25 | [PR #11](https://github.com/expidito/kos-jeans/pull/11), [Preview](https://kos-jeans-git-feat-block-11-shopping-cart-fedir-team.vercel.app/cart) |
 | 12 | Оформление заказа и атомарные остатки | done | 2026-11-25 | [PR #12](https://github.com/expidito/kos-jeans/pull/12); local/hosted/Preview приняты, merge после подтверждения |
-| 13 | Админка: заказы и статусы | todo | 2026-11-23 | — |
+| 13 | Админка: заказы и статусы | in_progress | 2026-11-23 | — |
 | 14 | Баннеры, настройки, контентные страницы и SEO | todo | 2026-11-23 | — |
 | 15 | Полное тестирование и защита | todo | 2026-11-23 | — |
 | 16 | Итоговая публикация и подготовка к домену | todo | 2026-11-23 | — |
@@ -919,3 +919,10 @@
 - **Блок 12 done**. PR #12 подготовлен к review, без слияния до подтверждения владельца.
   Только kos-jeans-dev; оплаты/API доставки нет; Preview требует доступ Vercel.
   Блок 13 (админка заказов и статусы) не начат.
+
+### Блок 13 — начало, 2026-11-25
+
+- Владелец принял блок 12 и разрешил слияние зелёного PR #12; PR слит.
+- main/origin/main синхронизированы до 792f18e; создана feat/block-13-admin-orders.
+- Реализуются список/карточка заказа и защищённые атомарные переходы статусов.
+- Только kos-jeans-dev; Production env не меняется, блок 14 не начат.

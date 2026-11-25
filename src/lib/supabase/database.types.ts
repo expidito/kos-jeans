@@ -12,6 +12,31 @@ export type Database = {
   __InternalSupabase: {
     PostgrestVersion: "14.18"
   }
+  graphql_public: {
+    Tables: {
+      [_ in never]: never
+    }
+    Views: {
+      [_ in never]: never
+    }
+    Functions: {
+      graphql: {
+        Args: {
+          extensions?: Json
+          operationName?: string
+          query?: string
+          variables?: Json
+        }
+        Returns: Json
+      }
+    }
+    Enums: {
+      [_ in never]: never
+    }
+    CompositeTypes: {
+      [_ in never]: never
+    }
+  }
   public: {
     Tables: {
       categories: {
@@ -467,6 +492,21 @@ export type Database = {
         }
         Returns: string
       }
+      admin_order_search: {
+        Args: {
+          p_from?: string
+          p_number?: string
+          p_page?: number
+          p_sort?: string
+          p_status?: string
+          p_to?: string
+        }
+        Returns: Json
+      }
+      admin_order_status: {
+        Args: { p_expected_version: string; p_order: string; p_status: string }
+        Returns: Json
+      }
       admin_product_cleanup: { Args: { p_done?: string }; Returns: string[] }
       admin_product_search: {
         Args: {
@@ -653,6 +693,9 @@ export type CompositeTypes<
     : never
 
 export const Constants = {
+  graphql_public: {
+    Enums: {},
+  },
   public: {
     Enums: {},
   },
