@@ -464,6 +464,37 @@ export type Database = {
         }
         Returns: string
       }
+      admin_product_cleanup: { Args: { p_done?: string }; Returns: string[] }
+      admin_product_search: {
+        Args: {
+          p_category?: string
+          p_page?: number
+          p_query?: string
+          p_sort?: string
+          p_status?: string
+        }
+        Returns: Json
+      }
+      admin_product_upload: {
+        Args: {
+          p_digest: string
+          p_extension: string
+          p_image_id: string
+          p_product_id: string
+          p_ready?: boolean
+        }
+        Returns: string
+      }
+      admin_product_write: {
+        Args: {
+          p_command?: string
+          p_expected_version?: string
+          p_product_id: string
+          p_request_id: string
+          p_values: Json
+        }
+        Returns: string
+      }
       catalog_search: {
         Args: {
           category_id?: string

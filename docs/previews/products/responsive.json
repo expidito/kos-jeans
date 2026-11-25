@@ -1,0 +1,78 @@
+{
+  "checks": [
+    {
+      "brokenImages": 0,
+      "page": "editor",
+      "scrollWidth": 1440,
+      "width": 1440
+    },
+    {
+      "brokenImages": 0,
+      "page": "editor",
+      "scrollWidth": 320,
+      "width": 320
+    },
+    {
+      "brokenImages": 0,
+      "page": "editor",
+      "scrollWidth": 390,
+      "width": 390
+    },
+    {
+      "brokenImages": 0,
+      "page": "editor",
+      "scrollWidth": 768,
+      "width": 768
+    },
+    {
+      "brokenImages": 0,
+      "page": "list",
+      "scrollWidth": 1440,
+      "width": 1440
+    },
+    {
+      "brokenImages": 0,
+      "page": "list",
+      "scrollWidth": 320,
+      "width": 320
+    },
+    {
+      "brokenImages": 0,
+      "page": "list",
+      "scrollWidth": 390,
+      "width": 390
+    },
+    {
+      "brokenImages": 0,
+      "page": "list",
+      "scrollWidth": 768,
+      "width": 768
+    },
+    {
+      "brokenImages": 0,
+      "page": "product",
+      "scrollWidth": 1440,
+      "width": 1440
+    },
+    {
+      "brokenImages": 0,
+      "page": "product",
+      "scrollWidth": 320,
+      "width": 320
+    },
+    {
+      "brokenImages": 0,
+      "page": "product",
+      "scrollWidth": 390,
+      "width": 390
+    },
+    {
+      "brokenImages": 0,
+      "page": "product",
+      "scrollWidth": 768,
+      "width": 768
+    }
+  ],
+  "mobileAdminMenu": "opened; create page reached; menu closed",
+  "status": "pass"
+}

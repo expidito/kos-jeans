@@ -12,7 +12,7 @@
 Vercel связан с GitHub; автоматическая production-публикация merge PR #2 проверена.
 Основа Supabase блока 05 подключена и проверена на отдельном тестовом kos-jeans-dev.
 Каталог блока 06 получает данные из Supabase на local/Preview. Production изолирован от dev.
-Админка и заказы ещё не реализованы; проект не готов к торговле.
+Защищённая админка управляет категориями; редактор товаров блока 10 прошёл приёмку. Заказы ещё не реализованы; проект не готов к торговле.
 
 PR #1 слит в `main` с разрешения владельца. Блок 02 выполнен в ветке
 `feat/block-02-vercel-preview`: production из `main`, автоматический preview
@@ -35,7 +35,7 @@ Next.js 16.4.6 (App Router), React 19.3.1, TypeScript 6.0.3, Tailwind CSS 4.3.5,
 ESLint 9.39.5 и GitHub Actions. Версии закреплены в `package.json` и
 `package-lock.json`. TypeScript 7 и ESLint 10 пока не используются из-за
 ограничений совместимости линтеров.
-Vercel подключён. Для Supabase применены SQL-миграции, RLS, Storage и типизированные SSR-клиенты; hosted dev проверен. Zod будет добавлен вместе с валидацией форм.
+Vercel подключён. Для Supabase применены SQL-миграции, RLS, Storage и типизированные SSR-клиенты; hosted dev проверен. Формы имеют серверную валидацию; RPC и ограничения PostgreSQL повторно проверяют данные.
 
 ## Локальная работа
 
@@ -260,3 +260,9 @@ Production изолирован. Каркас будущих разделов н
 разрешению владельца: Ready / Current, [сайт](https://kos-jeans.vercel.app).
 Dev к Production не подключён; управление категориями PR #9 остаётся в Preview
 до отдельного подтверждения слияния. Блок 09 done, блок 10 не начат.
+
+## Блок 10 — товары и склад
+
+[Инструкция владельца и архитектура](docs/ADMIN_PRODUCTS.md). Редактор `/admin/products` работает с настоящими данными только в local/Preview. Пять и более фото, стабильные варианты, атомарная публикация, контроль конкурентных изменений. Подключение тестовой базы к Production запрещено.
+
+[Preview управления товарами](https://kos-jeans-git-feat-block-10-admin-products-fedir-team.vercel.app/admin/products) · [ТЕСТ-товар](https://kos-jeans-git-feat-block-10-admin-products-fedir-team.vercel.app/product/test-wide-leg-blue). Preview может требовать вход Vercel; затем для админки используется постоянная учётная запись владельца. Это тестовое окружение, покупки недоступны.

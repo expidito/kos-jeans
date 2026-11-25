@@ -1,0 +1,406 @@
+import { before, after, test } from "node:test";
+import assert from "node:assert/strict";
+import { randomUUID } from "node:crypto";
+import { createTestDatabase, withRole } from "./helpers/database.mjs";
+import {
+  moneyMinor,
+  productInput,
+  compareVariants,
+} from "../src/lib/admin/products/validation.ts";
+const ADMIN = "40000000-0000-4000-8000-000000000001",
+  USER = "40000000-0000-4000-8000-000000000002",
+  C = "10000000-0000-4000-8000-000000000002";
+let db;
+before(async () => {
+  db = await createTestDatabase();
+  await db.exec(
+    `insert into auth.users(id) values('${ADMIN}'),('${USER}');insert into private.admin_users values('${ADMIN}',now());`,
+  );
+});
+after(async () => db.close());
+const input = (extra = {}) => ({
+  name: "ТЕСТ Wide Leg",
+  sku: "TEST-NEW",
+  slug: "test-new",
+  description: "Тест, не продається",
+  material: "Бавовна",
+  characteristics: {},
+  price_kopecks: 149900,
+  old_price_kopecks: null,
+  status: "draft",
+  is_new: true,
+  is_featured: false,
+  categories: [C],
+  variants: [],
+  images: [],
+  ...extra,
+});
+const write = (
+  d,
+  id,
+  values,
+  version = null,
+  command = "save",
+  request = randomUUID(),
+) =>
+  d.query(
+    "select public.admin_product_write($1,$2,$3::jsonb,$4::timestamptz,$5) id",
+    [request, id, JSON.stringify(values), version, command],
+  );
+const version = async (d, id) =>
+  (
+    await d.query(
+      "select updated_at::text value from public.products where id=$1",
+      [id],
+    )
+  ).rows[0].value;
+async function draft(d) {
+  const id = randomUUID();
+  await write(d, id, input(), null, "reserve");
+  return id;
+}
+async function photos(d, id) {
+  const images = [];
+  for (let n = 0; n < 5; n++) {
+    const image = randomUUID();
+    const args = [id, image, "jpg", "a".repeat(64)];
+    const path = (
+      await d.query(
+        "select public.admin_product_upload($1,$2,$3,$4) path",
+        args,
+      )
+    ).rows[0].path;
+    await d.query("insert into storage.objects(bucket_id,name) values($1,$2)", [
+      "store-media",
+      path,
+    ]);
+    await d.query("select public.admin_product_upload($1,$2,$3,$4,true)", args);
+    images.push({ id: image, alt_text: "ТЕСТ", is_primary: n === 2 });
+  }
+  return images;
+}
+const variants = () =>
+  [26, 27, 28, 29, 30].map((size, i) => ({
+    id: randomUUID(),
+    sku: `TEST-NEW-${size}`,
+    size: String(size),
+    color: "Синій",
+    stock: [3, 5, 1, 2, 4][i],
+    is_active: true,
+  }));
+test("money parsing is exact and rejects unsafe prices and duplicate variants", () => {
+  assert.equal(moneyMinor("1499"), 149900);
+  assert.equal(moneyMinor("0,29"), 29);
+  assert.equal(moneyMinor("21474836.47"), 2147483647);
+  for (const v of ["-1", "1e3", "1.001", "21474836.48", "NaN"])
+    assert.throws(() => moneyMinor(v));
+  const raw = { ...input(), price: "1499", old_price: "", characteristics: [] };
+  assert.equal(productInput(raw).price_kopecks, 149900);
+  assert.throws(() => productInput({ ...raw, old_price: "1400" }));
+  const vs = variants();
+  assert.throws(() =>
+    productInput({
+      ...raw,
+      variants: [vs[0], { ...vs[0], id: randomUUID(), sku: "OTHER" }],
+    }),
+  );
+  assert.throws(() =>
+    productInput({ ...raw, variants: [{ ...vs[0], stock: -1 }] }),
+  );
+});
+test("reserve retry is idempotent and never publishes an incomplete product", async () =>
+  withRole(db, "authenticated", ADMIN, async (d) => {
+    const id = randomUUID(),
+      request = randomUUID();
+    await write(
+      d,
+      id,
+      input({ status: "published" }),
+      null,
+      "reserve",
+      request,
+    );
+    await write(
+      d,
+      id,
+      input({ status: "published" }),
+      null,
+      "reserve",
+      request,
+    );
+    assert.equal(
+      (await d.query("select status from public.products where id=$1", [id]))
+        .rows[0].status,
+      "draft",
+    );
+    assert.equal(
+      (
+        await d.query(
+          "select count(*)::int n from private.product_mutations where request_id=$1",
+          [request],
+        )
+      ).rows[0].n,
+      1,
+    );
+  }));
+test("five photos and sizes publish atomically, price/stock edits keep variant IDs, retry and cleanup work", async () =>
+  withRole(db, "authenticated", ADMIN, async (d) => {
+    const id = await draft(d),
+      images = await photos(d, id),
+      vs = variants(),
+      payload = input({ status: "published", images, variants: vs });
+    const request = randomUUID();
+    await write(d, id, payload, await version(d, id), "save", request);
+    await write(d, id, payload, null, "save", request);
+    assert.equal(
+      (
+        await d.query(
+          "select count(*)::int n from public.product_images where product_id=$1",
+          [id],
+        )
+      ).rows[0].n,
+      5,
+    );
+    assert.equal(
+      (
+        await d.query(
+          "select is_primary from public.product_images where id=$1",
+          [images[2].id],
+        )
+      ).rows[0].is_primary,
+      true,
+    );
+    const changed = {
+      ...payload,
+      price_kopecks: 129900,
+      variants: vs.map((v) => ({ ...v, stock: v.size === "28" ? 0 : v.stock })),
+      images: images.slice(1),
+    };
+    await write(d, id, changed, await version(d, id));
+    const rows = (
+      await d.query(
+        "select id,stock from public.product_variants where product_id=$1",
+        [id],
+      )
+    ).rows;
+    assert.deepEqual(
+      new Set(rows.map((v) => v.id)),
+      new Set(vs.map((v) => v.id)),
+    );
+    assert.equal(rows.find((v) => v.id === vs[2].id).stock, 0);
+    assert.equal(
+      (
+        await d.query("select price_kopecks from public.products where id=$1", [
+          id,
+        ])
+      ).rows[0].price_kopecks,
+      129900,
+    );
+    const jobs = await d.query("select public.admin_product_cleanup() path");
+    assert.equal(jobs.rows.length, 1);
+    assert.equal(
+      (
+        await d.query(
+          "select count(*)::int n from storage.objects where name=$1",
+          [jobs.rows[0].path],
+        )
+      ).rows[0].n,
+      1,
+    );
+    await write(d, id, {}, await version(d, id), "archive");
+    assert.equal(
+      (
+        await d.query(
+          "select count(*)::int n from public.product_variants where product_id=$1",
+          [id],
+        )
+      ).rows[0].n,
+      5,
+    );
+  }));
+test("publication failure rolls back metadata, variants, price and receipt", async () => {
+  await assert.rejects(
+    withRole(db, "authenticated", ADMIN, async (d) => {
+      const id = await draft(d);
+      await write(
+        d,
+        id,
+        input({
+          status: "published",
+          price_kopecks: 129900,
+          variants: variants(),
+        }),
+        await version(d, id),
+      );
+    }),
+    /publication needs/,
+  );
+});
+test("negative stock and foreign variants/images cannot be committed", async () => {
+  for (const mode of ["negative", "variant", "image"])
+    await assert.rejects(
+      withRole(db, "authenticated", ADMIN, async (d) => {
+        const id = await draft(d),
+          vs = variants();
+        if (mode === "negative") vs[0].stock = -1;
+        if (mode === "variant")
+          vs[0].id = "30000000-0000-4000-8000-000000000001";
+        await write(
+          d,
+          id,
+          input({
+            variants: vs,
+            images:
+              mode === "image"
+                ? [{ id: randomUUID(), alt_text: "", is_primary: true }]
+                : [],
+          }),
+          await version(d, id),
+        );
+      }),
+      /check constraint|invalid variant ownership|invalid image ownership/,
+    );
+});
+test("stale snapshots and changed idempotency payload are rejected", async () => {
+  await assert.rejects(
+    withRole(db, "authenticated", ADMIN, async (d) => {
+      const id = await draft(d);
+      await write(d, id, input(), new Date(0).toISOString());
+    }),
+    /product changed/,
+  );
+  await assert.rejects(
+    withRole(db, "authenticated", ADMIN, async (d) => {
+      const id = randomUUID(),
+        request = randomUUID();
+      await write(d, id, input(), null, "reserve", request);
+      await write(d, id, input({ name: "changed" }), null, "reserve", request);
+    }),
+    /request reused/,
+  );
+});
+test("admin search filters, hierarchy and sort return real products", async () =>
+  withRole(db, "authenticated", ADMIN, async (d) => {
+    const id = await draft(d);
+    await write(d, id, input(), await version(d, id));
+    const result = (
+      await d.query(
+        "select public.admin_product_search('TEST-NEW',$1,'draft','price_asc',1) result",
+        [C],
+      )
+    ).rows[0].result;
+    assert.equal(result.total, 1);
+    assert.equal(result.items[0].id, id);
+    assert.deepEqual(result.items[0].category_names, ["ТЕСТ · Джинси"]);
+  }));
+test("anonymous and ordinary authenticated users cannot write, upload, clean or search admin data", async () => {
+  for (const [role, user] of [
+    ["anon", null],
+    ["authenticated", USER],
+  ])
+    for (const sql of [
+      "select public.admin_product_write($1,$2,'{}'::jsonb)",
+      "select public.admin_product_upload($2,$1,'jpg',repeat('a',64))",
+      "select public.admin_product_cleanup()",
+      "select public.admin_product_search()",
+    ]) {
+      await assert.rejects(
+        withRole(db, role, user, (d) =>
+          d.query(sql, sql.includes("$1") ? [randomUUID(), randomUUID()] : []),
+        ),
+        /permission denied|admin required/,
+      );
+    }
+});
+
+test("editor sizes retain human numeric order regardless of UUID or insertion order", () => {
+  const rows = ["30", "28", "26", "27", "29"].map((size, i) => ({
+    size,
+    color: "Синій",
+    id: String(i),
+  }));
+  assert.deepEqual(
+    rows.sort(compareVariants).map((v) => v.size),
+    ["26", "27", "28", "29", "30"],
+  );
+});
+
+test("admin pagination and price ordering remain deterministic across pages", async () =>
+  withRole(db, "authenticated", ADMIN, async (d) => {
+    for (let n = 0; n < 23; n++) {
+      const id = randomUUID();
+      await write(
+        d,
+        id,
+        input({
+          sku: `PAGING-${n}`,
+          slug: `paging-${n}`,
+          price_kopecks: 1000 + n,
+        }),
+        null,
+        "reserve",
+      );
+    }
+    const page = async (n) =>
+      (
+        await d.query(
+          "select public.admin_product_search('PAGING-',null,'draft','price_desc',$1) result",
+          [n],
+        )
+      ).rows[0].result;
+    const a = await page(1),
+      b = await page(2);
+    assert.equal(a.total, 23);
+    assert.equal(a.items.length, 20);
+    assert.equal(b.items.length, 3);
+    assert.equal(a.items[0].price_kopecks, 1022);
+    assert.equal(b.items[2].price_kopecks, 1000);
+    assert.equal(new Set([...a.items, ...b.items].map((p) => p.id)).size, 23);
+  }));
+test("failed replacement rolls back earlier variant writes and leaves old images linked", async () =>
+  withRole(db, "authenticated", ADMIN, async (d) => {
+    const id = await draft(d),
+      images = await photos(d, id),
+      vs = variants();
+    await write(d, id, input({ images, variants: vs }), await version(d, id));
+    await d.exec("savepoint invalid_change");
+    await assert.rejects(
+      write(
+        d,
+        id,
+        input({
+          images: [{ id: randomUUID(), alt_text: "", is_primary: true }],
+          variants: vs.map((v) => ({ ...v, stock: 99 })),
+        }),
+        await version(d, id),
+      ),
+      /invalid image ownership/,
+    );
+    await d.exec("rollback to invalid_change");
+    assert.equal(
+      (
+        await d.query("select stock from public.product_variants where id=$1", [
+          vs[0].id,
+        ])
+      ).rows[0].stock,
+      3,
+    );
+    assert.equal(
+      (
+        await d.query(
+          "select count(*)::int n from public.product_images where product_id=$1",
+          [id],
+        )
+      ).rows[0].n,
+      5,
+    );
+    assert.equal(
+      (
+        await d.query(
+          "select count(*)::int n from private.product_media_cleanup where product_id=$1",
+          [id],
+        )
+      ).rows[0].n,
+      0,
+    );
+  }));

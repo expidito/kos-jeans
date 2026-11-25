@@ -1,0 +1,11 @@
+{
+  "status": "pass",
+  "replacedAndRemovedObjectsDeletedAfterSave": true,
+  "final": {
+    "categories": 1,
+    "photos": 5,
+    "price_kopecks": 129900,
+    "status": "published"
+  },
+  "originalAssortmentRemoved": false
+}

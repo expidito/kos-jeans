@@ -1,0 +1,980 @@
+"use client";
+import Image from "next/image";
+import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
+import type { productEditor } from "@/lib/admin/products/data";
+import type { Category } from "@/lib/catalog/data";
+import {
+  categoryRows,
+  categorySlug,
+  maxCategoryImage,
+} from "@/lib/categories/validation";
+import { moneyText, type VariantInput } from "@/lib/admin/products/validation";
+import { ArchiveProduct } from "./archive";
+type Initial = NonNullable<Awaited<ReturnType<typeof productEditor>>>;
+type Photo = {
+  id: string;
+  src: string;
+  alt_text: string;
+  is_primary: boolean;
+  file?: File;
+  uploaded: boolean;
+  progress: number;
+};
+const field =
+  "mt-2 min-h-12 w-full min-w-0 border border-control bg-paper px-3 py-3 text-base";
+const secondary =
+  "inline-flex min-h-11 items-center justify-center border border-control bg-paper px-3 py-2 text-xs hover:border-ink disabled:opacity-40";
+export function ProductEditor({
+  id,
+  initial,
+  categories,
+}: {
+  id: string;
+  initial?: Initial;
+  categories: Category[];
+}) {
+  const router = useRouter(),
+    urls = useRef(new Set<string>()),
+    inFlight = useRef(false),
+    reserveAttempt = useRef<{ requestId: string; product: unknown } | null>(
+      null,
+    ),
+    saveAttempt = useRef<{ serialized: string; requestId: string } | null>(
+      null,
+    );
+  const p = initial?.product;
+  const [base, setBase] = useState({
+    name: p?.name ?? "",
+    sku: p?.sku ?? "",
+    slug: p?.slug ?? "",
+    description: p?.description ?? "",
+    material: p?.material ?? "",
+    price: moneyText(p?.price_kopecks ?? 0),
+    old_price: moneyText(p?.old_price_kopecks ?? null),
+    status: p?.status ?? "draft",
+    is_new: p?.is_new ?? false,
+    is_featured: p?.is_featured ?? false,
+  });
+  const [slugDirty, setSlugDirty] = useState(!!p),
+    [version, setVersion] = useState(p?.updated_at ?? null),
+    [color, setColor] = useState(initial?.variants[0]?.color ?? ""),
+    [selected, setSelected] = useState(initial?.categoryIds ?? []);
+  const [characteristics, setCharacteristics] = useState(
+    Object.entries((p?.characteristics ?? {}) as Record<string, unknown>).map(
+      ([name, value]) => ({
+        id: crypto.randomUUID(),
+        name,
+        value: typeof value === "string" ? value : JSON.stringify(value),
+      }),
+    ),
+  );
+  const [variants, setVariants] = useState<
+    (VariantInput & { persisted: boolean })[]
+  >((initial?.variants ?? []).map((v) => ({ ...v, persisted: true })));
+  const [photos, setPhotos] = useState<Photo[]>(
+    (initial?.images ?? []).map((i) => ({
+      id: i.id,
+      src: `/admin/product-media/${i.id}?v=${encodeURIComponent(p!.updated_at)}`,
+      alt_text: i.alt_text,
+      is_primary: i.is_primary,
+      uploaded: true,
+      progress: 100,
+    })),
+  );
+  const [pendingRemoval, setPendingRemoval] = useState<string | null>(null);
+  const [busy, setBusy] = useState(false),
+    [stage, setStage] = useState(""),
+    [error, setError] = useState(""),
+    [loginNeeded, setLoginNeeded] = useState(false);
+  useEffect(() => {
+    const owned = urls.current;
+    return () => {
+      owned.forEach((url) => URL.revokeObjectURL(url));
+    };
+  }, []);
+  const change = (key: keyof typeof base, value: string | boolean) =>
+    setBase((b) => ({ ...b, [key]: value }));
+  const newPhoto = (file: File, primary = false): Photo => {
+    if (
+      !["image/jpeg", "image/png", "image/webp"].includes(file.type) ||
+      file.size > maxCategoryImage ||
+      !file.size
+    )
+      throw Error("Кожне фото: JPEG, PNG або WebP до 3 МБ.");
+    const src = URL.createObjectURL(file);
+    urls.current.add(src);
+    return {
+      id: crypto.randomUUID(),
+      src,
+      alt_text: base.name,
+      is_primary: primary,
+      file,
+      uploaded: false,
+      progress: 0,
+    };
+  };
+  const addFiles = (files: FileList | null) => {
+    setError("");
+    if (!files) return;
+    try {
+      if (photos.length + files.length > 10)
+        throw Error("Для товару можна додати до 10 фото.");
+      const added = [...files].map((f, i) =>
+        newPhoto(f, !photos.length && i === 0),
+      );
+      setPhotos((v) => [...v, ...added]);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Не вдалося додати фото.");
+    }
+  };
+  const addSizes = (sizes: string[]) => {
+    if (variants.length + sizes.length > 100) {
+      setError("Дозволено до 100 варіантів.");
+      return;
+    }
+    const added = sizes
+      .filter(
+        (size) => !variants.some((v) => v.size === size && v.color === color),
+      )
+      .map((size, i) => ({
+        id: crypto.randomUUID(),
+        size,
+        color,
+        sku: base.sku
+          ? `${base.sku}-${categorySlug(color) || "color"}-${size || variants.length + i + 1}`.slice(
+              0,
+              80,
+            )
+          : "",
+        stock: 0,
+        is_active: true,
+        persisted: false,
+      }));
+    setVariants((v) => [...v, ...added]);
+  };
+  const api = async (body: unknown) => {
+    const response = await fetch("/admin/products/api/save", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
+    let data;
+    try {
+      data = await response.json();
+    } catch {
+      throw Error("Сервер тимчасово недоступний. Спробуйте ще раз.");
+    }
+    if (!response.ok) {
+      if (response.status === 401 || response.status === 403)
+        setLoginNeeded(true);
+      throw Error(data.error || "Не вдалося зберегти товар.");
+    }
+    return data as {
+      version: string;
+      id: string;
+      status: string;
+      slug: string;
+    };
+  };
+  const upload = (photo: Photo) =>
+    new Promise<void>((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.open("POST", "/admin/products/api/upload");
+      xhr.timeout = 120000;
+      xhr.upload.onprogress = (e) => {
+        if (e.lengthComputable)
+          setPhotos((v) =>
+            v.map((p) =>
+              p.id === photo.id
+                ? { ...p, progress: Math.round((e.loaded / e.total) * 100) }
+                : p,
+            ),
+          );
+      };
+      xhr.onerror = () =>
+        reject(Error("Немає з’єднання. Повторіть завантаження."));
+      xhr.ontimeout = () =>
+        reject(Error("Час очікування минув. Повторіть завантаження."));
+      xhr.onload = () => {
+        let data;
+        try {
+          data = JSON.parse(xhr.responseText);
+        } catch {
+          reject(Error("Не вдалося завантажити фото. Спробуйте ще раз."));
+          return;
+        }
+        if (xhr.status >= 200 && xhr.status < 300) {
+          setPhotos((v) =>
+            v.map((p) =>
+              p.id === photo.id ? { ...p, uploaded: true, progress: 100 } : p,
+            ),
+          );
+          resolve();
+        } else {
+          if (xhr.status === 401 || xhr.status === 403) setLoginNeeded(true);
+          reject(Error(data.error || "Не вдалося завантажити фото."));
+        }
+      };
+      const form = new FormData();
+      form.set("product_id", id);
+      form.set("image_id", photo.id);
+      form.set("image", photo.file!);
+      xhr.send(form);
+    });
+  return (
+    <div className="max-w-5xl">
+      <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <Link
+            href="/admin/products"
+            className="inline-flex min-h-11 items-center text-xs underline"
+          >
+            ← Товари
+          </Link>
+          <h1 className="mt-4 text-3xl font-medium tracking-tight sm:text-4xl">
+            {p ? "Редагування товару" : "Новий товар"}
+          </h1>
+          <p className="mt-3 text-xs text-muted">
+            {p
+              ? `Збережено: ${p.status === "published" ? "Опубліковано" : p.status === "archived" ? "Архів" : "Чернетка"}`
+              : "Почніть з основного. Чернетку можна доповнити пізніше."}
+          </p>
+        </div>
+        {p?.status === "published" && (
+          <Link
+            href={`/product/${p.slug}`}
+            target="_blank"
+            className={secondary}
+          >
+            Переглянути в магазині ↗
+          </Link>
+        )}
+      </div>
+      <form
+        onSubmit={async (e) => {
+          e.preventDefault();
+          if (inFlight.current) return;
+          inFlight.current = true;
+          const asDraft =
+            (e.nativeEvent as SubmitEvent).submitter?.getAttribute("value") ===
+            "draft";
+          setBusy(true);
+          setError("");
+          setLoginNeeded(false);
+          const product = {
+            ...base,
+            status: asDraft ? "draft" : base.status,
+            characteristics: characteristics.map(({ name, value }) => ({
+              name,
+              value,
+            })),
+            categories: selected,
+            variants: variants.map(
+              ({ id, sku, size, color, stock, is_active }) => ({
+                id,
+                sku,
+                size,
+                color,
+                stock,
+                is_active,
+              }),
+            ),
+            images: photos.map(({ id, alt_text, is_primary }) => ({
+              id,
+              alt_text,
+              is_primary,
+            })),
+          };
+          try {
+            let current = version;
+            if (!current) {
+              setStage("Створюємо приховану чернетку…");
+              reserveAttempt.current ??= {
+                requestId: crypto.randomUUID(),
+                product,
+              };
+              const draft = await api({
+                id,
+                request_id: reserveAttempt.current.requestId,
+                version: null,
+                command: "reserve",
+                product: reserveAttempt.current.product,
+              });
+              current = draft.version;
+              setVersion(current);
+            }
+            const pending = photos.filter((p) => p.file && !p.uploaded);
+            for (let i = 0; i < pending.length; i++) {
+              setStage(`Завантаження фото ${i + 1} з ${pending.length}…`);
+              await upload(pending[i]);
+            }
+            setStage("Зберігаємо товар і перевіряємо публікацію…");
+            const serialized = JSON.stringify(product);
+            if (saveAttempt.current?.serialized !== serialized)
+              saveAttempt.current = {
+                serialized,
+                requestId: crypto.randomUUID(),
+              };
+            await api({
+              id,
+              request_id: saveAttempt.current.requestId,
+              version: current,
+              command: "save",
+              product,
+            });
+            router.replace(`/admin/products/${id}?notice=saved`);
+            router.refresh();
+          } catch (e) {
+            setError(
+              e instanceof Error ? e.message : "Не вдалося зберегти товар.",
+            );
+          } finally {
+            inFlight.current = false;
+            setBusy(false);
+            setStage("");
+          }
+        }}
+        aria-busy={busy}
+      >
+        {error && (
+          <div
+            role="alert"
+            className="mb-6 border-l-2 border-danger bg-paper p-5 text-sm leading-6"
+          >
+            {error}
+            {loginNeeded && (
+              <Link
+                href="/admin/login"
+                target="_blank"
+                className="mt-3 block underline"
+              >
+                Увійти в новій вкладці
+              </Link>
+            )}
+          </div>
+        )}
+        {busy && (
+          <p
+            role="status"
+            className="sticky top-0 z-20 mb-6 border border-denim bg-denim-wash p-4 text-sm"
+          >
+            {stage}
+          </p>
+        )}
+        <fieldset disabled={busy} className="space-y-7">
+          <section className="grid gap-5 border border-line bg-paper p-5 sm:grid-cols-2 sm:p-8">
+            <h2 className="text-xl font-medium sm:col-span-2">
+              Основна інформація
+            </h2>
+            <label className="min-w-0 text-xs sm:col-span-2">
+              Назва товару
+              <input
+                aria-label="Назва товару"
+                required
+                maxLength={200}
+                value={base.name}
+                onChange={(e) => {
+                  change("name", e.target.value);
+                  if (!slugDirty) change("slug", categorySlug(e.target.value));
+                }}
+                className={field}
+              />
+            </label>
+            <label className="min-w-0 text-xs">
+              Артикул
+              <input
+                aria-label="Артикул"
+                required
+                maxLength={80}
+                value={base.sku}
+                onChange={(e) => change("sku", e.target.value)}
+                className={field}
+              />
+            </label>
+            <label className="min-w-0 text-xs">
+              URL slug
+              <input
+                aria-label="URL slug"
+                required
+                maxLength={200}
+                pattern="[a-z0-9]+(-[a-z0-9]+)*"
+                value={base.slug}
+                onChange={(e) => {
+                  setSlugDirty(true);
+                  change("slug", e.target.value);
+                }}
+                className={field}
+              />
+              <span className="mt-2 block leading-5 text-muted">
+                Зміна slug змінить адресу товару. Збережіть потрібне посилання.
+              </span>
+            </label>
+            <label className="min-w-0 text-xs sm:col-span-2">
+              Опис товару
+              <textarea
+                aria-label="Опис товару"
+                rows={5}
+                maxLength={20000}
+                value={base.description}
+                onChange={(e) => change("description", e.target.value)}
+                className={field}
+              />
+            </label>
+            <label className="min-w-0 text-xs sm:col-span-2">
+              Матеріал та склад
+              <textarea
+                aria-label="Матеріал та склад"
+                rows={3}
+                maxLength={5000}
+                value={base.material}
+                onChange={(e) => change("material", e.target.value)}
+                className={field}
+              />
+            </label>
+          </section>
+          <section className="grid gap-5 border border-line bg-paper p-5 sm:grid-cols-2 sm:p-8">
+            <h2 className="text-xl font-medium sm:col-span-2">
+              Ціна та публікація
+            </h2>
+            <label className="min-w-0 text-xs">
+              Ціна, ₴
+              <input
+                aria-label="Ціна, ₴"
+                required
+                inputMode="decimal"
+                maxLength={12}
+                value={base.price}
+                onChange={(e) => change("price", e.target.value)}
+                className={field}
+              />
+            </label>
+            <label className="min-w-0 text-xs">
+              Стара ціна, ₴
+              <input
+                aria-label="Стара ціна, ₴"
+                inputMode="decimal"
+                maxLength={12}
+                value={base.old_price}
+                onChange={(e) => change("old_price", e.target.value)}
+                className={field}
+              />
+              <span className="mt-2 block leading-5 text-muted">
+                Необов’язково. Має бути більшою за актуальну.
+              </span>
+            </label>
+            <label className="min-w-0 text-xs">
+              Статус публікації
+              <select
+                aria-label="Статус публікації"
+                value={base.status}
+                onChange={(e) => change("status", e.target.value)}
+                className={field}
+              >
+                <option value="draft">Чернетка</option>
+                <option value="published">Опубліковано</option>
+                <option value="archived">Архів</option>
+              </select>
+            </label>
+            <div className="flex flex-wrap items-center gap-5 text-xs">
+              <label className="flex min-h-11 items-center gap-2">
+                <input
+                  type="checkbox"
+                  checked={base.is_new}
+                  onChange={(e) => change("is_new", e.target.checked)}
+                  className="accent-ink"
+                />
+                Новинка
+              </label>
+              <label className="flex min-h-11 items-center gap-2">
+                <input
+                  type="checkbox"
+                  checked={base.is_featured}
+                  onChange={(e) => change("is_featured", e.target.checked)}
+                  className="accent-ink"
+                />
+                Популярний товар
+              </label>
+            </div>
+            <p className="text-xs leading-6 text-muted sm:col-span-2">
+              Для публікації заповніть опис, додайте фото й активні варіанти та
+              оберіть хоча б одну відкриту категорію. Чернетки й архів не видно
+              покупцям.
+            </p>
+          </section>
+          <section className="border border-line bg-paper p-5 sm:p-8">
+            <h2 className="text-xl font-medium">Категорії та підкатегорії</h2>
+            <p className="mt-2 mb-4 text-xs leading-6 text-muted">
+              Можна обрати кілька розділів. Приховані батьківські категорії
+              закривають і своїх нащадків.
+            </p>
+            <div className="grid max-h-80 gap-2 overflow-y-auto sm:grid-cols-2">
+              {categoryRows(categories)
+                .filter(
+                  (r) =>
+                    !r.category.archived_at || selected.includes(r.category.id),
+                )
+                .map((r) => (
+                  <label
+                    key={r.category.id}
+                    className="flex min-h-12 min-w-0 items-start gap-3 border border-line p-3 text-xs leading-5"
+                  >
+                    <input
+                      type="checkbox"
+                      checked={selected.includes(r.category.id)}
+                      onChange={(e) =>
+                        setSelected((v) =>
+                          e.target.checked
+                            ? [...v, r.category.id]
+                            : v.filter((id) => id !== r.category.id),
+                        )
+                      }
+                      className="mt-1 accent-ink"
+                    />
+                    <span className="min-w-0 wrap-anywhere">
+                      {r.path}
+                      {r.category.archived_at && (
+                        <span className="block text-danger">
+                          Архівна · зніміть призначення перед збереженням
+                        </span>
+                      )}
+                      {!r.effectiveVisible && (
+                        <span className="block text-muted">
+                          Прихована в магазині
+                        </span>
+                      )}
+                    </span>
+                  </label>
+                ))}
+            </div>
+          </section>
+          <section className="border border-line bg-paper p-5 sm:p-8">
+            <div className="flex flex-wrap items-end justify-between gap-3">
+              <div>
+                <h2 className="text-xl font-medium">Фотографії</h2>
+                <p className="mt-2 text-xs leading-6 text-muted">
+                  До 10 фото · JPEG, PNG, WebP · Кожне до 3 МБ.
+                  <br />
+                  Нові фото з’являться в магазині після успішного збереження.
+                </p>
+              </div>
+              <label className={secondary + " cursor-pointer"}>
+                Додати фото
+                <input
+                  aria-label="Додати фото"
+                  type="file"
+                  multiple
+                  accept="image/jpeg,image/png,image/webp"
+                  className="sr-only"
+                  onChange={(e) => {
+                    addFiles(e.target.files);
+                    e.target.value = "";
+                  }}
+                />
+              </label>
+            </div>
+            <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {photos.map((photo, i) => (
+                <div key={photo.id} className="min-w-0 border border-line p-3">
+                  <div className="relative aspect-[3/4] overflow-hidden bg-canvas">
+                    <Image
+                      unoptimized
+                      src={photo.src}
+                      alt={photo.alt_text || `Фото ${i + 1}`}
+                      fill
+                      sizes="(max-width:640px) 90vw, 250px"
+                      className="object-cover"
+                    />
+                    {photo.is_primary && (
+                      <span className="absolute top-2 left-2 bg-ink px-2 py-1 text-[10px] text-paper">
+                        Головне
+                      </span>
+                    )}
+                  </div>
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    <button
+                      type="button"
+                      className={secondary}
+                      disabled={i === 0}
+                      aria-label={`Перемістити фото ${i + 1} вгору`}
+                      onClick={() =>
+                        setPhotos((v) => {
+                          const next = [...v];
+                          [next[i - 1], next[i]] = [next[i], next[i - 1]];
+                          return next;
+                        })
+                      }
+                    >
+                      ↑
+                    </button>
+                    <button
+                      type="button"
+                      className={secondary}
+                      disabled={i === photos.length - 1}
+                      aria-label={`Перемістити фото ${i + 1} вниз`}
+                      onClick={() =>
+                        setPhotos((v) => {
+                          const next = [...v];
+                          [next[i + 1], next[i]] = [next[i], next[i + 1]];
+                          return next;
+                        })
+                      }
+                    >
+                      ↓
+                    </button>
+                    <button
+                      type="button"
+                      aria-pressed={photo.is_primary}
+                      className={secondary}
+                      onClick={() =>
+                        setPhotos((v) =>
+                          v.map((p) => ({
+                            ...p,
+                            is_primary: p.id === photo.id,
+                          })),
+                        )
+                      }
+                    >
+                      {photo.is_primary
+                        ? "Головне фото"
+                        : `Зробити головним фото ${i + 1}`}
+                    </button>
+                  </div>
+                  <label className="mt-3 block text-xs">
+                    Опис фото {i + 1}
+                    <input
+                      aria-label={`Опис фото ${i + 1}`}
+                      maxLength={500}
+                      value={photo.alt_text}
+                      onChange={(e) =>
+                        setPhotos((v) =>
+                          v.map((p) =>
+                            p.id === photo.id
+                              ? { ...p, alt_text: e.target.value }
+                              : p,
+                          ),
+                        )
+                      }
+                      className={field}
+                    />
+                  </label>
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    <label className={secondary + " cursor-pointer"}>
+                      Замінити
+                      <input
+                        aria-label={`Замінити фото ${i + 1}`}
+                        type="file"
+                        accept="image/jpeg,image/png,image/webp"
+                        className="sr-only"
+                        onChange={(e) => {
+                          const f = e.target.files?.[0];
+                          if (!f) return;
+                          try {
+                            const next = newPhoto(f, photo.is_primary);
+                            setPhotos((v) =>
+                              v.map((p) => (p.id === photo.id ? next : p)),
+                            );
+                          } catch (e) {
+                            setError(
+                              e instanceof Error
+                                ? e.message
+                                : "Перевірте фото.",
+                            );
+                          }
+                        }}
+                      />
+                    </label>
+                    <button
+                      type="button"
+                      className={secondary}
+                      aria-label={`Видалити фото ${i + 1}`}
+                      onClick={() => {
+                        if (!photo.file && pendingRemoval !== photo.id) {
+                          setPendingRemoval(photo.id);
+                          return;
+                        }
+                        setPendingRemoval(null);
+                        setPhotos((v) => {
+                          const next = v.filter((p) => p.id !== photo.id);
+                          if (photo.is_primary && next.length)
+                            next[0] = { ...next[0], is_primary: true };
+                          return next;
+                        });
+                      }}
+                    >
+                      {pendingRemoval === photo.id
+                        ? "Підтвердити видалення"
+                        : "Видалити"}
+                    </button>
+                    {pendingRemoval === photo.id && (
+                      <>
+                        <p className="w-full text-xs leading-5 text-muted">
+                          Фото буде видалено після збереження товару.
+                        </p>
+                        <button
+                          type="button"
+                          className={secondary}
+                          onClick={() => setPendingRemoval(null)}
+                        >
+                          Скасувати
+                        </button>
+                      </>
+                    )}
+                  </div>
+                  {busy && photo.file && (
+                    <div className="mt-3">
+                      <progress
+                        aria-label={`Завантаження фото ${i + 1}`}
+                        max={100}
+                        value={photo.progress}
+                        className="h-2 w-full accent-denim"
+                      />
+                      <p className="mt-1 text-[10px] text-muted">
+                        {photo.uploaded
+                          ? "Фото завантажено"
+                          : photo.progress === 100
+                            ? "Передано 100% · Перевіряємо…"
+                            : `Передано ${photo.progress}%`}
+                      </p>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+            {!photos.length && (
+              <p className="mt-6 bg-canvas p-6 text-sm text-muted">
+                Додайте перше фото. Воно стане головним.
+              </p>
+            )}
+          </section>
+          <section className="border border-line bg-paper p-5 sm:p-8">
+            <h2 className="text-xl font-medium">Розміри, кольори та залишки</h2>
+            <label className="mt-4 block max-w-sm text-xs">
+              Колір для нових розмірів
+              <input
+                aria-label="Колір для нових розмірів"
+                maxLength={60}
+                value={color}
+                onChange={(e) => setColor(e.target.value)}
+                className={field}
+              />
+            </label>
+            <div className="mt-4 flex flex-wrap gap-3">
+              <button
+                type="button"
+                className={secondary}
+                onClick={() => addSizes(["26", "27", "28", "29", "30"])}
+              >
+                Додати 26–30
+              </button>
+              <button
+                type="button"
+                className={secondary}
+                onClick={() => addSizes(["XS", "S", "M", "L", "XL"])}
+              >
+                Додати XS–XL
+              </button>
+              <button
+                type="button"
+                className={secondary}
+                onClick={() => addSizes([""])}
+              >
+                Додати свій розмір
+              </button>
+            </div>
+            <p className="mt-4 text-xs leading-6 text-muted">
+              Кожен розмір і колір має окремий артикул та залишок. Збережені
+              варіанти можна вимкнути, зберігши історію.
+            </p>
+            <div className="mt-6 space-y-4">
+              {variants.map((v, i) => {
+                const update = (patch: Partial<VariantInput>) =>
+                  setVariants((rows) =>
+                    rows.map((r) => (r.id === v.id ? { ...r, ...patch } : r)),
+                  );
+                return (
+                  <div
+                    key={v.id}
+                    className={`grid gap-4 border border-line p-4 sm:grid-cols-2 lg:grid-cols-4 ${v.is_active ? "bg-paper" : "bg-canvas"}`}
+                  >
+                    <label className="min-w-0 text-xs">
+                      Розмір {i + 1}
+                      <input
+                        aria-label={`Розмір ${i + 1}`}
+                        required
+                        maxLength={30}
+                        value={v.size}
+                        onChange={(e) => update({ size: e.target.value })}
+                        className={field}
+                      />
+                    </label>
+                    <label className="min-w-0 text-xs">
+                      Колір варіанта {i + 1}
+                      <input
+                        aria-label={`Колір варіанта ${i + 1}`}
+                        required
+                        maxLength={60}
+                        value={v.color}
+                        onChange={(e) => update({ color: e.target.value })}
+                        className={field}
+                      />
+                    </label>
+                    <label className="min-w-0 text-xs">
+                      Артикул варіанта {i + 1}
+                      <input
+                        aria-label={`Артикул варіанта ${i + 1}`}
+                        required
+                        maxLength={80}
+                        value={v.sku}
+                        onChange={(e) => update({ sku: e.target.value })}
+                        className={field}
+                      />
+                    </label>
+                    <label className="min-w-0 text-xs">
+                      Залишок · {v.size || i + 1} / {v.color || "колір"}
+                      <input
+                        aria-label={`Залишок ${i + 1}`}
+                        required
+                        type="number"
+                        min={0}
+                        max={1000000}
+                        step={1}
+                        value={v.stock}
+                        onChange={(e) =>
+                          update({ stock: Number(e.target.value) })
+                        }
+                        className={field}
+                      />
+                    </label>
+                    <label className="flex min-h-11 items-center gap-2 text-xs">
+                      <input
+                        type="checkbox"
+                        checked={v.is_active}
+                        onChange={(e) =>
+                          update({ is_active: e.target.checked })
+                        }
+                        className="accent-ink"
+                      />
+                      Активний варіант
+                    </label>
+                    {!v.persisted && (
+                      <button
+                        type="button"
+                        className={secondary}
+                        onClick={() =>
+                          setVariants((rows) =>
+                            rows.filter((r) => r.id !== v.id),
+                          )
+                        }
+                      >
+                        Прибрати варіант
+                      </button>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </section>
+          <section className="border border-line bg-paper p-5 sm:p-8">
+            <h2 className="text-xl font-medium">Характеристики</h2>
+            <div className="mt-5 space-y-3">
+              {characteristics.map((c, i) => (
+                <div
+                  key={c.id}
+                  className="grid gap-3 sm:grid-cols-[1fr_1fr_auto]"
+                >
+                  <label className="min-w-0 text-xs">
+                    Назва характеристики {i + 1}
+                    <input
+                      aria-label={`Назва характеристики ${i + 1}`}
+                      maxLength={100}
+                      value={c.name}
+                      onChange={(e) =>
+                        setCharacteristics((v) =>
+                          v.map((row) =>
+                            row.id === c.id
+                              ? { ...row, name: e.target.value }
+                              : row,
+                          ),
+                        )
+                      }
+                      className={field}
+                    />
+                  </label>
+                  <label className="min-w-0 text-xs">
+                    Значення {i + 1}
+                    <input
+                      aria-label={`Значення ${i + 1}`}
+                      maxLength={500}
+                      value={c.value}
+                      onChange={(e) =>
+                        setCharacteristics((v) =>
+                          v.map((row) =>
+                            row.id === c.id
+                              ? { ...row, value: e.target.value }
+                              : row,
+                          ),
+                        )
+                      }
+                      className={field}
+                    />
+                  </label>
+                  <button
+                    type="button"
+                    className={secondary + " self-end"}
+                    onClick={() =>
+                      setCharacteristics((v) =>
+                        v.filter((row) => row.id !== c.id),
+                      )
+                    }
+                  >
+                    Прибрати
+                  </button>
+                </div>
+              ))}
+            </div>
+            <button
+              type="button"
+              disabled={characteristics.length >= 40}
+              className={secondary + " mt-4"}
+              onClick={() =>
+                setCharacteristics((v) => [
+                  ...v,
+                  { id: crypto.randomUUID(), name: "", value: "" },
+                ])
+              }
+            >
+              Додати характеристику
+            </button>
+          </section>
+          <div className="flex flex-wrap items-center gap-4 border border-line bg-paper p-5">
+            <button
+              type="submit"
+              className="min-h-12 bg-ink px-6 text-sm font-semibold text-paper disabled:opacity-50"
+            >
+              {busy ? "Збереження…" : "Зберегти"}
+            </button>
+            <button
+              type="submit"
+              name="saveMode"
+              value="draft"
+              className={secondary}
+            >
+              Зберегти чернетку
+            </button>
+            <Link
+              href="/admin/products"
+              className="inline-flex min-h-11 items-center px-3 text-sm underline"
+            >
+              До списку
+            </Link>
+          </div>
+        </fieldset>
+      </form>
+      {p && p.status !== "archived" && (
+        <ArchiveProduct id={id} version={p.updated_at} />
+      )}
+    </div>
+  );
+}
