@@ -1,0 +1,43 @@
+{
+  "status": "pass",
+  "orders": [
+    {
+      "order_number": 17,
+      "released": false,
+      "status": "shipped",
+      "total_kopecks": 129900
+    },
+    {
+      "order_number": 18,
+      "released": true,
+      "status": "cancelled",
+      "total_kopecks": 129900
+    }
+  ],
+  "stocks": [
+    {
+      "size": "26",
+      "stock": 2
+    },
+    {
+      "size": "27",
+      "stock": 5
+    },
+    {
+      "size": "28",
+      "stock": 0
+    },
+    {
+      "size": "29",
+      "stock": 2
+    },
+    {
+      "size": "30",
+      "stock": 4
+    }
+  ],
+  "duplicateCancellationViaStaleTab": true,
+  "stock27Before": 4,
+  "stock27After": 5,
+  "inventoryReturnedExactlyOnce": true
+}

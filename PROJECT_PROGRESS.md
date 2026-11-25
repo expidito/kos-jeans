@@ -21,7 +21,7 @@
 | 10 | Админка: товары, фото, цены, варианты и склад | done | 2026-11-25 | [PR #10](https://github.com/expidito/kos-jeans/pull/10), [Preview](https://kos-jeans-git-feat-block-10-admin-products-fedir-team.vercel.app/admin/products); UI/hosted приёмка пройдена |
 | 11 | Полноценная корзина | done | 2026-11-25 | [PR #11](https://github.com/expidito/kos-jeans/pull/11), [Preview](https://kos-jeans-git-feat-block-11-shopping-cart-fedir-team.vercel.app/cart) |
 | 12 | Оформление заказа и атомарные остатки | done | 2026-11-25 | [PR #12](https://github.com/expidito/kos-jeans/pull/12); local/hosted/Preview приняты, merge после подтверждения |
-| 13 | Админка: заказы и статусы | todo | 2026-11-23 | — |
+| 13 | Админка: заказы и статусы | done | 2026-11-25 | [PR #13](https://github.com/expidito/kos-jeans/pull/13); local/hosted/Preview приняты, merge после подтверждения |
 | 14 | Баннеры, настройки, контентные страницы и SEO | todo | 2026-11-23 | — |
 | 15 | Полное тестирование и защита | todo | 2026-11-23 | — |
 | 16 | Итоговая публикация и подготовка к домену | todo | 2026-11-23 | — |
@@ -919,3 +919,80 @@
 - **Блок 12 done**. PR #12 подготовлен к review, без слияния до подтверждения владельца.
   Только kos-jeans-dev; оплаты/API доставки нет; Preview требует доступ Vercel.
   Блок 13 (админка заказов и статусы) не начат.
+
+### Блок 13 — начало, 2026-11-25
+
+- Владелец принял блок 12 и разрешил слияние зелёного PR #12; PR слит.
+- main/origin/main синхронизированы до 792f18e; создана feat/block-13-admin-orders.
+- Реализуются список/карточка заказа и защищённые атомарные переходы статусов.
+- Только kos-jeans-dev; Production env не меняется, блок 14 не начат.
+
+### Блок 13 — реализация и технические проверки, 2026-11-25
+
+- Production main 792f18e Ready: главная/корзина 200, checkout отключён,
+  admin закрыт, dev-товар 404. [Отчёт](docs/checks/block13-production.json).
+  Production env не менялся; тестовая база не подключена.
+- Список /admin/orders: номер/дата/покупатель/сумма/количество/доставка/статус,
+  точный поиск номера, статус/даты Europe/Kyiv, сортировка, страницы по 20.
+  Карточка /admin/orders/[id] читает сохранённые snapshots, не актуальную цену.
+- Подтверждаемые переходы: new → processing/cancelled; processing → shipped/cancelled;
+  shipped → completed; completed/cancelled конечные. CAS версии и FOR UPDATE,
+  повтор текущего статуса no-op, отмена и возврат stock в одной транзакции.
+  Архивные варианты поддерживаются; удалённые не воссоздаются по изменяемому SKU.
+- Миграция 20261125000700 применена только в kos-jeans-dev, типы обновлены.
+  Проверки роли выполняются и Next.js, и SQL; прямые order writes запрещены.
+  Секрет в браузерных assets отсутствует, .env.local игнорируется Git.
+- 68 тестов, lint/typecheck и Webpack production build успешны; оба CI успешны
+  на a6aa2e6: [push](https://github.com/expidito/kos-jeans/actions/runs/45678021133),
+  [PR](https://github.com/expidito/kos-jeans/actions/runs/45678035572).
+- [Hosted](docs/checks/block13-hosted.json): две параллельные отмены → один возврат;
+  конфликт разных статусов → один успех/один отказ; снимки цены, фильтры, RLS,
+  запреты без Auth и CSRF. Только собственные fixtures, история сохранена,
+  временный ассортимент архивирован; роли никому не назначались.
+- В первоначальном hosted fixture вариант был неактивен по default схемы.
+  Данные теста исправлены на явный is_active=true; весь сценарий затем прошёл.
+- [Vercel Preview Ready](https://vercel.com/fedir-team/kos-jeans/ApFMqDPhT82p7BEQzea6B1g3AVpF).
+  Реальный /admin/orders без сессии показал вход, контакты не раскрыты.
+- **blocked только для браузерной Preview-приёмки**: владелец должен войти своей
+  постоянной учётной записью в открытой Chrome-вкладке
+  https://kos-jeans-git-feat-block-13-admin-orders-fedir-team.vercel.app/admin/login
+  и сообщить «Вошёл в Preview блока 13». Пароль в чат не передавать.
+  После входа: публичный тестовый заказ → admin new/processing/shipped,
+  отдельная отмена/retry/проверка склада, ширины 320/390/768/1440 и клавиатура,
+  безопасный teardown только своих записей. PR #13 Draft, не merge. Блок 14 не начат.
+
+### Блок 13 — финальная Preview-приёмка, 2026-11-25
+
+- Владелец вошёл в Preview; ограничение отсутствующей сессии снято.
+  [Заказы](https://kos-jeans-git-feat-block-13-admin-orders-fedir-team.vercel.app/admin/orders).
+  Серверная переменная checkout уже действует для всех Preview, изменений Vercel env не было.
+- Через публичный Preview создан заказ №17: размер 26 × 1, 1299 ₴, вымышленные
+  имя/телефон/город/отделение. Без deploy появился в списке; карточка показала
+  верные SKU, размер/цвет, количество, доставку, комментарий и snapshot цены.
+  Через UI пройдены new → processing → shipped; после shipped отмена недоступна.
+- Отдельный заказ №18: размер 27 × 1, new → cancelled с подтверждением и двойным
+  нажатием. Повтор из второй устаревшей вкладки вернул «Цей статус уже збережено».
+  SQL подтвердил stock 27: 4 → 5, inventory_released_at установлен; двойного возврата нет.
+- Через редактор цена TEST Wide Leg временно изменена 1299 → 1399 ₴.
+  Reload карточки №17 сохранил исходные 1299 ₴. Цена через редактор возвращена 1299 ₴.
+- Проверены список и карточка на 320/390/768/1440 px: горизонтальной прокрутки нет.
+  Tab переводит фокус с номера в статус; мобильное меню открывается и закрывается
+  после навигации. Совместные фильтры номера и статуса показывают один нужный заказ.
+  Новый автоматический SQL-тест проверяет даты/статус, сортировку и страницы 20+2.
+- [Preview UI](docs/checks/block13-preview-ui.json),
+  [отмена/SQL](docs/checks/block13-preview-cancellation.json),
+  [responsive](docs/previews/orders/responsive.json),
+  [desktop](docs/previews/orders/detail-desktop.jpg),
+  [mobile](docs/previews/orders/detail-mobile.jpg). Скриншоты обрезаны по main,
+  email сессии владельца не включён; контакты на них исключительно вымышленные.
+- Точный dev-only teardown `orders:cleanup:ui` выполнен дважды. Только свои
+  маркеры UI-SHIPPED/UI-CANCELLED, история сохранена. №17 восстановлен доверенной
+  тестовой уборкой БД; публичный запрет отмены shipped не менялся.
+  [Проверка](docs/checks/block13-ui-restored.json): stocks 3/5/0/2/4, price 1299,
+  old price 1499, published, пять фото. Существующий ассортимент не удалялся.
+- 69 тестов, lint и typecheck успешны. Функциональный код уже прошёл production
+  build и CI; финальный push повторно проверяется CI/Vercel. Dashboard больше не
+  сообщает, что управление заказами ещё отсутствует. README и инструкция обновлены.
+- **Блок 13 done**, PR #13 готовится к review после финального CI, без merge.
+  Production main 792f18e остаётся изолированной от dev; окружение не менялось.
+  Следующий блок 14 (баннеры, настройки, контент и SEO) не начат.

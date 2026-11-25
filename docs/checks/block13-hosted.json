@@ -1,0 +1,40 @@
+{
+  "status": "pass",
+  "checks": [
+    {
+      "check": "Authenticated admin cancels atomically; stale retry returns same result and restores once",
+      "status": "pass"
+    },
+    {
+      "check": "Two concurrent administrator cancellations both finish without double restoration",
+      "status": "pass"
+    },
+    {
+      "check": "Conflicting concurrent status writes: one wins and stale administrator is rejected",
+      "status": "pass"
+    },
+    {
+      "check": "Historical order totals and snapshots survive current catalog price changes",
+      "status": "pass"
+    },
+    {
+      "check": "Admin exact-number, date and status filters return the real order",
+      "status": "pass"
+    },
+    {
+      "check": "Anonymous and ordinary users cannot mutate/read orders or call privileged search",
+      "status": "pass"
+    },
+    {
+      "check": "Protected pages redirect without session; mutation API rejects unauthenticated and cross-origin requests",
+      "status": "pass"
+    },
+    {
+      "check": "Only owned fixture orders restored once, history retained, fixture archived; existing assortment untouched",
+      "status": "pass"
+    }
+  ],
+  "existingAssortmentRemoved": false,
+  "rolesAssigned": false,
+  "productionEnvironmentChanged": false
+}

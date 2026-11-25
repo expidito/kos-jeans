@@ -1,0 +1,35 @@
+{
+  "status": "pass",
+  "ordersCreatedThroughPublicPreview": [
+    17,
+    18
+  ],
+  "shippingOrder": {
+    "number": 17,
+    "transitions": [
+      "new",
+      "processing",
+      "shipped"
+    ],
+    "cancelUnavailableWhenShipped": true
+  },
+  "cancellationOrder": {
+    "number": 18,
+    "doubleClick": true,
+    "staleTabRetry": true,
+    "terminalStatus": true
+  },
+  "snapshotPriceMinor": 129900,
+  "catalogPriceTemporarilyChangedToMinor": 139900,
+  "catalogPriceRestoredToMinor": 129900,
+  "filtersNumberAndStatus": true,
+  "keyboardNavigation": true,
+  "mobileMenu": true,
+  "widths": [
+    320,
+    390,
+    768,
+    1440
+  ],
+  "customerData": "fictitious only"
+}

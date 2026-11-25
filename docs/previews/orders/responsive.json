@@ -1,0 +1,45 @@
+{
+  "status": "pass",
+  "detail": [
+    {
+      "brokenImages": 0,
+      "scrollWidth": 1440,
+      "width": 1440
+    },
+    {
+      "brokenImages": 0,
+      "scrollWidth": 320,
+      "width": 320
+    },
+    {
+      "brokenImages": 0,
+      "scrollWidth": 390,
+      "width": 390
+    },
+    {
+      "brokenImages": 0,
+      "scrollWidth": 768,
+      "width": 768
+    }
+  ],
+  "list": [
+    {
+      "scrollWidth": 320,
+      "width": 320
+    },
+    {
+      "scrollWidth": 390,
+      "width": 390
+    },
+    {
+      "scrollWidth": 768,
+      "width": 768
+    },
+    {
+      "scrollWidth": 1440,
+      "width": 1440
+    }
+  ],
+  "keyboard": "number input -> status select by Tab",
+  "mobileMenuOpensAndClosesOnNavigation": true
+}
