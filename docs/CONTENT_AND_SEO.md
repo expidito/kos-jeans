@@ -92,4 +92,18 @@ dev-БД/Storage и HTTP: публикацию, немедленную смен�
 контакт в footer/contacts, SEO/noindex, RLS/API/CSRF. Контакты вымышленные; исходная
 настройка восстанавливается, только собственный баннер архивируется, фото приватное.
 
-Реальная браузерная Preview-приёмка ещё выполняется. До неё блок не done.
+Публичная Preview-приёмка главной/footer и /delivery пройдена, 320/390/768/1440
+без горизонтальной прокрутки. [Отчёт](previews/content/public-responsive.json).
+[Preview](https://kos-jeans-git-feat-block-14-content-seo-fedir-team.vercel.app/),
+[баннеры](https://kos-jeans-git-feat-block-14-content-seo-fedir-team.vercel.app/admin/banners),
+[настройки](https://kos-jeans-git-feat-block-14-content-seo-fedir-team.vercel.app/admin/settings).
+
+Ожидается вход владельца в новую Preview-ветку. До сквозного теста редактирования
+через браузер блок blocked, PR #14 Draft. Пароль в чат не передавать.
+Новых переменных окружения для админки не требуется. Блок 15 не начат.
+
+Просмотрены публичные [доставка Spazio](https://spazio.ua/ua/help/?tab=delivery),
+[возвраты](https://spazio.ua/ua/help/?tab=change) и
+[соглашение](https://spazio.ua/ua/public_purchase_agreement/).
+Использован только общий паттерн информационных ссылок; содержание и обязательства
+составлены заново как незаполненные черновики KOS JEANS, чужие условия не перенесены.

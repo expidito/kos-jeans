@@ -22,7 +22,7 @@
 | 11 | Полноценная корзина | done | 2026-11-25 | [PR #11](https://github.com/expidito/kos-jeans/pull/11), [Preview](https://kos-jeans-git-feat-block-11-shopping-cart-fedir-team.vercel.app/cart) |
 | 12 | Оформление заказа и атомарные остатки | done | 2026-11-25 | [PR #12](https://github.com/expidito/kos-jeans/pull/12); local/hosted/Preview приняты, merge после подтверждения |
 | 13 | Админка: заказы и статусы | done | 2026-11-25 | [PR #13](https://github.com/expidito/kos-jeans/pull/13); local/hosted/Preview приняты, merge после подтверждения |
-| 14 | Баннеры, настройки, контентные страницы и SEO | in_progress | 2026-11-23 | — |
+| 14 | Баннеры, настройки, контентные страницы и SEO | blocked | 2026-11-25 | [PR #14](https://github.com/expidito/kos-jeans/pull/14); ожидается вход владельца в Preview для UI-приёмки |
 | 15 | Полное тестирование и защита | todo | 2026-11-23 | — |
 | 16 | Итоговая публикация и подготовка к домену | todo | 2026-11-23 | — |
 
@@ -1002,3 +1002,42 @@
 - Владелец принял блок 13. Зелёный PR #13 слит, main/origin/main 3a53885.
 - Создана feat/block-14-content-seo. Реализуются баннеры, настройки, информационные страницы и SEO.
 - Только kos-jeans-dev/Preview; индексация заблокирована, Production env не меняется. Блок 15 не начат.
+
+### Блок 14 — техническая приёмка и Preview, 2026-11-25
+
+- PR #13 слит по разрешению владельца после зелёных проверок. Production main
+  3a53885 Ready, главная/корзина 200, admin закрыт, dev-товар 404.
+  [Отчёт](docs/checks/block14-production.json). Production env не менялся.
+- /admin/banners: создание приватной черновой записи, MIME/сигнатура JPEG/PNG/WebP
+  до 3 MiB, предпросмотр, title/subtitle/alt/button, существующая цель, порядок,
+  период, видимость и архив. SQL и RLS защищают изменения/фото, ошибки версии и retry.
+- /admin/settings: allowlisted публичные ключи, подтверждение контактов/social URLs,
+  редактируемые about/delivery/payment/returns/privacy/terms. Общий динамический
+  footer и пять информационных страниц; черновики явно обозначены.
+- Миграция 20261125000800 применена только в kos-jeans-dev; типы обновлены.
+  [Hosted](docs/checks/block14-hosted.json): публикация/смена текста без deploy,
+  недоступность черновых/будущих/скрытых фото, unsafe URL/stale version, контакт
+  в footer/contacts, SEO, запреты обычной роли/анонимного API/CSRF и восстановление.
+  Только собственный баннер архивирован, исходные контакты восстановлены.
+- [SEO](docs/checks/block14-seo.json): уникальные title/description, OG/Twitter,
+  Production canonical. noindex meta/header, robots Disallow: /, sitemap пустой:
+  никаких Preview/test URL. Product structured data выключены для тестового магазина.
+  Индексация не включается переменными; требуется отдельное разрешение после 15–16.
+- 74 теста, lint/typecheck и Webpack production build успешны. Оба CI на 4677ad1
+  зелёные: [push](https://github.com/expidito/kos-jeans/actions/runs/45683276225),
+  [PR](https://github.com/expidito/kos-jeans/actions/runs/45683291323).
+  [Vercel Ready](https://vercel.com/fedir-team/kos-jeans/LsVjYA3cJ7L2dXHd9oaPrCWXqGnE).
+- Настоящий Preview главной открылся, footer содержит рабочие инфо-ссылки;
+  /delivery показывает незаполненные черновики. [Адаптивность](docs/previews/content/public-responsive.json):
+  главная/инфостраница на 320/390/768/1440 без overflow, сломанных фото нет.
+- **blocked только для финальной административной UI-приёмки**: владелец должен войти
+  своей постоянной учётной записью в открытой Chrome-вкладке
+  https://kos-jeans-git-feat-block-14-content-seo-fedir-team.vercel.app/admin/login
+  и сообщить «Вошёл в Preview блока 14». Пароль в чат не передавать.
+  После входа: создать/загрузить/опубликовать/изменить/скрыть баннер через UI,
+  тестовый контакт/social URL → footer, responsive админки/клавиатура,
+  восстановление своих тестовых настроек и архивация баннера. PR #14 Draft, не merge.
+- Перед реальным запуском нужны подтверждённые контакты/реквизиты, доставка/оплата,
+  правила возвратов и согласованные privacy/terms: [перечень](docs/CONTENT_AND_SEO.md).
+  Старые заменённые файлы хранятся приватно для аудита; постоянной очистки orphan фото нет.
+  Блок 15 не начат.

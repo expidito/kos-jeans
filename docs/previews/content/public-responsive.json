@@ -1,0 +1,51 @@
+{
+  "status": "pass",
+  "home": [
+    {
+      "brokenImages": 0,
+      "page": "home",
+      "scrollWidth": 320,
+      "width": 320
+    },
+    {
+      "brokenImages": 0,
+      "page": "home",
+      "scrollWidth": 390,
+      "width": 390
+    },
+    {
+      "brokenImages": 0,
+      "page": "home",
+      "scrollWidth": 768,
+      "width": 768
+    },
+    {
+      "brokenImages": 0,
+      "page": "home",
+      "scrollWidth": 1440,
+      "width": 1440
+    }
+  ],
+  "information": [
+    {
+      "page": "delivery",
+      "scrollWidth": 320,
+      "width": 320
+    },
+    {
+      "page": "delivery",
+      "scrollWidth": 390,
+      "width": 390
+    },
+    {
+      "page": "delivery",
+      "scrollWidth": 768,
+      "width": 768
+    },
+    {
+      "page": "delivery",
+      "scrollWidth": 1440,
+      "width": 1440
+    }
+  ]
+}
