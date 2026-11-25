@@ -19,7 +19,7 @@
 | 08 | Защищённый вход администратора и каркас `/admin` | done | 2026-11-24 | [PR #8](https://github.com/expidito/kos-jeans/pull/8), [Preview](https://kos-jeans-git-feat-block-08-admin-auth-fedir-team.vercel.app/admin/login); роль владельца, живой вход, Dashboard, выход и защита проверены |
 | 09 | Админка: категории и подкатегории | done | 2026-11-24 | [PR #9](https://github.com/expidito/kos-jeans/pull/9), [Preview](https://kos-jeans-git-feat-block-09-admin-categories-fedir-team.vercel.app/admin/categories); живая приёмка пройдена, Production main c571bfd опубликована с разрешения владельца |
 | 10 | Админка: товары, фото, цены, варианты и склад | done | 2026-11-25 | [PR #10](https://github.com/expidito/kos-jeans/pull/10), [Preview](https://kos-jeans-git-feat-block-10-admin-products-fedir-team.vercel.app/admin/products); UI/hosted приёмка пройдена |
-| 11 | Полноценная корзина | todo | 2026-11-23 | — |
+| 11 | Полноценная корзина | in_progress | 2026-11-25 | Ветка feat/block-11-shopping-cart |
 | 12 | Оформление заказа и атомарные остатки | todo | 2026-11-23 | — |
 | 13 | Админка: заказы и статусы | todo | 2026-11-23 | — |
 | 14 | Баннеры, настройки, контентные страницы и SEO | todo | 2026-11-23 | — |
@@ -805,3 +805,9 @@
   файлов обрабатывается при следующем сохранении/загрузке, постоянный cron не добавлен.
 - **Блок 10 done**, PR #10 подготовлен к review, merge только после подтверждения владельца.
   Следующий блок 11 (корзина) не начат.
+
+### Блок 11 — начало, 2026-11-25
+
+- Владелец принял блок 10. Зелёный PR #10 слит, main синхронизирована до 42591a5.
+- Создана feat/block-11-shopping-cart. Реализуется корзина с localStorage и анонимной RLS-сверкой цен/остатков.
+- Заказы, платежи, доставка и списание остатков не реализуются. Блок 12 не начат.
