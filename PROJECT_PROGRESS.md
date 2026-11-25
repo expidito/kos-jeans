@@ -21,7 +21,7 @@
 | 10 | Админка: товары, фото, цены, варианты и склад | done | 2026-11-25 | [PR #10](https://github.com/expidito/kos-jeans/pull/10), [Preview](https://kos-jeans-git-feat-block-10-admin-products-fedir-team.vercel.app/admin/products); UI/hosted приёмка пройдена |
 | 11 | Полноценная корзина | done | 2026-11-25 | [PR #11](https://github.com/expidito/kos-jeans/pull/11), [Preview](https://kos-jeans-git-feat-block-11-shopping-cart-fedir-team.vercel.app/cart) |
 | 12 | Оформление заказа и атомарные остатки | done | 2026-11-25 | [PR #12](https://github.com/expidito/kos-jeans/pull/12); local/hosted/Preview приняты, merge после подтверждения |
-| 13 | Админка: заказы и статусы | in_progress | 2026-11-23 | — |
+| 13 | Админка: заказы и статусы | blocked | 2026-11-25 | [PR #13](https://github.com/expidito/kos-jeans/pull/13); ожидается вход владельца для Preview UI-приёмки |
 | 14 | Баннеры, настройки, контентные страницы и SEO | todo | 2026-11-23 | — |
 | 15 | Полное тестирование и защита | todo | 2026-11-23 | — |
 | 16 | Итоговая публикация и подготовка к домену | todo | 2026-11-23 | — |
@@ -926,3 +926,37 @@
 - main/origin/main синхронизированы до 792f18e; создана feat/block-13-admin-orders.
 - Реализуются список/карточка заказа и защищённые атомарные переходы статусов.
 - Только kos-jeans-dev; Production env не меняется, блок 14 не начат.
+
+### Блок 13 — реализация и технические проверки, 2026-11-25
+
+- Production main 792f18e Ready: главная/корзина 200, checkout отключён,
+  admin закрыт, dev-товар 404. [Отчёт](docs/checks/block13-production.json).
+  Production env не менялся; тестовая база не подключена.
+- Список /admin/orders: номер/дата/покупатель/сумма/количество/доставка/статус,
+  точный поиск номера, статус/даты Europe/Kyiv, сортировка, страницы по 20.
+  Карточка /admin/orders/[id] читает сохранённые snapshots, не актуальную цену.
+- Подтверждаемые переходы: new → processing/cancelled; processing → shipped/cancelled;
+  shipped → completed; completed/cancelled конечные. CAS версии и FOR UPDATE,
+  повтор текущего статуса no-op, отмена и возврат stock в одной транзакции.
+  Архивные варианты поддерживаются; удалённые не воссоздаются по изменяемому SKU.
+- Миграция 20261125000700 применена только в kos-jeans-dev, типы обновлены.
+  Проверки роли выполняются и Next.js, и SQL; прямые order writes запрещены.
+  Секрет в браузерных assets отсутствует, .env.local игнорируется Git.
+- 68 тестов, lint/typecheck и Webpack production build успешны; оба CI успешны
+  на a6aa2e6: [push](https://github.com/expidito/kos-jeans/actions/runs/45678021133),
+  [PR](https://github.com/expidito/kos-jeans/actions/runs/45678035572).
+- [Hosted](docs/checks/block13-hosted.json): две параллельные отмены → один возврат;
+  конфликт разных статусов → один успех/один отказ; снимки цены, фильтры, RLS,
+  запреты без Auth и CSRF. Только собственные fixtures, история сохранена,
+  временный ассортимент архивирован; роли никому не назначались.
+- В первоначальном hosted fixture вариант был неактивен по default схемы.
+  Данные теста исправлены на явный is_active=true; весь сценарий затем прошёл.
+- [Vercel Preview Ready](https://vercel.com/fedir-team/kos-jeans/ApFMqDPhT82p7BEQzea6B1g3AVpF).
+  Реальный /admin/orders без сессии показал вход, контакты не раскрыты.
+- **blocked только для браузерной Preview-приёмки**: владелец должен войти своей
+  постоянной учётной записью в открытой Chrome-вкладке
+  https://kos-jeans-git-feat-block-13-admin-orders-fedir-team.vercel.app/admin/login
+  и сообщить «Вошёл в Preview блока 13». Пароль в чат не передавать.
+  После входа: публичный тестовый заказ → admin new/processing/shipped,
+  отдельная отмена/retry/проверка склада, ширины 320/390/768/1440 и клавиатура,
+  безопасный teardown только своих записей. PR #13 Draft, не merge. Блок 14 не начат.

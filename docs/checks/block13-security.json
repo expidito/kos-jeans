@@ -1,0 +1,8 @@
+{
+  "serverSecretInBrowserAssets": false,
+  "adminOperationsUseSessionJWT": true,
+  "ordersTableWritesDenied": true,
+  "csrfRejectionTested": true,
+  "publicOrderReadDenied": true,
+  "productionIsolated": true
+}
