@@ -18,7 +18,7 @@
 | 07 | Страница товара и варианты | done | 2026-11-24 | [PR #7](https://github.com/expidito/kos-jeans/pull/7), [товар в Preview](https://kos-jeans-git-feat-block-07-product-detail-fedir-team.vercel.app/product/test-catalog-1), CI и проверки пройдены |
 | 08 | Защищённый вход администратора и каркас `/admin` | done | 2026-11-24 | [PR #8](https://github.com/expidito/kos-jeans/pull/8), [Preview](https://kos-jeans-git-feat-block-08-admin-auth-fedir-team.vercel.app/admin/login); роль владельца, живой вход, Dashboard, выход и защита проверены |
 | 09 | Админка: категории и подкатегории | done | 2026-11-24 | [PR #9](https://github.com/expidito/kos-jeans/pull/9), [Preview](https://kos-jeans-git-feat-block-09-admin-categories-fedir-team.vercel.app/admin/categories); живая приёмка пройдена, Production main c571bfd опубликована с разрешения владельца |
-| 10 | Админка: товары, фото, цены, варианты и склад | todo | 2026-11-23 | — |
+| 10 | Админка: товары, фото, цены, варианты и склад | in_progress | 2026-11-24 | [PR #10](https://github.com/expidito/kos-jeans/pull/10); UI-приёмка Preview |
 | 11 | Полноценная корзина | todo | 2026-11-23 | — |
 | 12 | Оформление заказа и атомарные остатки | todo | 2026-11-23 | — |
 | 13 | Админка: заказы и статусы | todo | 2026-11-23 | — |
@@ -757,3 +757,7 @@
 - PR #9 слит; main синхронизирована до ee93028. Автоматический Production Deployment успешен; дополнительная проверка домена выполняется.
 - Создана отдельная ветка feat/block-10-admin-products. Статус блока 10: in_progress.
 - Реализуется редактор реальных товаров, приватных фото и стабильных вариантов; тестовая база только kos-jeans-dev. Блок 11 не начат.
+
+- Production main ee93028 проверен: Ready, домен kos-jeans.vercel.app, страницы 200/noindex; admin закрыт, тестовый товар 404. Dev не подключён к Production.
+- Миграция 20261124000500 применена в kos-jeans-dev; типы регенерированы. Локально 45 тестов, lint, typecheck, Webpack build успешны; CI и Preview a99d4ce успешны.
+- Владелец вошёл в новую Preview-ветку. Сквозная UI-приёмка продолжается. PR #10 Draft, merge не выполняется.

@@ -2,7 +2,7 @@ import {before,after,test} from 'node:test';
 import assert from 'node:assert/strict';
 import {randomUUID} from 'node:crypto';
 import {createTestDatabase,withRole} from './helpers/database.mjs';
-import {moneyMinor,productInput} from '../src/lib/admin/products/validation.ts';
+import {moneyMinor,productInput,compareVariants} from '../src/lib/admin/products/validation.ts';
 const ADMIN='40000000-0000-4000-8000-000000000001',USER='40000000-0000-4000-8000-000000000002',C='10000000-0000-4000-8000-000000000002';let db;
 before(async()=>{db=await createTestDatabase();await db.exec(`insert into auth.users(id) values('${ADMIN}'),('${USER}');insert into private.admin_users values('${ADMIN}',now());`);});after(async()=>db.close());
 const input=(extra={})=>({name:'ТЕСТ Wide Leg',sku:'TEST-NEW',slug:'test-new',description:'Тест, не продається',material:'Бавовна',characteristics:{},price_kopecks:149900,old_price_kopecks:null,status:'draft',is_new:true,is_featured:false,categories:[C],variants:[],images:[],...extra});
@@ -19,3 +19,5 @@ test('negative stock and foreign variants/images cannot be committed',async()=>{
 test('stale snapshots and changed idempotency payload are rejected',async()=>{await assert.rejects(withRole(db,'authenticated',ADMIN,async d=>{const id=await draft(d);await write(d,id,input(),new Date(0).toISOString());}),/product changed/);await assert.rejects(withRole(db,'authenticated',ADMIN,async d=>{const id=randomUUID(),request=randomUUID();await write(d,id,input(),null,'reserve',request);await write(d,id,input({name:'changed'}),null,'reserve',request);}),/request reused/);});
 test('admin search filters, hierarchy and sort return real products',async()=>withRole(db,'authenticated',ADMIN,async d=>{const id=await draft(d);await write(d,id,input(),await version(d,id));const result=(await d.query("select public.admin_product_search('TEST-NEW',$1,'draft','price_asc',1) result",[C])).rows[0].result;assert.equal(result.total,1);assert.equal(result.items[0].id,id);assert.deepEqual(result.items[0].category_names,['ТЕСТ · Джинси']);}));
 test('anonymous and ordinary authenticated users cannot write, upload, clean or search admin data',async()=>{for(const [role,user] of [['anon',null],['authenticated',USER]])for(const sql of ["select public.admin_product_write($1,$2,'{}'::jsonb)","select public.admin_product_upload($2,$1,'jpg',repeat('a',64))","select public.admin_product_cleanup()","select public.admin_product_search()"]){await assert.rejects(withRole(db,role,user,d=>d.query(sql,sql.includes('$1')?[randomUUID(),randomUUID()]:[])),/permission denied|admin required/);}});
+
+test('editor sizes retain human numeric order regardless of UUID or insertion order',()=>{const rows=['30','28','26','27','29'].map((size,i)=>({size,color:'Синій',id:String(i)}));assert.deepEqual(rows.sort(compareVariants).map(v=>v.size),['26','27','28','29','30']);});

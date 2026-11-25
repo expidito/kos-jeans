@@ -26,3 +26,5 @@ export function productInput(raw:unknown):ProductInput{
  if(typeof v.is_new!=='boolean'||typeof v.is_featured!=='boolean')throw Error('Перевірте позначки товару.');
  return {name,sku,slug,description:text(v.description,'Опис',20000),material:text(v.material,'Матеріал',5000),characteristics,price_kopecks:price,old_price_kopecks:old,status:v.status as ProductInput['status'],is_new:v.is_new,is_featured:v.is_featured,categories,variants,images};
 }
+
+export function compareVariants(a:{size:string;color:string;id:string},b:{size:string;color:string;id:string}){return a.color.localeCompare(b.color,'uk')||a.size.localeCompare(b.size,'uk',{numeric:true})||a.id.localeCompare(b.id);}
