@@ -118,11 +118,12 @@ export type Database = {
       homepage_banners: {
         Row: {
           alt_text: string
+          archived_at: string | null
           button_label: string | null
           created_at: string
           ends_at: string | null
           id: string
-          image_path: string
+          image_path: string | null
           is_visible: boolean
           link_path: string | null
           sort_order: number
@@ -133,11 +134,12 @@ export type Database = {
         }
         Insert: {
           alt_text?: string
+          archived_at?: string | null
           button_label?: string | null
           created_at?: string
           ends_at?: string | null
           id?: string
-          image_path: string
+          image_path?: string | null
           is_visible?: boolean
           link_path?: string | null
           sort_order?: number
@@ -148,11 +150,12 @@ export type Database = {
         }
         Update: {
           alt_text?: string
+          archived_at?: string | null
           button_label?: string | null
           created_at?: string
           ends_at?: string | null
           id?: string
-          image_path?: string
+          image_path?: string | null
           is_visible?: boolean
           link_path?: string | null
           sort_order?: number
@@ -491,6 +494,17 @@ export type Database = {
           p_values: Json
         }
         Returns: string
+      }
+      admin_content_write: {
+        Args: {
+          p_command?: string
+          p_kind: string
+          p_request: string
+          p_target: string
+          p_values?: Json
+          p_version?: string
+        }
+        Returns: Json
       }
       admin_order_search: {
         Args: {

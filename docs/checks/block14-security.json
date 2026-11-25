@@ -1,0 +1,9 @@
+{
+  "status": "pass",
+  "secretInRepositoryFiles": false,
+  "secretInBrowserAssets": false,
+  "privateBannerMediaTested": true,
+  "settingsAllowlist": true,
+  "csrfRejected": true,
+  "productionEnvironmentChanged": false
+}

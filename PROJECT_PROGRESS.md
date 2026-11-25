@@ -22,7 +22,7 @@
 | 11 | Полноценная корзина | done | 2026-11-25 | [PR #11](https://github.com/expidito/kos-jeans/pull/11), [Preview](https://kos-jeans-git-feat-block-11-shopping-cart-fedir-team.vercel.app/cart) |
 | 12 | Оформление заказа и атомарные остатки | done | 2026-11-25 | [PR #12](https://github.com/expidito/kos-jeans/pull/12); local/hosted/Preview приняты, merge после подтверждения |
 | 13 | Админка: заказы и статусы | done | 2026-11-25 | [PR #13](https://github.com/expidito/kos-jeans/pull/13); local/hosted/Preview приняты, merge после подтверждения |
-| 14 | Баннеры, настройки, контентные страницы и SEO | todo | 2026-11-23 | — |
+| 14 | Баннеры, настройки, контентные страницы и SEO | in_progress | 2026-11-23 | — |
 | 15 | Полное тестирование и защита | todo | 2026-11-23 | — |
 | 16 | Итоговая публикация и подготовка к домену | todo | 2026-11-23 | — |
 
@@ -996,3 +996,9 @@
 - **Блок 13 done**, PR #13 готовится к review после финального CI, без merge.
   Production main 792f18e остаётся изолированной от dev; окружение не менялось.
   Следующий блок 14 (баннеры, настройки, контент и SEO) не начат.
+
+### Блок 14 — начало, 2026-11-25
+
+- Владелец принял блок 13. Зелёный PR #13 слит, main/origin/main 3a53885.
+- Создана feat/block-14-content-seo. Реализуются баннеры, настройки, информационные страницы и SEO.
+- Только kos-jeans-dev/Preview; индексация заблокирована, Production env не меняется. Блок 15 не начат.

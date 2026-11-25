@@ -1,0 +1,27 @@
+{
+  "commit": "3a538858c49d083b8377f0be4106f2e9e567294b",
+  "deployment": "https://vercel.com/fedir-team/kos-jeans/85ZXUDh4ymi42L3A28kkuXPeN5db",
+  "checks": [
+    {
+      "path": "/",
+      "status": 200,
+      "location": null
+    },
+    {
+      "path": "/cart",
+      "status": 200,
+      "location": null
+    },
+    {
+      "path": "/admin/orders",
+      "status": 307,
+      "location": "/admin/login?error=unavailable"
+    },
+    {
+      "path": "/product/test-wide-leg-blue",
+      "status": 404,
+      "location": null
+    }
+  ],
+  "productionEnvironmentChanged": false
+}
