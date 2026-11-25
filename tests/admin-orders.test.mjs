@@ -28,7 +28,7 @@ async function admin(fn) {
     throw e;
   }
 }
-async function order() {
+async function order(price = 149900) {
   const { rows } = await db.query(
     "select public.checkout_submit($1,$2,$3::jsonb)",
     [
@@ -43,7 +43,7 @@ async function order() {
           address: "Тестове відділення",
           comment: "TEST-ORDERS",
         },
-        items: [{ variantId: V, price: 149900, quantity: 1 }],
+        items: [{ variantId: V, price, quantity: 1 }],
       }),
     ],
   );
@@ -228,4 +228,49 @@ test("snapshots survive price edits; archived variants restore; deleted variants
       1,
     );
   });
+});
+
+test("order search combines Kyiv dates/status, sorts totals and paginates deterministically", async () => {
+  const ids = [];
+  for (let i = 0; i < 22; i++) {
+    const price = 10000 + i * 100;
+    await db.query("update public.products set price_kopecks=$1 where id=$2", [
+      price,
+      P,
+    ]);
+    const o = await order(price);
+    ids.push(o.id);
+    await db.query(
+      "update public.orders set created_at='2001-01-01T10:00:00Z'::timestamptz + $1 * interval '1 minute' where id=$2",
+      [i, o.id],
+    );
+  }
+  const search = async (sort, page) =>
+    (
+      await admin((d) =>
+        d.query(
+          "select public.admin_order_search('','new','2001-01-01','2001-01-01',$1,$2) result",
+          [sort, page],
+        ),
+      )
+    ).rows[0].result;
+  const first = await search("total_asc", 1),
+    second = await search("total_asc", 2);
+  assert.equal(first.total, 22);
+  assert.equal(first.items.length, 20);
+  assert.equal(second.items.length, 2);
+  assert.equal(
+    new Set([...first.items, ...second.items].map((o) => o.id)).size,
+    22,
+  );
+  assert.equal(first.items[0].total_kopecks, 10000);
+  assert.equal(second.items[1].total_kopecks, 12100);
+  assert.equal((await search("newest", 1)).items[0].id, ids[21]);
+  assert.equal((await search("oldest", 1)).items[0].id, ids[0]);
+  const outside = await admin((d) =>
+    d.query(
+      "select public.admin_order_search('','new','2001-01-02','2001-01-02') result",
+    ),
+  );
+  assert.equal(outside.rows[0].result.total, 0);
 });

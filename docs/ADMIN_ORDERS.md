@@ -72,10 +72,26 @@ kos-jeans-dev, использует только собственные фикт
 
 [Preview заказов](https://kos-jeans-git-feat-block-13-admin-orders-fedir-team.vercel.app/admin/orders).
 Реальное открытие без сессии корректно перенаправляет на вход.
-Технические проверки пройдены: 68 тестов, lint/typecheck/build, 8 hosted групп,
+Технические проверки пройдены: 69 тестов, lint/typecheck/build, 8 hosted групп,
 CI и Vercel Ready. [Hosted](checks/block13-hosted.json), [security](checks/block13-security.json).
 
-Ожидается вход владельца своей постоянной учётной записью в Chrome Preview блока 13.
-Пароль в чат не передавать. После входа остаются сквозной заказ через публичный
-Preview, управление статусами/отмена в UI, проверка ширин и восстановление тестов.
-До этой приёмки блок blocked, PR #13 остаётся Draft.
+Настоящий Preview прошёл сквозную приёмку после входа владельца:
+- публичное оформление №17 (26 × 1, 1299 ₴) → список → карточка → processing → shipped;
+- отдельный №18 (27 × 1) → подтверждаемая отмена, двойное нажатие и повтор из
+  устаревшей вкладки; SQL stock 27: 4 → 5, один release marker;
+- изменение цены каталога 1299 → 1399 ₴ не поменяло snapshot №17; цена восстановлена;
+- список и карточка на 320/390/768/1440 px без overflow, мобильное меню, Tab,
+  совместный фильтр номера/статуса. Автотест SQL проверяет сортировку и страницы 20+2.
+
+[UI](checks/block13-preview-ui.json), [отмена](checks/block13-preview-cancellation.json),
+[responsive](previews/orders/responsive.json),
+[desktop](previews/orders/detail-desktop.jpg), [mobile](previews/orders/detail-mobile.jpg).
+Скриншоты показывают только main и вымышленные контакты, без email владельца.
+
+`npm run orders:cleanup:ui -- --dev-only` восстанавливает только точные собственные
+UI-маркеры/контакты блока 13 и исходный товар. Запущен дважды: №17/18 сохранены
+cancelled, stock 3/5/0/2/4, price 1299, old price 1499, published и пять фото.
+[Восстановление](checks/block13-ui-restored.json). Это доверенная уборка dev-тестов,
+а не обход запрета отменять shipped через интерфейс. Реальные заказы не трогает.
+
+Блок 13 завершён; PR #13 не сливается до подтверждения владельца. Блок 14 не начат.

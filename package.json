@@ -24,7 +24,8 @@
     "cart:test:hosted": "node --env-file=.env.local scripts/test-cart-hosted.mjs",
     "checkout:test:hosted": "node --env-file=.env.local scripts/test-checkout-hosted.mjs",
     "checkout:cleanup": "node --env-file=.env.local scripts/cleanup-checkout-tests.mjs",
-    "orders:test:hosted": "node --env-file=.env.local scripts/test-admin-orders-hosted.mjs"
+    "orders:test:hosted": "node --env-file=.env.local scripts/test-admin-orders-hosted.mjs",
+    "orders:cleanup:ui": "node --env-file=.env.local scripts/cleanup-admin-order-ui.mjs"
   },
   "dependencies": {
     "@fontsource-variable/manrope": "5.3.0",
