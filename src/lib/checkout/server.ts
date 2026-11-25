@@ -1,4 +1,5 @@
 import "server-only";
+import { checkoutAvailable } from "./policy";
 import { createClient } from "@supabase/supabase-js";
 import { createHmac, randomBytes } from "node:crypto";
 import { isIP } from "node:net";
@@ -16,12 +17,7 @@ export const cookieOptions = {
   maxAge: 60 * 60 * 24 * 7,
 };
 export function checkoutConfigured() {
-  return (
-    process.env.VERCEL_ENV !== "production" &&
-    !!process.env.NEXT_PUBLIC_SUPABASE_URL &&
-    !!process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY &&
-    !!process.env.SUPABASE_CHECKOUT_SECRET_KEY?.startsWith("sb_secret_")
-  );
+  return checkoutAvailable(process.env);
 }
 export function checkoutClient() {
   if (!checkoutConfigured()) throw Error("Checkout unavailable");

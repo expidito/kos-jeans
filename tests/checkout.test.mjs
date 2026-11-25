@@ -1,3 +1,4 @@
+import { checkoutAvailable } from "../src/lib/checkout/policy.ts";
 import { before, after, test } from "node:test";
 import assert from "node:assert/strict";
 import { randomUUID } from "node:crypto";
@@ -315,3 +316,24 @@ test("persistent rate limit survives individual requests and saturates without o
       false,
     );
   }));
+
+test("Production checkout stays disabled even if development secrets are accidentally present", () => {
+  const env = {
+    NEXT_PUBLIC_SUPABASE_URL: "https://dev.example.test",
+    NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: "sb_publishable_test",
+    SUPABASE_CHECKOUT_SECRET_KEY: "sb_secret_test",
+  };
+  assert.equal(checkoutAvailable({ ...env, VERCEL_ENV: "production" }), false);
+  assert.equal(checkoutAvailable({ ...env, VERCEL_ENV: "preview" }), true);
+  assert.equal(
+    checkoutAvailable({ ...env, SUPABASE_CHECKOUT_SECRET_KEY: "" }),
+    false,
+  );
+  assert.equal(
+    checkoutAvailable({
+      ...env,
+      SUPABASE_CHECKOUT_SECRET_KEY: "sb_publishable_test",
+    }),
+    false,
+  );
+});

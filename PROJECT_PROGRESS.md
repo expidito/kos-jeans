@@ -20,7 +20,7 @@
 | 09 | Админка: категории и подкатегории | done | 2026-11-24 | [PR #9](https://github.com/expidito/kos-jeans/pull/9), [Preview](https://kos-jeans-git-feat-block-09-admin-categories-fedir-team.vercel.app/admin/categories); живая приёмка пройдена, Production main c571bfd опубликована с разрешения владельца |
 | 10 | Админка: товары, фото, цены, варианты и склад | done | 2026-11-25 | [PR #10](https://github.com/expidito/kos-jeans/pull/10), [Preview](https://kos-jeans-git-feat-block-10-admin-products-fedir-team.vercel.app/admin/products); UI/hosted приёмка пройдена |
 | 11 | Полноценная корзина | done | 2026-11-25 | [PR #11](https://github.com/expidito/kos-jeans/pull/11), [Preview](https://kos-jeans-git-feat-block-11-shopping-cart-fedir-team.vercel.app/cart) |
-| 12 | Оформление заказа и атомарные остатки | in_progress | 2026-11-25 | Ветка feat/block-12-checkout |
+| 12 | Оформление заказа и атомарные остатки | blocked | 2026-11-25 | [PR #12](https://github.com/expidito/kos-jeans/pull/12); нужна серверная Preview-переменная и UI-приёмка |
 | 13 | Админка: заказы и статусы | todo | 2026-11-23 | — |
 | 14 | Баннеры, настройки, контентные страницы и SEO | todo | 2026-11-23 | — |
 | 15 | Полное тестирование и защита | todo | 2026-11-23 | — |
@@ -851,3 +851,38 @@
 - Владелец принял блок 11; зелёный PR #11 слит, main синхронизирована до 91abada.
 - Создана feat/block-12-checkout. Реализуется только тестовое оформление kos-jeans-dev.
 - Production env не меняется, блок 13 не начат.
+
+### Блок 12 — локальная и hosted-приёмка; ожидается Preview
+
+- PR #11 слит по разрешению владельца после зелёных проверок; main/origin/main 91abada.
+  [Production Ready](https://vercel.com/fedir-team/kos-jeans/H8yp2obtUdVmrzTbC1isDNa6Zr5v),
+  / и /cart 200, /checkout 404, admin/dev-товар закрыты. Production env не менялся.
+- В feat/block-12-checkout реализованы форма, серверная валидация, service-only RPC,
+  SQL guards/row locks, snapshots/суммы, идемпотентность, cookie-bound подтверждение,
+  rate limit и очистка купленных позиций. Ключ только server-only, не в браузере.
+- Миграция 20261125000600 применена только в kos-jeans-dev; типы обновлены.
+  Секрет добавлен только в игнорируемую локальную .env.local, права 0600, значения не выводились.
+- Hosted-проверки пройдены: один заказ/повтор, изменённый payload и чужая сессия,
+  новая цена с повторным согласием, два параллельных запроса последней единицы,
+  принудительная ошибка после первого списания и полный rollback, RLS/приватность,
+  нулевой/архивный вариант, HTTP 429. Восстановлены собственные тестовые остатки,
+  заказы оставлены cancelled с release marker, новые fixtures архивированы.
+- [Hosted-отчёт](docs/checks/block12-hosted.json). Сбой первоначального test harness
+  был сравнением bigint string с numeric; серверное создание и повторы уже работали.
+  Сравнение исправлено, весь hosted-сценарий затем прошёл.
+- Локальный браузер прошёл товары → корзина → checkout → подтверждение № → reload
+  той же страницы → пустая корзина. 26 × 1 + 27 × 2 = 3897 ₴. Данные вымышленные.
+  Тестовый заказ отменён точным CLI marker, cleanup выполнен дважды; склад 3/5/0/2/4.
+- [UI](docs/checks/block12-local-ui.json), [данные](docs/checks/block12-local-data.json),
+  [восстановление](docs/checks/block12-ui-restored.json). Формы и фото проверены на
+  320/390/768/1440 px, overflow и broken images 0; клавиатура Tab/Enter работает.
+- 62 локальных теста, lint/typecheck и Webpack build успешны. Исходный функциональный
+  head d9fb536 прошёл CI и Vercel Preview. Финальное оформление
+  проверяется повторно. Реальная Preview-страница /checkout открылась и показала
+  «Тестове оформлення ще не налаштоване»: секрет там отсутствует.
+- **blocked только для финальной Preview-приёмки**: владелец должен добавить
+  SUPABASE_CHECKOUT_SECRET_KEY (sb_secret_… из kos-jeans-dev) в Vercel только
+  Preview / feat/block-12-checkout, без NEXT_PUBLIC_ и без Production. Значение не
+  передавать в чат. После сообщения «Preview-секрет добавлен» создать новый Preview
+  deploy, пройти реальный UI заказ/повтор/цена/склад и teardown UI-PREVIEW.
+- PR #12 остаётся Draft; не merge. Блок 13 не начат. [Инструкция](docs/CHECKOUT.md).

@@ -48,6 +48,8 @@ export function checkoutInput(raw: unknown) {
     throw Error("Телефон: введіть український номер у форматі +380…");
   if (!["nova_poshta_branch", "nova_poshta_address"].includes(String(c.method)))
     throw Error("Оберіть спосіб доставки.");
+  if (c.comment !== undefined && typeof c.comment !== "string")
+    throw Error("Перевірте коментар.");
   const customer: Customer = {
     name,
     phone,

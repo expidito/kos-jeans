@@ -1,0 +1,8 @@
+{
+  "status": "pass",
+  "testOrders": 1,
+  "cancelled": 1,
+  "inventoryRestored": true,
+  "existingAssortmentRemoved": false,
+  "repeatSafe": true
+}

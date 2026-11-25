@@ -275,3 +275,17 @@ Dev к Production не подключён; управление категори
 [Preview корзины](https://kos-jeans-git-feat-block-11-shopping-cart-fedir-team.vercel.app/cart)
 и [тестовый товар](https://kos-jeans-git-feat-block-11-shopping-cart-fedir-team.vercel.app/product/test-wide-leg-blue).
 Оформление заказа отключено, склад не списывается. Production к dev не подключён.
+
+## Блок 12 — оформление заказа (приёмка)
+
+[Архитектура, Preview-переменная и тестовый teardown](docs/CHECKOUT.md).
+`/checkout` и приватный `/checkout/success`, атомарная SQL-транзакция, снимки,
+идемпотентность и rate limit реализованы. Миграция применена только в kos-jeans-dev;
+локальный UI и hosted-тесты пройдены. Production checkout принудительно отключён.
+
+**Preview ещё не подключён:** требуется серверная переменная
+`SUPABASE_CHECKOUT_SECRET_KEY` только Preview / feat/block-12-checkout.
+[Preview оформления](https://kos-jeans-git-feat-block-12-checkout-fedir-team.vercel.app/checkout)
+пока показывает корректное состояние отсутствующей конфигурации. После добавления
+нужны новый deploy и реальная UI-приёмка; блок не считается done до этой проверки.
+Ключ не передавать в чат, не использовать NEXT_PUBLIC_ и не выбирать Production.

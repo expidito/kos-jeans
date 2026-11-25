@@ -1,0 +1,21 @@
+{
+  "status": "pass",
+  "environment": "local UI with kos-jeans-dev",
+  "sizes": [
+    {
+      "size": "26",
+      "quantity": 1
+    },
+    {
+      "size": "27",
+      "quantity": 2
+    }
+  ],
+  "totalKopecks": 389700,
+  "receiptShown": true,
+  "successURLHasNoPersonalData": true,
+  "reloadSameConfirmation": true,
+  "cartCleared": true,
+  "keyboard": true,
+  "previewVerified": false
+}
