@@ -17,7 +17,7 @@ export function CatalogShell({
   return (
     <>
       <div className="bg-denim-dark px-4 py-2 text-center text-[11px] text-paper">
-        KOS JEANS / Магазин у розробці · Замовлення ще недоступні
+        KOS JEANS / Магазин у розробці · Не для реальних покупок
       </div>
       <StoreHeader
         catalogMode
@@ -46,7 +46,7 @@ export function CatalogShell({
           <p className="text-xs leading-7 text-white/70">
             Українська / ₴ · Магазин у розробці
             <br />
-            Замовлення та оплата ще недоступні.
+            Реальні покупки й онлайн-оплата недоступні.
           </p>
         </div>
       </footer>

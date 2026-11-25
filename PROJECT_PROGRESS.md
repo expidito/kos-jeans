@@ -20,7 +20,7 @@
 | 09 | Админка: категории и подкатегории | done | 2026-11-24 | [PR #9](https://github.com/expidito/kos-jeans/pull/9), [Preview](https://kos-jeans-git-feat-block-09-admin-categories-fedir-team.vercel.app/admin/categories); живая приёмка пройдена, Production main c571bfd опубликована с разрешения владельца |
 | 10 | Админка: товары, фото, цены, варианты и склад | done | 2026-11-25 | [PR #10](https://github.com/expidito/kos-jeans/pull/10), [Preview](https://kos-jeans-git-feat-block-10-admin-products-fedir-team.vercel.app/admin/products); UI/hosted приёмка пройдена |
 | 11 | Полноценная корзина | done | 2026-11-25 | [PR #11](https://github.com/expidito/kos-jeans/pull/11), [Preview](https://kos-jeans-git-feat-block-11-shopping-cart-fedir-team.vercel.app/cart) |
-| 12 | Оформление заказа и атомарные остатки | todo | 2026-11-23 | — |
+| 12 | Оформление заказа и атомарные остатки | done | 2026-11-25 | [PR #12](https://github.com/expidito/kos-jeans/pull/12); local/hosted/Preview приняты, merge после подтверждения |
 | 13 | Админка: заказы и статусы | todo | 2026-11-23 | — |
 | 14 | Баннеры, настройки, контентные страницы и SEO | todo | 2026-11-23 | — |
 | 15 | Полное тестирование и защита | todo | 2026-11-23 | — |
@@ -845,3 +845,77 @@
   браузер не закрывался, проверено закрытие вкладки. Checkout явно отключён; корзина
   не резервирует товар. Все тестовые изменения dev восстановлены, Production изолирован.
 - **Блок 11 done**, PR #11 без merge до подтверждения владельца. Блок 12 не начат.
+
+### Блок 12 — начало
+
+- Владелец принял блок 11; зелёный PR #11 слит, main синхронизирована до 91abada.
+- Создана feat/block-12-checkout. Реализуется только тестовое оформление kos-jeans-dev.
+- Production env не меняется, блок 13 не начат.
+
+### Блок 12 — локальная и hosted-приёмка; ожидается Preview
+
+- PR #11 слит по разрешению владельца после зелёных проверок; main/origin/main 91abada.
+  [Production Ready](https://vercel.com/fedir-team/kos-jeans/H8yp2obtUdVmrzTbC1isDNa6Zr5v),
+  / и /cart 200, /checkout 404, admin/dev-товар закрыты. Production env не менялся.
+- В feat/block-12-checkout реализованы форма, серверная валидация, service-only RPC,
+  SQL guards/row locks, snapshots/суммы, идемпотентность, cookie-bound подтверждение,
+  rate limit и очистка купленных позиций. Ключ только server-only, не в браузере.
+- Миграция 20261125000600 применена только в kos-jeans-dev; типы обновлены.
+  Секрет добавлен только в игнорируемую локальную .env.local, права 0600, значения не выводились.
+- Hosted-проверки пройдены: один заказ/повтор, изменённый payload и чужая сессия,
+  новая цена с повторным согласием, два параллельных запроса последней единицы,
+  принудительная ошибка после первого списания и полный rollback, RLS/приватность,
+  нулевой/архивный вариант, HTTP 429. Восстановлены собственные тестовые остатки,
+  заказы оставлены cancelled с release marker, новые fixtures архивированы.
+- [Hosted-отчёт](docs/checks/block12-hosted.json). Сбой первоначального test harness
+  был сравнением bigint string с numeric; серверное создание и повторы уже работали.
+  Сравнение исправлено, весь hosted-сценарий затем прошёл.
+- Локальный браузер прошёл товары → корзина → checkout → подтверждение № → reload
+  той же страницы → пустая корзина. 26 × 1 + 27 × 2 = 3897 ₴. Данные вымышленные.
+  Тестовый заказ отменён точным CLI marker, cleanup выполнен дважды; склад 3/5/0/2/4.
+- [UI](docs/checks/block12-local-ui.json), [данные](docs/checks/block12-local-data.json),
+  [восстановление](docs/checks/block12-ui-restored.json). Формы и фото проверены на
+  320/390/768/1440 px, overflow и broken images 0; клавиатура Tab/Enter работает.
+- 62 локальных теста, lint/typecheck и Webpack build успешны. Исходный функциональный
+  head d9fb536 прошёл CI и Vercel Preview. Финальное оформление
+  проверяется повторно. Реальная Preview-страница /checkout открылась и показала
+  «Тестове оформлення ще не налаштоване»: секрет там отсутствует.
+- **blocked только для финальной Preview-приёмки**: владелец должен добавить
+  SUPABASE_CHECKOUT_SECRET_KEY (sb_secret_… из kos-jeans-dev) в Vercel только
+  Preview / feat/block-12-checkout, без NEXT_PUBLIC_ и без Production. Значение не
+  передавать в чат. После сообщения «Preview-секрет добавлен» создать новый Preview
+  deploy, пройти реальный UI заказ/повтор/цена/склад и teardown UI-PREVIEW.
+- PR #12 остаётся Draft; не merge. Блок 13 не начат. [Инструкция](docs/CHECKOUT.md).
+
+### Продолжение блока 12 после настройки Preview
+
+- Владелец сообщил «Preview-секрет добавлен». Значение не запрашивалось и не выводилось.
+- Документационный push запускает новый Preview Deployment с текущими переменными.
+- После Ready проверить реальное оформление, приватное подтверждение и восстановить только собственные UI-PREVIEW тесты. Блок 13 не начат.
+
+### Блок 12 — финальная Preview-приёмка, 2026-11-25
+
+- После сообщения владельца «Preview-секрет добавлен» создана новая сборка cca7697.
+  [Vercel Ready](https://vercel.com/fedir-team/kos-jeans/7jb2KtJUq3TuNV61d9xhLahnevDR),
+  [checkout](https://kos-jeans-git-feat-block-12-checkout-fedir-team.vercel.app/checkout).
+  Прежнее ограничение отсутствующей конфигурации снято, Production env не менялся.
+- Реальный Preview: 26 × 1 и 27 × 2; уменьшение stock 27 до 1 отклонило заказ.
+  После возврата stock=5 цена изменена с 1299 на 1399 ₴: сервер вернул новую сумму
+  4197 ₴, согласие сброшено. Повторное согласие и двойное нажатие создали ровно
+  один заказ №12. Reload сохранил тот же номер, корзина очистилась.
+- SQL подтвердил один заказ, два snapshots по 139900 копеек и сумму 419700.
+  Цена возвращена через админку, точный тестовый заказ cancelled, teardown выполнен
+  дважды без двойного возврата. Цена 1299, old price 1499, stocks 3/5/0/2/4,
+  исходные UUID вариантов, статус published и пять фотографий сохранены.
+- [Preview UI](docs/checks/block12-preview-ui.json),
+  [SQL](docs/checks/block12-preview-data.json),
+  [восстановление](docs/checks/block12-preview-restored.json),
+  [responsive](docs/previews/checkout/preview-responsive.json).
+  Проверены 320/390/768/1440, отсутствие overflow и broken images, клавиатура.
+- Локальные lint/typecheck/62 теста/Webpack production build успешны; hosted:
+  параллельная покупка последней единицы только одним запросом, полный rollback
+  после принудительной ошибки, идемпотентность, RLS, приватность и HTTP 429.
+  Функциональный код прошёл оба CI на cca7697. README и инструкция актуализированы.
+- **Блок 12 done**. PR #12 подготовлен к review, без слияния до подтверждения владельца.
+  Только kos-jeans-dev; оплаты/API доставки нет; Preview требует доступ Vercel.
+  Блок 13 (админка заказов и статусы) не начат.

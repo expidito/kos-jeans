@@ -1,0 +1,21 @@
+{
+  "status": "pass",
+  "head": "cca76977e6ef267fa19d7f31c5eaa2f8d28fb8b9",
+  "stockConflict": true,
+  "priceConflictRequiresReconfirmation": true,
+  "originalPriceMinor": 129900,
+  "acceptedPriceMinor": 139900,
+  "totalMinor": 419700,
+  "orderNumber": "12",
+  "doubleClickSingleReceipt": true,
+  "reloadSameReceipt": true,
+  "priceRestored": true,
+  "responsiveWidths": [
+    320,
+    390,
+    768,
+    1440
+  ],
+  "keyboardNameToPhone": true,
+  "cartCleared": true
+}

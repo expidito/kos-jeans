@@ -1,0 +1,44 @@
+{
+  "status": "pass",
+  "checks": [
+    {
+      "check": "HTTP creates exactly one order; same key retries without stock change; snapshots and server total correct",
+      "status": "pass"
+    },
+    {
+      "check": "Receipt requires browser capability; success HTML has no contact data; changed payload conflicts and cross-origin POST denied",
+      "status": "pass"
+    },
+    {
+      "check": "Price change rejected before stock/order writes, new confirmed price accepted with same stable key",
+      "status": "pass"
+    },
+    {
+      "check": "Two parallel PostgreSQL checkout transactions: exactly one wins the last unit, no negative stock",
+      "status": "pass"
+    },
+    {
+      "check": "Failure after an earlier stock write rolls back order, items and all inventory changes",
+      "status": "pass"
+    },
+    {
+      "check": "Anon and ordinary users cannot invoke checkout RPC directly or read other orders/items; metadata role is ignored",
+      "status": "pass"
+    },
+    {
+      "check": "Zero-stock and archived products cannot create orders",
+      "status": "pass"
+    },
+    {
+      "check": "HTTP rate limit persists across requests and returns 429 / Retry-After",
+      "status": "pass"
+    },
+    {
+      "check": "Only owned test orders cancelled idempotently; fixture stocks restored and new fixture archived, no assortment deletion",
+      "status": "pass"
+    }
+  ],
+  "productionModified": false,
+  "existingAssortmentRemoved": false,
+  "testOrdersRetainedAsCancelled": true
+}

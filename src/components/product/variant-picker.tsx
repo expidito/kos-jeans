@@ -154,7 +154,7 @@ export function VariantPicker({
           )}
         </div>
         <p className="mt-2 text-xs leading-6 text-muted">
-          Додавання не резервує товар. Оформлення замовлення ще недоступне.
+          Додавання не резервує товар. Оформлення тестове, без онлайн-оплати.
         </p>
       </div>
     </section>

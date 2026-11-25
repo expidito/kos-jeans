@@ -275,3 +275,23 @@ Dev к Production не подключён; управление категори
 [Preview корзины](https://kos-jeans-git-feat-block-11-shopping-cart-fedir-team.vercel.app/cart)
 и [тестовый товар](https://kos-jeans-git-feat-block-11-shopping-cart-fedir-team.vercel.app/product/test-wide-leg-blue).
 Оформление заказа отключено, склад не списывается. Production к dev не подключён.
+
+## Блок 12 — оформление заказа (приёмка)
+
+[Архитектура, Preview-переменная и тестовый teardown](docs/CHECKOUT.md).
+`/checkout` и приватный `/checkout/success`, атомарная SQL-транзакция, снимки,
+идемпотентность и rate limit реализованы. Миграция применена только в kos-jeans-dev;
+локальный UI и hosted-тесты пройдены. Production checkout принудительно отключён.
+
+[Preview оформления](https://kos-jeans-git-feat-block-12-checkout-fedir-team.vercel.app/checkout)
+подключён к kos-jeans-dev и прошёл настоящий браузерный сценарий: нехватка остатка,
+изменение цены с повторным согласием, один заказ при двойном нажатии, повторное
+открытие подтверждения и пустая корзина. Вымышленные тестовые заказы отменены,
+цены/остатки восстановлены; существующие товары и фото сохранены.
+
+62 теста, lint, typecheck, production build и hosted-проверки успешны.
+[Отчёт Preview](docs/checks/block12-preview-ui.json) ·
+[Восстановление](docs/checks/block12-preview-restored.json) ·
+[PR #12](https://github.com/expidito/kos-jeans/pull/12).
+Preview может требовать вход Vercel. Реальные покупки и Production checkout отключены.
+Блок 13 не начат.

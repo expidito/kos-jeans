@@ -1,0 +1,19 @@
+{
+  "status": "pass",
+  "orderCount": 1,
+  "totalMinor": 419700,
+  "snapshotPriceMinor": 139900,
+  "snapshotItems": [
+    {
+      "price": 139900,
+      "quantity": 2,
+      "size": "27"
+    },
+    {
+      "price": 139900,
+      "quantity": 1,
+      "size": "26"
+    }
+  ],
+  "exactlyOnce": true
+}

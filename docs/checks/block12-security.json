@@ -1,0 +1,7 @@
+{
+  "serverSecretInBrowserAssets": false,
+  "productionGuardTested": true,
+  "customerDataInURL": false,
+  "publicOrderReadDenied": true,
+  "previewConfigured": true
+}
