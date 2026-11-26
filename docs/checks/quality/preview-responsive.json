@@ -1,0 +1,173 @@
+{
+  "preview": "https://kos-jeans-git-feat-block-15-quality-security-fedir-team.vercel.app",
+  "commit": "ba181aa",
+  "checks": [
+    {
+      "broken": 0,
+      "path": "/",
+      "scroll": 320,
+      "width": 320
+    },
+    {
+      "broken": 0,
+      "path": "/",
+      "scroll": 390,
+      "width": 390
+    },
+    {
+      "broken": 0,
+      "path": "/",
+      "scroll": 768,
+      "width": 768
+    },
+    {
+      "broken": 0,
+      "path": "/",
+      "scroll": 1024,
+      "width": 1024
+    },
+    {
+      "broken": 0,
+      "path": "/",
+      "scroll": 1440,
+      "width": 1440
+    },
+    {
+      "broken": 0,
+      "images": 12,
+      "path": "/catalog",
+      "scroll": 320,
+      "width": 320
+    },
+    {
+      "broken": 0,
+      "images": 12,
+      "path": "/catalog",
+      "scroll": 390,
+      "width": 390
+    },
+    {
+      "broken": 0,
+      "images": 12,
+      "path": "/catalog",
+      "scroll": 768,
+      "width": 768
+    },
+    {
+      "broken": 0,
+      "images": 12,
+      "path": "/catalog",
+      "scroll": 1024,
+      "width": 1024
+    },
+    {
+      "broken": 0,
+      "images": 12,
+      "path": "/catalog",
+      "scroll": 1440,
+      "width": 1440
+    },
+    {
+      "broken": 0,
+      "images": 10,
+      "path": "/product/test-wide-leg-blue",
+      "scroll": 320,
+      "width": 320
+    },
+    {
+      "broken": 0,
+      "images": 10,
+      "path": "/product/test-wide-leg-blue",
+      "scroll": 390,
+      "width": 390
+    },
+    {
+      "broken": 0,
+      "images": 10,
+      "path": "/product/test-wide-leg-blue",
+      "scroll": 768,
+      "width": 768
+    },
+    {
+      "broken": 0,
+      "images": 10,
+      "path": "/product/test-wide-leg-blue",
+      "scroll": 1024,
+      "width": 1024
+    },
+    {
+      "broken": 0,
+      "images": 10,
+      "path": "/product/test-wide-leg-blue",
+      "scroll": 1440,
+      "width": 1440
+    },
+    {
+      "broken": 0,
+      "path": "/cart",
+      "scroll": 320,
+      "width": 320
+    },
+    {
+      "broken": 0,
+      "path": "/cart",
+      "scroll": 390,
+      "width": 390
+    },
+    {
+      "broken": 0,
+      "path": "/cart",
+      "scroll": 768,
+      "width": 768
+    },
+    {
+      "broken": 0,
+      "path": "/cart",
+      "scroll": 1024,
+      "width": 1024
+    },
+    {
+      "broken": 0,
+      "path": "/cart",
+      "scroll": 1440,
+      "width": 1440
+    },
+    {
+      "broken": 0,
+      "path": "/checkout",
+      "scroll": 320,
+      "width": 320
+    },
+    {
+      "broken": 0,
+      "path": "/checkout",
+      "scroll": 390,
+      "width": 390
+    },
+    {
+      "broken": 0,
+      "path": "/checkout",
+      "scroll": 768,
+      "width": 768
+    },
+    {
+      "broken": 0,
+      "path": "/checkout",
+      "scroll": 1024,
+      "width": 1024
+    },
+    {
+      "broken": 0,
+      "path": "/checkout",
+      "scroll": 1440,
+      "width": 1440
+    }
+  ],
+  "mobileMenuEscapeFocusReturn": true,
+  "gallerySwitchAndZoom": true,
+  "cartTwoVariantsQuantityThree": true,
+  "cartRefreshPreserved": true,
+  "cartTotalKopecks": 389700,
+  "ownCartCleared": true,
+  "orderCreatedInBrowser": false
+}
