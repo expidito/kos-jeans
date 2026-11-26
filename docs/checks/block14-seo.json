@@ -1,0 +1,90 @@
+{
+  "status": "pass",
+  "pages": [
+    {
+      "path": "/",
+      "status": 200,
+      "title": "Денім та повсякденний одяг | KOS JEANS",
+      "canonical": "https://kos-jeans.vercel.app/",
+      "robots": "noindex, nofollow",
+      "header": "noindex, nofollow",
+      "og": true
+    },
+    {
+      "path": "/catalog",
+      "status": 200,
+      "title": "Каталог | KOS JEANS",
+      "canonical": "https://kos-jeans.vercel.app/catalog",
+      "robots": "noindex, nofollow",
+      "header": "noindex, nofollow",
+      "og": true
+    },
+    {
+      "path": "/contacts",
+      "status": 200,
+      "title": "Контакти | KOS JEANS",
+      "canonical": "https://kos-jeans.vercel.app/contacts",
+      "robots": "noindex, nofollow",
+      "header": "noindex, nofollow",
+      "og": true
+    },
+    {
+      "path": "/delivery",
+      "status": 200,
+      "title": "Доставка та оплата | KOS JEANS",
+      "canonical": "https://kos-jeans.vercel.app/delivery",
+      "robots": "noindex, nofollow",
+      "header": "noindex, nofollow",
+      "og": true
+    },
+    {
+      "path": "/returns",
+      "status": 200,
+      "title": "Обмін та повернення | KOS JEANS",
+      "canonical": "https://kos-jeans.vercel.app/returns",
+      "robots": "noindex, nofollow",
+      "header": "noindex, nofollow",
+      "og": true
+    },
+    {
+      "path": "/privacy",
+      "status": 200,
+      "title": "Політика конфіденційності | KOS JEANS",
+      "canonical": "https://kos-jeans.vercel.app/privacy",
+      "robots": "noindex, nofollow",
+      "header": "noindex, nofollow",
+      "og": true
+    },
+    {
+      "path": "/terms",
+      "status": 200,
+      "title": "Умови користування | KOS JEANS",
+      "canonical": "https://kos-jeans.vercel.app/terms",
+      "robots": "noindex, nofollow",
+      "header": "noindex, nofollow",
+      "og": true
+    },
+    {
+      "path": "/product/test-wide-leg-blue",
+      "status": 200,
+      "title": "ТЕСТ · Джинси Wide Leg Blue | KOS JEANS",
+      "canonical": "https://kos-jeans.vercel.app/product/test-wide-leg-blue",
+      "robots": "noindex, nofollow",
+      "header": "noindex, nofollow",
+      "og": true
+    },
+    {
+      "path": "/catalog/test-jeans",
+      "status": 200,
+      "title": "ТЕСТ · Джинси | KOS JEANS",
+      "canonical": "https://kos-jeans.vercel.app/catalog/test-jeans",
+      "robots": "noindex, nofollow",
+      "header": "noindex, nofollow",
+      "og": true
+    }
+  ],
+  "robotsDisallowsAll": true,
+  "sitemapTestURLs": 0,
+  "productStructuredDataSuppressedForTestStore": true,
+  "previewUrlsInCanonical": false
+}

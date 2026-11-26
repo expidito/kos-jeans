@@ -1,0 +1,40 @@
+{
+  "status": "pass",
+  "pages": [
+    {
+      "canonical": "https://kos-jeans.vercel.app/contacts",
+      "h1": "Контакти",
+      "path": "/contacts",
+      "robots": "noindex, nofollow",
+      "title": "Контакти | KOS JEANS"
+    },
+    {
+      "canonical": "https://kos-jeans.vercel.app/delivery",
+      "h1": "Доставка та оплата",
+      "path": "/delivery",
+      "robots": "noindex, nofollow",
+      "title": "Доставка та оплата | KOS JEANS"
+    },
+    {
+      "canonical": "https://kos-jeans.vercel.app/returns",
+      "h1": "Обмін та повернення",
+      "path": "/returns",
+      "robots": "noindex, nofollow",
+      "title": "Обмін та повернення | KOS JEANS"
+    },
+    {
+      "canonical": "https://kos-jeans.vercel.app/privacy",
+      "h1": "Політика конфіденційності",
+      "path": "/privacy",
+      "robots": "noindex, nofollow",
+      "title": "Політика конфіденційності | KOS JEANS"
+    },
+    {
+      "canonical": "https://kos-jeans.vercel.app/terms",
+      "h1": "Умови користування",
+      "path": "/terms",
+      "robots": "noindex, nofollow",
+      "title": "Умови користування | KOS JEANS"
+    }
+  ]
+}

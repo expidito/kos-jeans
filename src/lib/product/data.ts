@@ -12,7 +12,7 @@ export const getProduct=cache(async (slug:string) => {
     client.from('product_images').select('id,alt_text,is_primary,sort_order').eq('product_id',product.id).order('is_primary',{ascending:false}).order('sort_order').order('id'),
     client.from('product_variants').select('*').eq('product_id',product.id).order('color').order('size').order('id'),
     client.from('product_categories').select('category_id').eq('product_id',product.id).order('category_id'),
-    client.from('store_settings').select('key,value').in('key',['delivery_template','returns_template']),
+    client.from('store_settings').select('key,value').in('key',['delivery_template','payment_template','returns_template']),
   ]);
   if([photos,variants,categories,settings].some(r=>r.error))throw new Error('Product unavailable');
   const categoryIds=(categories.data??[]).map(c=>c.category_id);
