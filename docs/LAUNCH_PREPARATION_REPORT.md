@@ -1,6 +1,6 @@
 # Приёмка блока16: безопасная публикация и план запуска
 
-2026-11-26. Статус: техническая часть проверена, PR/финальный Preview ожидают приёмки.
+2026-11-26. Статус: done — техническая подготовка завершена, merge PR16 ожидает разрешения владельца.
 Реальные заказы, индексация, новый prod-проект, домен, DNS и платные услуги не включались.
 
 ## Production и Git
@@ -83,7 +83,10 @@ footer, пустой каталог, info drafts, disabled checkout/login и р�
   проверки не отключены. `npm run build -- --webpack` проходит, включая отдельную
   сборку с Production mode/пустыми env. CI/Vercel выполняют обычный build.
 - Black-box Production-mode smoke проходит; remote Production read-only smoke проходит.
-- GitHub Actions/Ready Preview финального PR подтверждаются перед завершением блока.
+- GitHub Actions обычный build и Production-mode регрессия прошли в обоих событиях
+  [push](https://github.com/expidito/kos-jeans/actions/runs/45826362659) и
+  [PR](https://github.com/expidito/kos-jeans/actions/runs/45826535306) для634e27e.
+  Документационный push повторно проверяется теми же обязательными CI до передачи PR.
 
 Перед реальной торговлей нужны данные продавца/контакты/юридические условия, подходящий
 тариф, согласованное создание prod-базы/администратора/env, резервирование и restore-тест,
@@ -91,3 +94,17 @@ footer, пустой каталог, info drafts, disabled checkout/login и р�
 [официальные условия](https://vercel.com/docs/plans/hobby). Бесплатный Supabase не даёт
 права обещать включённые paid backups/PITR; [возможности](https://supabase.com/docs/guides/platform/backups).
 Домен/коммерческая работа/индексация — только после отдельных решений владельца.
+
+## PR и фактический Preview
+
+[PR #16](https://github.com/expidito/kos-jeans/pull/16),
+[Preview](https://kos-jeans-git-feat-block-16-launch-preparation-fedir-team.vercel.app) — Vercel Ready.
+50 измерений:10 маршрутов ×320/390/768/1024/1440, горизонтальная прокрутка0,
+битые изображения0, noindex/canonical проверены. Публичный каталог показывает
+опубликованный dev-ассортимент (14 товаров,12 загруженных изображений на странице);
+анонимный /admin/orders перенаправляет на login, форма входа доступна в Preview.
+[Адаптивность](checks/launch/preview-responsive.json),
+[доступ](checks/launch/preview-access.json), [каталог](checks/launch/preview-catalog.jpg).
+Prod остаётся e71f98a: новая главная не выдаётся за уже опубликованную.
+После отдельного разрешения merge16 повторить `npm run launch:check:production -- --empty-home`.
+Коммерческий запуск не выполнялся. Все дальнейшие включения — по LAUNCH_CHECKLIST.

@@ -13,8 +13,10 @@
 В local/Preview с `kos-jeans-dev` реализованы и проверены настоящий каталог,
 категории/фильтры/варианты, private фото, корзина, тестовое атомарное оформление и
 отмена, защищённая админка, товары/склад/контент. Блок15 прошёл сквозную приёмку.
-Блок16 готовит документацию/окружения; отдельная prod-база и домен ещё не создавались.
+Блок16 завершает подготовку документации и окружений; отдельная prod-база и домен ещё не создавались.
+[Отчёт и ограничения](docs/LAUNCH_PREPARATION_REPORT.md).
 
+- [Preview блока16](https://kos-jeans-git-feat-block-16-launch-preparation-fedir-team.vercel.app) · [PR #16](https://github.com/expidito/kos-jeans/pull/16)
 - [GitHub](https://github.com/expidito/kos-jeans)
 - [Vercel project](https://vercel.com/fedir-team/kos-jeans)
 - [Supabase Dashboard](https://supabase.com/dashboard/projects)

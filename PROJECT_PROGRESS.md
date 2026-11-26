@@ -24,7 +24,7 @@
 | 13 | Админка: заказы и статусы | done | 2026-11-25 | [PR #13](https://github.com/expidito/kos-jeans/pull/13); local/hosted/Preview приняты, merge после подтверждения |
 | 14 | Баннеры, настройки, контентные страницы и SEO | done | 2026-11-26 | [PR #14](https://github.com/expidito/kos-jeans/pull/14); local/hosted/Preview приняты, merge после подтверждения |
 | 15 | Полное тестирование и защита | done | 2026-11-26 | [PR #15](https://github.com/expidito/kos-jeans/pull/15) |
-| 16 | Итоговая публикация и подготовка к домену | in_progress | 2026-11-26 | — |
+| 16 | Итоговая публикация и подготовка к домену | done | 2026-11-26 | [PR #16](https://github.com/expidito/kos-jeans/pull/16); подготовка завершена, merge и коммерческий запуск требуют отдельного разрешения |
 
 ## Блок 00
 
@@ -1162,3 +1162,22 @@
 - 79 тестов/lint/types успешны; локальный Turbopack build ограничен OS port permission,
   Webpack build и Production-mode regression успешны. Ошибка не скрыта; обычный build проверит CI/Vercel.
 - Доказательства/границы: docs/LAUNCH_PREPARATION_REPORT.md. Ещё нужен PR16 и проверка его Preview/CI.
+
+
+### Блок16 — финальная приёмка, 2026-11-26
+
+- Создан PR #16 https://github.com/expidito/kos-jeans/pull/16,634e27e опубликован.
+  Оба GitHub Actions (push/PR), обычный build и Production-mode regression зелёные.
+- Реальный Vercel Preview Ready: https://kos-jeans-git-feat-block-16-launch-preparation-fedir-team.vercel.app/ .
+  Каталог с14 опубликованными dev-товарами, фото, redirect закрытой админки и login проверены.
+  50 responsive измерений (320/390/768/1024/1440), overflow0, broken images0.
+- DOMAIN_SETUP, SUPABASE_PRODUCTION, OWNER_GUIDE, LAUNCH_CHECKLIST, README и
+  LAUNCH_PREPARATION_REPORT завершены; артефакты в docs/checks/launch.
+- Локальный Webpack build,79 тестов, lint/types и Production-mode smoke успешны;
+  обычный Turbopack build подтверждён в CI/Vercel. Локальное ограничение порта описано.
+- Production e71f98a после merge15 Ready и безопасен: dev не подключён, noindex,
+  checkout/admin отключены. Env/DNS/роли/тарифы/данные не менялись.
+- **done для подготовки блока16**. Документационный push должен пройти CI перед review.
+  PR16 НЕ слит; новую пустую главную проверить в Production только после разрешения merge.
+  kos-jeans-prod/домена нет; создание, реальные заказы и индексация ожидают отдельных решений.
+  Дальнейшие работы не начаты.

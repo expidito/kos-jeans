@@ -3,8 +3,9 @@
 2026-11-26. Сейчас рабочие функции проверяются в **Preview → kos-jeans-dev**.
 Production [kos-jeans.vercel.app](https://kos-jeans.vercel.app) безопасен, но не принимает
 заказы и не предоставляет рабочую админку. Будущая рабочая база пока не создана.
-Текущую Preview-ссылку берите в [PR блока16](https://github.com/expidito/kos-jeans/pulls)
-по кнопке Preview у Vercel; может требоваться обычный вход в ваш Vercel.
+[Войти в Preview блока16](https://kos-jeans-git-feat-block-16-launch-preparation-fedir-team.vercel.app/admin/login).
+[PR блока16](https://github.com/expidito/kos-jeans/pull/16) содержит статус публикации;
+может требоваться обычный вход в ваш Vercel.
 
 ## Вход и выход
 

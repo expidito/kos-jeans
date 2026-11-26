@@ -1,0 +1,13 @@
+{
+  "previewLogin": {
+    "noindex": "noindex, nofollow",
+    "passwordFormEnabled": true,
+    "path": "/admin/login"
+  },
+  "anonymousAdminOrdersRedirectsToLogin": true,
+  "brokenImages": 0,
+  "hasKnownDevProduct": true,
+  "loadedImages": 12,
+  "noindex": "noindex, nofollow",
+  "productionUnchanged": true
+}
