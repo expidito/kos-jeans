@@ -1,0 +1,30 @@
+{
+  "sessionPresent": false,
+  "checks": [
+    {
+      "path": "/admin/login",
+      "scroll": 320,
+      "width": 320
+    },
+    {
+      "path": "/admin/login",
+      "scroll": 390,
+      "width": 390
+    },
+    {
+      "path": "/admin/login",
+      "scroll": 768,
+      "width": 768
+    },
+    {
+      "path": "/admin/login",
+      "scroll": 1024,
+      "width": 1024
+    },
+    {
+      "path": "/admin/login",
+      "scroll": 1440,
+      "width": 1440
+    }
+  ]
+}

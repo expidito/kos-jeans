@@ -200,7 +200,7 @@ try {
     "Anonymous and ordinary users cannot mutate/read orders or call privileged search",
   );
   stage = "http";
-  const base = "http://127.0.0.1:3013";
+  const base = (process.env.AUDIT_TEST_BASE ?? "http://127.0.0.1:3013");
   for (const path of ["/admin/orders", "/admin/orders/" + snap.id]) {
     const r = await fetch(base + path, { redirect: "manual" });
     assert.equal(r.status, 307);

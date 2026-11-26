@@ -1,0 +1,3 @@
+'use client';
+import Link from 'next/link';
+export default function StoreError({reset}:{reset:()=>void}){return <main id="main-content" className="mx-auto max-w-store px-page py-16"><p className="text-xs tracking-widest text-muted">KOS JEANS</p><h1 className="mt-5 text-heading">Сторінка тимчасово недоступна</h1><p role="alert" className="mt-6 max-w-xl text-sm leading-7 text-muted">Не вдалося завантажити дані магазину. Перевірте з’єднання або спробуйте ще раз.</p><button onClick={reset} className="mt-8 min-h-12 bg-ink px-6 text-paper">Спробувати знову</button><Link href="/" className="ml-5 inline-flex min-h-11 items-center underline">На головну</Link></main>;}

@@ -1,3 +1,4 @@
+import {mediaWidth} from '@/lib/media/transform';
 import { publicCatalogClient } from "@/lib/catalog/data";
 import { uuidPattern } from "@/lib/categories/validation";
 import { bannerMedia, bannerHeaders } from "@/lib/content/media";
@@ -10,5 +11,5 @@ export async function GET(
     client = publicCatalogClient();
   if (!client || !uuidPattern.test(id))
     return new Response(null, { status: 404, headers: bannerHeaders });
-  return bannerMedia(client, id);
+  try{return bannerMedia(client, id,mediaWidth(_r));}catch{return new Response(null,{status:400});}
 }

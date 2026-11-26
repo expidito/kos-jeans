@@ -1,0 +1,33 @@
+{
+  "status": "passed",
+  "main": "21197454df0302bc9b82cad1b377afbb19f7b688",
+  "deployment": "https://vercel.com/fedir-team/kos-jeans/7kccafPsg8s7YgDDoZ17LMKgLQw6",
+  "environmentModified": false,
+  "checks": [
+    {
+      "path": "/",
+      "status": 200,
+      "noindex": "noindex, nofollow"
+    },
+    {
+      "path": "/delivery",
+      "status": 200,
+      "noindex": "noindex, nofollow"
+    },
+    {
+      "path": "/robots.txt",
+      "status": 200,
+      "noindex": "noindex, nofollow"
+    },
+    {
+      "path": "/sitemap.xml",
+      "status": 200,
+      "noindex": "noindex, nofollow"
+    },
+    {
+      "path": "/product/test-wide-leg-blue",
+      "status": 404,
+      "noindex": "noindex, nofollow"
+    }
+  ]
+}

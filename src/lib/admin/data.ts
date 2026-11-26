@@ -8,8 +8,8 @@ export async function getDashboard() {
     client.from('products').select('id', { count: 'exact', head: true }).eq('status', 'published'),
     client.from('categories').select('id', { count: 'exact', head: true }),
     client.from('orders').select('id', { count: 'exact', head: true }),
-    client.from('product_variants').select('id,product_id,sku,size,color,stock,products(name,status)').eq('is_active', true).lte('stock', 3).order('stock').order('id').limit(8),
-    client.from('product_variants').select('id', { count: 'exact', head: true }).eq('is_active', true).lte('stock', 3),
+    client.from('product_variants').select('id,product_id,sku,size,color,stock,products!inner(name,status)').eq('is_active', true).neq('products.status', 'archived').lte('stock', 3).order('stock').order('id').limit(8),
+    client.from('product_variants').select('id,products!inner(id)', { count: 'exact', head: true }).eq('is_active', true).neq('products.status', 'archived').lte('stock', 3),
   ]);
   return {
     counts: results.slice(0, 4).map(r => r.error ? null : r.count),

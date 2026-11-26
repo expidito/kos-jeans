@@ -1,0 +1,29 @@
+{
+  "status": "pass",
+  "checks": [
+    {
+      "check": "Real variants, sizes, current price and cover resolved anonymously; spoofed price ignored; total 389700 kopecks",
+      "status": "pass"
+    },
+    {
+      "check": "Requested count above stock is shortage; zero-stock size is unavailable",
+      "status": "pass"
+    },
+    {
+      "check": "Draft, archived, hidden-category and nonexistent variants expose no product metadata or images",
+      "status": "pass"
+    },
+    {
+      "check": "Malformed IDs, nonpositive/fractional/excessive quantities and oversized carts rejected",
+      "status": "pass"
+    },
+    {
+      "check": "Resolving and adding cart data creates no orders and changes no stock",
+      "status": "pass"
+    }
+  ],
+  "productionModified": false,
+  "dataModified": false,
+  "recheckedInBlock": 15,
+  "recheckedOn": "2026-11-26"
+}

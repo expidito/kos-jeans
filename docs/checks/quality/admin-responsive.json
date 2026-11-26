@@ -1,0 +1,159 @@
+{
+  "checks": [
+    {
+      "path": "/admin/orders/631a8346-c9b2-4450-8c32-42e44dd23af2",
+      "scroll": 320,
+      "width": 320
+    },
+    {
+      "path": "/admin/orders/631a8346-c9b2-4450-8c32-42e44dd23af2",
+      "scroll": 390,
+      "width": 390
+    },
+    {
+      "path": "/admin/orders/631a8346-c9b2-4450-8c32-42e44dd23af2",
+      "scroll": 768,
+      "width": 768
+    },
+    {
+      "path": "/admin/orders/631a8346-c9b2-4450-8c32-42e44dd23af2",
+      "scroll": 1024,
+      "width": 1024
+    },
+    {
+      "path": "/admin/orders/631a8346-c9b2-4450-8c32-42e44dd23af2",
+      "scroll": 1440,
+      "width": 1440
+    },
+    {
+      "broken": 0,
+      "path": "/admin/products/39c8e37b-018a-4906-a7a8-3f93328b6e77",
+      "scroll": 320,
+      "width": 320
+    },
+    {
+      "broken": 0,
+      "path": "/admin/products/39c8e37b-018a-4906-a7a8-3f93328b6e77",
+      "scroll": 390,
+      "width": 390
+    },
+    {
+      "broken": 0,
+      "path": "/admin/products/39c8e37b-018a-4906-a7a8-3f93328b6e77",
+      "scroll": 768,
+      "width": 768
+    },
+    {
+      "broken": 0,
+      "path": "/admin/products/39c8e37b-018a-4906-a7a8-3f93328b6e77",
+      "scroll": 1024,
+      "width": 1024
+    },
+    {
+      "broken": 0,
+      "path": "/admin/products/39c8e37b-018a-4906-a7a8-3f93328b6e77",
+      "scroll": 1440,
+      "width": 1440
+    },
+    {
+      "path": "/admin/categories/e424ab67-32a9-4467-8491-d3d1611e22d0",
+      "scroll": 320,
+      "width": 320
+    },
+    {
+      "path": "/admin/categories/e424ab67-32a9-4467-8491-d3d1611e22d0",
+      "scroll": 390,
+      "width": 390
+    },
+    {
+      "path": "/admin/categories/e424ab67-32a9-4467-8491-d3d1611e22d0",
+      "scroll": 768,
+      "width": 768
+    },
+    {
+      "path": "/admin/categories/e424ab67-32a9-4467-8491-d3d1611e22d0",
+      "scroll": 1024,
+      "width": 1024
+    },
+    {
+      "path": "/admin/categories/e424ab67-32a9-4467-8491-d3d1611e22d0",
+      "scroll": 1440,
+      "width": 1440
+    },
+    {
+      "path": "/admin/banners/f3e52be9-6dc6-4a97-a218-cfa1e0a336a8",
+      "scroll": 320,
+      "width": 320
+    },
+    {
+      "path": "/admin/banners/f3e52be9-6dc6-4a97-a218-cfa1e0a336a8",
+      "scroll": 390,
+      "width": 390
+    },
+    {
+      "path": "/admin/banners/f3e52be9-6dc6-4a97-a218-cfa1e0a336a8",
+      "scroll": 768,
+      "width": 768
+    },
+    {
+      "path": "/admin/banners/f3e52be9-6dc6-4a97-a218-cfa1e0a336a8",
+      "scroll": 1024,
+      "width": 1024
+    },
+    {
+      "path": "/admin/banners/f3e52be9-6dc6-4a97-a218-cfa1e0a336a8",
+      "scroll": 1440,
+      "width": 1440
+    },
+    {
+      "path": "/admin/settings",
+      "scroll": 320,
+      "width": 320
+    },
+    {
+      "path": "/admin/settings",
+      "scroll": 390,
+      "width": 390
+    },
+    {
+      "path": "/admin/settings",
+      "scroll": 768,
+      "width": 768
+    },
+    {
+      "path": "/admin/settings",
+      "scroll": 1024,
+      "width": 1024
+    },
+    {
+      "path": "/admin/settings",
+      "scroll": 1440,
+      "width": 1440
+    },
+    {
+      "path": "/admin",
+      "scroll": 320,
+      "width": 320
+    },
+    {
+      "path": "/admin",
+      "scroll": 390,
+      "width": 390
+    },
+    {
+      "path": "/admin",
+      "scroll": 768,
+      "width": 768
+    },
+    {
+      "path": "/admin",
+      "scroll": 1024,
+      "width": 1024
+    },
+    {
+      "path": "/admin",
+      "scroll": 1440,
+      "width": 1440
+    }
+  ]
+}

@@ -327,3 +327,39 @@ Product JSON-LD не публикуется для тестового ассор
 его фото приватно. [UI-отчёт](docs/checks/block14-preview-ui.json) ·
 [SEO-отчёт](docs/checks/block14-seo.json) · [PR #14](https://github.com/expidito/kos-jeans/pull/14).
 Индексация не включена; реальные контактные и юридические сведения нужны до запуска.
+
+### Аудит качества — блок 15
+
+Результаты и ограничения: [QUALITY_AND_SECURITY_AUDIT.md](docs/QUALITY_AND_SECURITY_AUDIT.md).
+Дополнительные проверки запускаются после production build и `npm start -- --port 3018`:
+
+```bash
+QUALITY_BASE=http://127.0.0.1:3018 node scripts/quality/http-checks.mjs
+node --env-file=.env.local scripts/quality/client-secrets.mjs
+node --env-file=.env.local scripts/quality/scan-history.mjs
+node --env-file=.env.local scripts/quality/scale.mjs
+```
+
+`http-checks` читает Production без изменений; остальные hosted проверки допускаются
+только для подтверждённого `kos-jeans-dev`. `scale` создаёт 1000 временных товаров,
+вариантов и заказов внутри откатываемой транзакции, не меняет sequence номеров.
+Сканер истории использует локальный `/tmp/kos-block15-npm-audit.json`, который получают
+через `npm audit --json > /tmp/kos-block15-npm-audit.json`. Значения секретов не печатаются.
+
+Миграция `20261126000100_quality_hardening.sql` применена к dev: отклонённые запросы
+не расходуют глобальный checkout лимит, deferred guard проверяет оба заказа при
+переносе строки доверенной операцией. Production БД/переменные не менялись.
+Приватные фото запрещены в Next optimizer; уменьшение выполняется за проверками
+RLS и Storage, ответ всегда private/no-store. Новые загрузки декодируются Sharp,
+проверяются на повреждения и предел 32 млн пикселей, нормализуются в WebP без EXIF.
+
+Приёмка блока15 завершена на настоящем Preview: новый товар/категория, пять фото,
+цена1499→1299, M0, две позиции корзины, заказ и повторная отмена, контент и выход.
+[Результаты UI](docs/checks/quality/ui-acceptance.json),
+[сохранность данных](docs/checks/quality/ui-restored.json).
+После проверки выполнен выход из административной сессии; вход обычным способом
+на `/admin/login`. Постоянная учётная запись не менялась. Тестовый товар архивирован,
+поэтому его прямая ссылка404 ожидаема; для просмотра используйте `/catalog`.
+`scripts/quality/finish-ui.mjs --dev-only` — проверка конкретных fixtures этой приёмки,
+требует временные исходные fingerprints/settings из `/tmp`, не является общей очисткой БД.
+Коммерческий запуск блокируют реальные реквизиты/условия и согласованное production окружение.

@@ -1,4 +1,6 @@
 import "server-only";
+import {FormError} from "@/lib/form-error";
+
 import { NextResponse, type NextRequest } from "next/server";
 import { adminSession } from "@/lib/admin/auth";
 import { rejectCrossOrigin } from "@/lib/admin/forms";
@@ -30,7 +32,7 @@ export async function mutationSession(request: NextRequest) {
 }
 export async function boundedBody(request: NextRequest, limit: number) {
   const reader = request.body?.getReader();
-  if (!reader) throw Error("Порожній запит.");
+  if (!reader) throw new FormError("Порожній запит.");
   const chunks: Uint8Array[] = [];
   let size = 0;
   while (true) {
@@ -39,7 +41,7 @@ export async function boundedBody(request: NextRequest, limit: number) {
     size += value.byteLength;
     if (size > limit) {
       await reader.cancel();
-      throw Error("Завеликий запит.");
+      throw new FormError("Завеликий запит.");
     }
     chunks.push(value);
   }

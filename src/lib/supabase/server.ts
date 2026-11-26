@@ -1,4 +1,5 @@
 import "server-only";
+import {supabaseFetch} from "./fetch";
 
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
@@ -12,7 +13,7 @@ export async function createClient() {
   const cookieStore = await cookies();
   return createServerClient<Database>(url, key, {
     cookieOptions: { httpOnly: true, sameSite: 'lax', secure: !!process.env.VERCEL },
-    global: { fetch: (input, init) => fetch(input, { ...init, cache: 'no-store' }) },
+    global: { fetch: supabaseFetch },
     cookies: {
       getAll: () => cookieStore.getAll(),
       setAll: (values) => {

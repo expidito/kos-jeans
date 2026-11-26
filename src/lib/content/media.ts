@@ -1,3 +1,4 @@
+import {privatePhotoResponse} from '@/lib/media/response';
 import "server-only";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type { Database } from "@/lib/supabase/database.types";
@@ -9,6 +10,7 @@ export const bannerHeaders = {
 export async function bannerMedia(
   client: SupabaseClient<Database>,
   id: string,
+  width: number | null = null,
 ) {
   try {
     const { data, error } = await client
@@ -29,9 +31,7 @@ export async function bannerMedia(
       !["image/jpeg", "image/png", "image/webp"].includes(file.data.type)
     )
       return new Response(null, { status: 404, headers: bannerHeaders });
-    return new Response(await file.data.arrayBuffer(), {
-      headers: { ...bannerHeaders, "Content-Type": file.data.type },
-    });
+    return privatePhotoResponse(file.data,bannerHeaders,width);
   } catch {
     return new Response(null, { status: 503, headers: bannerHeaders });
   }

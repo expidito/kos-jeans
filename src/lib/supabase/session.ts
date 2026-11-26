@@ -1,4 +1,5 @@
 import "server-only";
+import {supabaseFetch} from "./fetch";
 
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
@@ -12,7 +13,7 @@ export async function refreshSession(request: NextRequest) {
   let response = NextResponse.next({ request });
   const supabase = createServerClient<Database>(url, key, {
     cookieOptions: { httpOnly: true, sameSite: 'lax', secure: !!process.env.VERCEL },
-    global: { fetch: (input, init) => fetch(input, { ...init, cache: 'no-store' }) },
+    global: { fetch: supabaseFetch },
     cookies: {
       getAll: () => request.cookies.getAll(),
       setAll: (values) => {

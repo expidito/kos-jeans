@@ -1,4 +1,6 @@
 import 'server-only';
+import {cache} from 'react';
+import {supabaseFetch} from '@/lib/supabase/fetch';
 import {createClient} from '@supabase/supabase-js';
 import type {Database} from '@/lib/supabase/database.types';
 import {getSupabaseConfig} from '@/lib/supabase/config';
@@ -11,11 +13,11 @@ export function publicCatalogClient(){
   // Explicit production isolation until the owner approves a separate production database.
   if(process.env.VERCEL_ENV==='production'||!process.env.NEXT_PUBLIC_SUPABASE_URL||!process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY)return null;
   const {url,key}=getSupabaseConfig();
-  return createClient<Database>(url,key,{auth:{persistSession:false,autoRefreshToken:false,detectSessionInUrl:false},global:{fetch:(input,init)=>fetch(input,{...init,cache:'no-store'})}});
+  return createClient<Database>(url,key,{auth:{persistSession:false,autoRefreshToken:false,detectSessionInUrl:false},global:{fetch:supabaseFetch}});
 }
-export async function getCategories(){const client=publicCatalogClient();if(!client)return [];
+export const getCategories=cache(async()=>{const client=publicCatalogClient();if(!client)return [];
   const {data,error}=await client.from('categories').select('*').order('sort_order').order('id');if(error)throw new Error('Catalog unavailable');return data;
-}
+});
 export function categoryTree(categories:Category[],parent:string|null=null):NavigationNode[]{return categories.filter(c=>c.parent_id===parent).map(c=>({id:c.id,label:c.name,href:`/catalog/${c.slug}`,children:categoryTree(categories,c.id)}));}
 export async function getCatalog(f:CatalogFilters,categoryId:string|null=null):Promise<CatalogResult>{
   const client=publicCatalogClient();if(!client)return {items:[],total:0,sizes:[],colors:[]};

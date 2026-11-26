@@ -5,7 +5,7 @@ import {readFile,writeFile} from 'node:fs/promises';
 import {createClient} from '@supabase/supabase-js';
 import {devContext} from './catalog-dev-fixtures.mjs';
 import {getSupabaseConfig} from '../src/lib/supabase/config.ts';
-const base='http://127.0.0.1:3009',parent=randomUUID(),child=randomUUID(),image=randomUUID();
+const base=process.env.AUDIT_TEST_BASE??'http://127.0.0.1:3009',parent=randomUUID(),child=randomUUID(),image=randomUUID();
 const prefix='test-category-check-'+randomUUID(),path=`categories/${child}/${image}.jpg`;
 let ctx,userId,stage='dev target',failed=false;const checks=[];const record=check=>{checks.push({check,status:'pass'});console.log('PASS: '+check);};
 const get=url=>fetch(base+url,{redirect:'manual'});

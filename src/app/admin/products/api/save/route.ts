@@ -1,3 +1,5 @@
+
+import {FormError} from "@/lib/form-error";
 import type { NextRequest } from "next/server";
 import {
   mutationSession,
@@ -21,7 +23,7 @@ export async function POST(request: NextRequest) {
       requestId = uuid(body.request_id),
       command = String(body.command);
     if (!["reserve", "save", "archive"].includes(command))
-      throw Error("Невідома дія.");
+      throw new FormError("Невідома дія.");
     const version =
       body.version === null
         ? null
@@ -64,7 +66,7 @@ export async function POST(request: NextRequest) {
         error:
           error instanceof SyntaxError
             ? "Невірний формат даних."
-            : error instanceof Error
+            : error instanceof FormError
               ? error.message
               : "Не вдалося зберегти товар.",
       },

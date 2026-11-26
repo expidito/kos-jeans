@@ -1,0 +1,6 @@
+import {readdir,readFile,writeFile} from 'node:fs/promises';
+import assert from 'node:assert/strict';
+const files=[];async function walk(dir){for(const e of await readdir(dir,{withFileTypes:true})){const p=dir+'/'+e.name;if(e.isDirectory())await walk(p);else if(/\.(js|json|html)$/.test(e.name))files.push(p);}}await walk('.next/static');
+const secret=process.env.SUPABASE_CHECKOUT_SECRET_KEY;assert(secret);let bytes=0;const findings=[];
+for(const path of files){const s=await readFile(path,'utf8');bytes+=Buffer.byteLength(s);if(s.includes(secret)||/\bsb_secret_[A-Za-z0-9_-]{20,}\b/.test(s)||/-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----/.test(s))findings.push({path,kind:'private-credential-pattern'});for(const token of s.matchAll(/eyJ[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+/g)){try{if(JSON.parse(Buffer.from(token[0].split('.')[1],'base64url').toString()).role==='service_role')findings.push({path,kind:'service-role-jwt'});}catch{}}}
+await writeFile('docs/checks/quality/client-secrets.json',JSON.stringify({status:findings.length?'failed':'passed',files:files.length,bytes,findings,valuesPrinted:false},null,2)+'\n');assert.equal(findings.length,0);console.log('PASS browser artifacts contain no current server secret, secret pattern or service-role JWT');

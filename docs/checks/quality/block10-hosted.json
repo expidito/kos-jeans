@@ -1,0 +1,29 @@
+{
+  "checks": [
+    {
+      "check": "All four admin product RPCs exist in kos-jeans-dev",
+      "status": "pass"
+    },
+    {
+      "check": "Anonymous and ordinary users cannot change prices/variants/stock or call admin RPCs; role metadata ignored",
+      "status": "pass"
+    },
+    {
+      "check": "Ordinary users cannot upload/delete catalog photos or read draft photos; original object remains",
+      "status": "pass"
+    },
+    {
+      "check": "Private HTTP routes redirect; anonymous mutation and cross-origin POST denied; draft media 404",
+      "status": "pass"
+    },
+    {
+      "check": "Temporary ordinary Auth account removed; permanent roles and catalog untouched",
+      "status": "pass"
+    }
+  ],
+  "status": "pass",
+  "productionModified": false,
+  "permanentRolesChanged": false,
+  "recheckedInBlock": 15,
+  "recheckedOn": "2026-11-26"
+}

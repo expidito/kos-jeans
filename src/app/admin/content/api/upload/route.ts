@@ -1,3 +1,4 @@
+import {preparePhoto} from '@/lib/media/transform';
 import type { NextRequest } from "next/server";
 import { createHash } from "node:crypto";
 import { mutationSession, json, boundedBody } from "@/lib/admin/products/http";
@@ -18,8 +19,9 @@ export async function POST(request: NextRequest) {
       file = form.get("image");
     if (!(file instanceof File) || !file.size || file.size > maxCategoryImage)
       return json({ error: "Фото JPEG, PNG або WebP до 3 МБ." }, 422);
-    const bytes = new Uint8Array(await file.arrayBuffer()),
-      ext = imageExtension(file.type, bytes);
+    const original = new Uint8Array(await file.arrayBuffer());
+    imageExtension(file.type,original);
+    const bytes=await preparePhoto(original,file.type),ext="webp";
     const row = await session.client
       .from("homepage_banners")
       .select("id,archived_at")
@@ -31,7 +33,7 @@ export async function POST(request: NextRequest) {
     const result = await session.client.storage
       .from("store-media")
       .upload(path, bytes, {
-        contentType: file.type,
+        contentType: "image/webp",
         upsert: false,
         cacheControl: "0",
       });
