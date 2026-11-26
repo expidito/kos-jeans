@@ -1,0 +1,396 @@
+{
+  "mainCommit": "e71f98a",
+  "checks": [
+    {
+      "broken": 0,
+      "path": "/",
+      "scroll": 320,
+      "width": 320
+    },
+    {
+      "broken": 0,
+      "path": "/",
+      "scroll": 390,
+      "width": 390
+    },
+    {
+      "broken": 0,
+      "path": "/",
+      "scroll": 768,
+      "width": 768
+    },
+    {
+      "broken": 0,
+      "path": "/",
+      "scroll": 1024,
+      "width": 1024
+    },
+    {
+      "broken": 0,
+      "path": "/",
+      "scroll": 1440,
+      "width": 1440
+    },
+    {
+      "broken": 0,
+      "path": "/catalog",
+      "scroll": 320,
+      "width": 320
+    },
+    {
+      "broken": 0,
+      "path": "/catalog",
+      "scroll": 390,
+      "width": 390
+    },
+    {
+      "broken": 0,
+      "path": "/catalog",
+      "scroll": 768,
+      "width": 768
+    },
+    {
+      "broken": 0,
+      "path": "/catalog",
+      "scroll": 1024,
+      "width": 1024
+    },
+    {
+      "broken": 0,
+      "path": "/catalog",
+      "scroll": 1440,
+      "width": 1440
+    },
+    {
+      "broken": 0,
+      "path": "/contacts",
+      "scroll": 320,
+      "width": 320
+    },
+    {
+      "broken": 0,
+      "path": "/contacts",
+      "scroll": 390,
+      "width": 390
+    },
+    {
+      "broken": 0,
+      "path": "/contacts",
+      "scroll": 768,
+      "width": 768
+    },
+    {
+      "broken": 0,
+      "path": "/contacts",
+      "scroll": 1024,
+      "width": 1024
+    },
+    {
+      "broken": 0,
+      "path": "/contacts",
+      "scroll": 1440,
+      "width": 1440
+    },
+    {
+      "broken": 0,
+      "path": "/delivery",
+      "scroll": 320,
+      "width": 320
+    },
+    {
+      "broken": 0,
+      "path": "/delivery",
+      "scroll": 390,
+      "width": 390
+    },
+    {
+      "broken": 0,
+      "path": "/delivery",
+      "scroll": 768,
+      "width": 768
+    },
+    {
+      "broken": 0,
+      "path": "/delivery",
+      "scroll": 1024,
+      "width": 1024
+    },
+    {
+      "broken": 0,
+      "path": "/delivery",
+      "scroll": 1440,
+      "width": 1440
+    },
+    {
+      "broken": 0,
+      "path": "/returns",
+      "scroll": 320,
+      "width": 320
+    },
+    {
+      "broken": 0,
+      "path": "/returns",
+      "scroll": 390,
+      "width": 390
+    },
+    {
+      "broken": 0,
+      "path": "/returns",
+      "scroll": 768,
+      "width": 768
+    },
+    {
+      "broken": 0,
+      "path": "/returns",
+      "scroll": 1024,
+      "width": 1024
+    },
+    {
+      "broken": 0,
+      "path": "/returns",
+      "scroll": 1440,
+      "width": 1440
+    },
+    {
+      "broken": 0,
+      "path": "/privacy",
+      "scroll": 320,
+      "width": 320
+    },
+    {
+      "broken": 0,
+      "path": "/privacy",
+      "scroll": 390,
+      "width": 390
+    },
+    {
+      "broken": 0,
+      "path": "/privacy",
+      "scroll": 768,
+      "width": 768
+    },
+    {
+      "broken": 0,
+      "path": "/privacy",
+      "scroll": 1024,
+      "width": 1024
+    },
+    {
+      "broken": 0,
+      "path": "/privacy",
+      "scroll": 1440,
+      "width": 1440
+    },
+    {
+      "broken": 0,
+      "path": "/terms",
+      "scroll": 320,
+      "width": 320
+    },
+    {
+      "broken": 0,
+      "path": "/terms",
+      "scroll": 390,
+      "width": 390
+    },
+    {
+      "broken": 0,
+      "path": "/terms",
+      "scroll": 768,
+      "width": 768
+    },
+    {
+      "broken": 0,
+      "path": "/terms",
+      "scroll": 1024,
+      "width": 1024
+    },
+    {
+      "broken": 0,
+      "path": "/terms",
+      "scroll": 1440,
+      "width": 1440
+    },
+    {
+      "broken": 0,
+      "path": "/cart",
+      "scroll": 320,
+      "width": 320
+    },
+    {
+      "broken": 0,
+      "path": "/cart",
+      "scroll": 390,
+      "width": 390
+    },
+    {
+      "broken": 0,
+      "path": "/cart",
+      "scroll": 768,
+      "width": 768
+    },
+    {
+      "broken": 0,
+      "path": "/cart",
+      "scroll": 1024,
+      "width": 1024
+    },
+    {
+      "broken": 0,
+      "path": "/cart",
+      "scroll": 1440,
+      "width": 1440
+    },
+    {
+      "broken": 0,
+      "path": "/checkout",
+      "scroll": 320,
+      "width": 320
+    },
+    {
+      "broken": 0,
+      "path": "/checkout",
+      "scroll": 390,
+      "width": 390
+    },
+    {
+      "broken": 0,
+      "path": "/checkout",
+      "scroll": 768,
+      "width": 768
+    },
+    {
+      "broken": 0,
+      "path": "/checkout",
+      "scroll": 1024,
+      "width": 1024
+    },
+    {
+      "broken": 0,
+      "path": "/checkout",
+      "scroll": 1440,
+      "width": 1440
+    },
+    {
+      "broken": 0,
+      "path": "/admin/login",
+      "scroll": 320,
+      "width": 320
+    },
+    {
+      "broken": 0,
+      "path": "/admin/login",
+      "scroll": 390,
+      "width": 390
+    },
+    {
+      "broken": 0,
+      "path": "/admin/login",
+      "scroll": 768,
+      "width": 768
+    },
+    {
+      "broken": 0,
+      "path": "/admin/login",
+      "scroll": 1024,
+      "width": 1024
+    },
+    {
+      "broken": 0,
+      "path": "/admin/login",
+      "scroll": 1440,
+      "width": 1440
+    },
+    {
+      "broken": 0,
+      "path": "/catalog/test-jeans",
+      "scroll": 320,
+      "width": 320
+    },
+    {
+      "broken": 0,
+      "path": "/catalog/test-jeans",
+      "scroll": 390,
+      "width": 390
+    },
+    {
+      "broken": 0,
+      "path": "/catalog/test-jeans",
+      "scroll": 768,
+      "width": 768
+    },
+    {
+      "broken": 0,
+      "path": "/catalog/test-jeans",
+      "scroll": 1024,
+      "width": 1024
+    },
+    {
+      "broken": 0,
+      "path": "/catalog/test-jeans",
+      "scroll": 1440,
+      "width": 1440
+    },
+    {
+      "broken": 0,
+      "path": "/product/test-wide-leg-blue",
+      "scroll": 320,
+      "width": 320
+    },
+    {
+      "broken": 0,
+      "path": "/product/test-wide-leg-blue",
+      "scroll": 390,
+      "width": 390
+    },
+    {
+      "broken": 0,
+      "path": "/product/test-wide-leg-blue",
+      "scroll": 768,
+      "width": 768
+    },
+    {
+      "broken": 0,
+      "path": "/product/test-wide-leg-blue",
+      "scroll": 1024,
+      "width": 1024
+    },
+    {
+      "broken": 0,
+      "path": "/product/test-wide-leg-blue",
+      "scroll": 1440,
+      "width": 1440
+    },
+    {
+      "broken": 0,
+      "path": "/launch-check-missing",
+      "scroll": 320,
+      "width": 320
+    },
+    {
+      "broken": 0,
+      "path": "/launch-check-missing",
+      "scroll": 390,
+      "width": 390
+    },
+    {
+      "broken": 0,
+      "path": "/launch-check-missing",
+      "scroll": 768,
+      "width": 768
+    },
+    {
+      "broken": 0,
+      "path": "/launch-check-missing",
+      "scroll": 1024,
+      "width": 1024
+    },
+    {
+      "broken": 0,
+      "path": "/launch-check-missing",
+      "scroll": 1440,
+      "width": 1440
+    }
+  ],
+  "mobileMenuNestedAndEscape": true
+}

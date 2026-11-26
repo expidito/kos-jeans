@@ -1,86 +1,67 @@
-# KOS JEANS: Vercel — блок 02
+# Vercel: текущая публикация и окружения
 
-Дата: 2026-11-23 (Europe/Vienna). Статус: `done`.
+Проверено 2026-11-26, блок16. Настройки Production не изменялись.
 
-## Адреса
+- [Production](https://kos-jeans.vercel.app) — публичный безопасный сайт.
+- [Проект](https://vercel.com/fedir-team/kos-jeans),
+  [GitHub](https://github.com/expidito/kos-jeans).
+- Production Branch: `main`. PR15 слит с разрешения; main `e71f98a802648a8983e40e6a3ed744c8b16f64ff`.
+  [Ready Deployment](https://vercel.com/fedir-team/kos-jeans/5BrRKKCHQ2vUN4zt5zkCgpJmQGG6)
+  подтверждён в GitHub status и Vercel Project Overview (Current Production).
+- Изменения блока16 — отдельный PR/Preview. Его Production-публикация не разрешена
+  автоматически: только после нового подтверждения merge, затем повторный GET-smoke.
 
-- Публичный сайт: **https://kos-jeans.vercel.app** — без входа в Vercel.
-- [Проект Vercel](https://vercel.com/fedir-team/kos-jeans).
-- [Репозиторий GitHub](https://github.com/expidito/kos-jeans).
-- [Первая production-публикация](https://vercel.com/fedir-team/kos-jeans/GHrwkuRanYYQzurr1uCjxmJBLo6L):
-  `main`, SHA `b6f8589`, Ready.
-- [Проверенный автоматический preview](https://vercel.com/fedir-team/kos-jeans/5XPTzEAR4zFRdtVCykrBi18gqL2X):
-  ветка `feat/block-02-vercel-preview`, SHA `5054ccf`, Ready.
-- [Preview-ссылка](https://kos-jeans-o8ujl62md-fedir-team.vercel.app) может требовать
-  входа в Vercel. Для просмотра с любого устройства используйте публичный сайт.
+## Публикация кода
 
-## Как публикуются изменения
+Feature-ветка → push → GitHub Actions и Vercel Preview → проверка владельцем →
+разрешённый merge в main → Production Deployment. Источник кода — GitHub Integration.
+`vercel.json`: npm ci / npm run build, корневая папка проекта. CI Node24 из `.nvmrc`;
+диапазон приложения24–26 поддерживает существующий Vercel Node26.
+Preview может требовать Vercel SSO; это ожидаемая защита, не ошибка сайта.
+Не отключать защиту и не публиковать bypass-token ради внешнего smoke.
 
-Vercel Git Integration связан с `expidito/kos-jeans`.
+## Проверенные переменные, без значений
 
-1. Разработка и push выполняются в feature-ветку.
-2. GitHub Actions запускает `npm ci`, lint, typecheck и build.
-3. Vercel автоматически создаёт Preview Deployment. Ссылка доступна в PR,
-   в статусе Vercel у коммита и в разделе Deployments проекта.
-4. Владелец проверяет изменения и подтверждает слияние PR.
-5. После merge в `main` Git Integration запускает production-публикацию,
-   обновляющую стабильный адрес https://kos-jeans.vercel.app.
+| Переменная | Local Development | Vercel Preview | Vercel Production сейчас |
+| --- | --- | --- | --- |
+| NEXT_PUBLIC_SUPABASE_URL | Есть в игнорируемом .env.local, dev | Есть, только Preview | Не назначена Production |
+| NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY | Есть, проверен публичный формат | Есть, только Preview | Не назначена Production |
+| SUPABASE_CHECKOUT_SECRET_KEY | Есть, server only | Есть, только Preview | Не назначена Production |
+| NEXT_PUBLIC_SITE_URL | Не задана; безопасный canonical fallback | Не задана в наблюдаемом списке | Не задана в наблюдаемом списке; fallback на действующий адрес |
+| VERCEL_ENV | Локально отсутствует | Системное preview | Системное production |
 
-Первая production-сборка запущена вручную через Create Deployment с Git
-reference `main`, поскольку создание проекта не запустило её автоматически.
-Для автоматического preview выполнен настоящий push `5054ccf`, без ручного
-создания deployment; Vercel и GitHub Actions завершились успешно.
-2026-11-24 PR #2 слит с разрешения владельца. Production-триггер проверен:
-[deployment](https://vercel.com/fedir-team/kos-jeans/CJdmemxArsgyXqSYkDcv7bpCmaxC)
-Ready / Current / Production, исходный SHA main `dfa91d6`, домен `kos-jeans.vercel.app`.
+Dashboard показал три Supabase записи с областью Preview и без branch labels.
+Значения не открывались/не копировались. Local-файл не принадлежит облачному
+Development scope: наличие локального ключа не означает добавления его в Vercel.
+[Метаданные](checks/launch/vercel-environments.json),
+[локальная проверка](checks/launch/local-environment.json).
 
-## Настройки сборки
+Production изолирован **дважды**: dev-переменные не назначены Production, а код
+publicCatalogClient/adminConfigured/checkoutAvailable запрещает работу при
+VERCEL_ENV=production даже при случайном наличии dev-значений.
+Не менять/подделывать VERCEL_ENV. Серверный checkout secret не имеет NEXT_PUBLIC prefix,
+публичное чтение каталога использует publishable key и RLS.
 
-- Команда: `Fedir Team`, проект `kos-jeans`, существующий репозиторий GitHub.
-- Framework: Next.js; Root Directory: корень (`./`).
-- Production Branch: `main`; остальные feature-ветки — Preview.
-- `vercel.json`: `installCommand: npm ci`, `buildCommand: npm run build`.
-  Конфигурация проверена в preview и production после merge PR #2.
-- Output Directory: стандартный для Next.js.
-- В настройках Vercel сейчас Node.js 26.x; диапазон `engines.node` приложения
-  `>=24 <27` его поддерживает. CI использует Node.js 24 из `.nvmrc`.
-- Платные функции, Pro Trial и on-demand concurrent builds не активировались.
-- Защита preview оставлена штатной; публичный production доступен без авторизации.
+Само добавление будущих prod env не разблокирует магазин: нужен отдельно reviewed
+переход [SUPABASE_PRODUCTION.md](SUPABASE_PRODUCTION.md). Никаких новых переключателей
+реальных заказов в этом блоке не добавлено. После изменения env нужен новый deploy;
+предыдущий deployment не получает их автоматически.
 
-## Переменные окружения
+## Auth и адреса
 
-Каркас собирается без ключей и без `.env.local`. Supabase не подключался.
-В Vercel не добавлялись фиктивные или пустые Supabase-ключи.
+Dev Auth Site URL localhost:3000, redirect allowlist пуст — read-only проверка Dashboard.
+Текущая email/password server-авторизация возвращает в /admin того же HTTP host,
+logout — /admin/login; произвольный return URL не принимается. Origin проверяется.
+Email recovery/OAuth callback не реализованы. Для будущей рабочей базы Site URL и
+точные redirect URLs согласуются отдельно по [DOMAIN_SETUP.md](DOMAIN_SETUP.md).
 
-Когда соответствующий функционал будет реализован, значения задаются в
-Project Settings → Environment Variables отдельно для Production и Preview:
+## Резервный возврат и тариф
 
-| Переменная | Окружение и назначение |
-| --- | --- |
-| `NEXT_PUBLIC_SITE_URL` | Для Production: `https://kos-jeans.vercel.app`; сейчас каркас не использует переменную |
-| `NEXT_PUBLIC_SUPABASE_URL` | Адрес соответствующей БД, начиная с блока 05 |
-| `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | Публичный ключ с RLS, отдельно для каждого окружения |
-| `SUPABASE_SERVICE_ROLE_KEY` | Только серверный секрет; никогда не передавать в браузер |
+При неудачной публикации не включать checkout: сравнить SHA/логи и вернуть ранее
+проверенную публикацию только после согласования. Rollback кода не откатывает БД.
+Не менять env и не запускать SQL/очистку, чтобы замаскировать ошибку сборки.
 
-Preview должен использовать тестовую БД, изолированную от production.
-Не переносить реальные ключи в Git или документацию. Названия без значений
-есть в `.env.example`; `.env.local` и `.vercel/` исключены из Git.
-После изменения переменных требуется новый deployment для их применения.
-
-## Проверки
-
-Проверено без cookies и авторизации через системный curl с обычной проверкой TLS:
-главная HTTPS 200, украинский контент, сообщение о разработке, `noindex, nofollow`,
-CSS 200 и украинская страница 404 с правильным HTTP-статусом.
-Production визуально проверен в Chrome. Vercel вернул `Deployment has completed`
-для main и проверенного preview; CI feature-ветки прошёл.
-Поле Website репозитория GitHub указывает на реальный публичный адрес.
-
-Это ранняя тестовая публикация: каталог, админка и заказы ещё не реализованы.
-Блок 03 не начинается без отдельного подтверждения владельца.
-
-## Официальные инструкции
-
-- [Git deployments](https://vercel.com/docs/git)
-- [Vercel for GitHub](https://vercel.com/docs/git/vercel-for-github)
-- [Deployment environments](https://vercel.com/docs/deployments/environments)
+Перед коммерческим использованием проверить действующий тариф. Если это Hobby,
+он ограничен личным некоммерческим использованием; тариф/расходы нужно согласовать.
+[Официальные условия Hobby](https://vercel.com/docs/plans/hobby).
+Текущий тариф не объявляется автоматически подходящим для торговли; upgrade не выполнялся.

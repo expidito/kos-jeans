@@ -1,0 +1,32 @@
+{
+  "checkedOn": "2026-11-26",
+  "project": "kos-jeans",
+  "productionBranch": "main",
+  "currentProductionCommit": "e71f98a802648a8983e40e6a3ed744c8b16f64ff",
+  "currentProductionReady": true,
+  "observedVariables": [
+    {
+      "branchLabels": [],
+      "name": "NEXT_PUBLIC_SUPABASE_URL",
+      "scopes": [
+        "Preview"
+      ]
+    },
+    {
+      "branchLabels": [],
+      "name": "NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY",
+      "scopes": [
+        "Preview"
+      ]
+    },
+    {
+      "branchLabels": [],
+      "name": "SUPABASE_CHECKOUT_SECRET_KEY",
+      "scopes": [
+        "Preview"
+      ]
+    }
+  ],
+  "valuesRevealed": false,
+  "settingsChanged": false
+}
