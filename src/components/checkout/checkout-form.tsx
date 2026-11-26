@@ -401,7 +401,7 @@ export function CheckoutForm({ configured }: { configured: boolean }) {
                               unoptimized
                               fill
                               sizes="60px"
-                              src={`/media/${r.imageId}`}
+                              src={`/media/${r.imageId}?w=480`}
                               alt={r.name ?? ""}
                               className="object-cover"
                             />

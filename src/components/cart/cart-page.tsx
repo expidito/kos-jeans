@@ -149,7 +149,7 @@ export function ShoppingCart() {
                       {row.imageId ? (
                         <Image
                           unoptimized
-                          src={`/media/${row.imageId}`}
+                          src={`/media/${row.imageId}?w=480`}
                           alt={row.name ?? ""}
                           fill
                           sizes="120px"
