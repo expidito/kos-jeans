@@ -1,0 +1,70 @@
+{
+  "status": "passed",
+  "environment": "local production build + kos-jeans-dev",
+  "checks": [
+    {
+      "path": "/media/a0000000-0000-4000-8000-000000000003",
+      "optimizerStatus": 400
+    },
+    {
+      "path": "/category-media/70000000-0000-4000-8000-000000000004",
+      "optimizerStatus": 400
+    },
+    {
+      "path": "/banner-media/00000000-0000-4000-8000-000000000001",
+      "optimizerStatus": 400
+    },
+    {
+      "path": "/admin/product-media/00000000-0000-4000-8000-000000000001",
+      "optimizerStatus": 400
+    },
+    {
+      "width": 160,
+      "status": 200,
+      "bytes": 6684,
+      "cache": "private, no-store, max-age=0"
+    },
+    {
+      "width": 480,
+      "status": 200,
+      "bytes": 32332,
+      "cache": "private, no-store, max-age=0"
+    },
+    {
+      "width": 960,
+      "status": 200,
+      "bytes": 80922,
+      "cache": "private, no-store, max-age=0"
+    },
+    {
+      "width": 1440,
+      "status": 200,
+      "bytes": 87198,
+      "cache": "private, no-store, max-age=0"
+    },
+    {
+      "path": "/admin",
+      "status": 307
+    },
+    {
+      "path": "/admin/products",
+      "status": 307
+    },
+    {
+      "path": "/admin/categories",
+      "status": 307
+    },
+    {
+      "path": "/admin/orders",
+      "status": 307
+    },
+    {
+      "path": "/admin/banners",
+      "status": 307
+    },
+    {
+      "path": "/admin/settings",
+      "status": 307
+    }
+  ]
+}

@@ -1,3 +1,5 @@
+import {privatePhotoResponse} from '@/lib/media/response';
+import {mediaWidth} from '@/lib/media/transform';
 import {publicCatalogClient} from '@/lib/catalog/data';
 export const dynamic='force-dynamic';
 export async function GET(_request:Request,{params}:{params:Promise<{id:string}>}){
@@ -8,6 +10,6 @@ export async function GET(_request:Request,{params}:{params:Promise<{id:string}>
     if(error)return new Response(null,{status:503,headers});if(!image)return new Response(null,{status:404,headers});
     const {data,error:downloadError}=await client.storage.from('store-media').download(image.storage_path);
     if(downloadError||!data)return new Response(null,{status:404,headers});
-    return new Response(await data.arrayBuffer(),{headers:{...headers,'Content-Type':data.type||'application/octet-stream'}});
+    return privatePhotoResponse(data,headers,mediaWidth(_request));
   }catch{return new Response(null,{status:503,headers});}
 }

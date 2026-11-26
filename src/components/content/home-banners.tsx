@@ -41,7 +41,7 @@ export function HomeBanners({
             <div className="relative h-[440px] overflow-hidden sm:h-[560px] lg:h-auto lg:min-h-[660px]">
               <Image
                 unoptimized
-                src={`/banner-media/${b.id}?v=${encodeURIComponent(b.updated_at)}`}
+                src={`/banner-media/${b.id}?w=1440&v=${encodeURIComponent(b.updated_at)}`}
                 alt={b.alt_text || b.title}
                 fill
                 sizes="(max-width:1024px) 100vw,50vw"

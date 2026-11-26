@@ -1,0 +1,26 @@
+{
+  "status": "pass",
+  "environment": "kos-jeans-dev",
+  "syntheticProducts": 1000,
+  "syntheticVariants": 1000,
+  "syntheticOrders": 1000,
+  "allRowsRolledBack": true,
+  "orderIdentitySequenceUntouched": true,
+  "rows": [
+    {
+      "ms": "1086.596000",
+      "name": "admin products page 20 / stock sort",
+      "total": 1000
+    },
+    {
+      "ms": "6.098000",
+      "name": "admin orders page 20",
+      "total": 1022
+    },
+    {
+      "ms": "1538.223000",
+      "name": "anon combined filters page 20",
+      "total": 1000
+    }
+  ]
+}

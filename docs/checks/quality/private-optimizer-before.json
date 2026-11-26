@@ -1,0 +1,5 @@
+{
+  "status": 200,
+  "cacheControl": "public, max-age=14400, must-revalidate",
+  "contentType": "image/jpeg"
+}

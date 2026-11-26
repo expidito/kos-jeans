@@ -6,6 +6,7 @@ import { authRedirect, rejectCrossOrigin } from '@/lib/admin/forms';
 export async function POST(request: NextRequest) {
   const rejected = rejectCrossOrigin(request);
   if (rejected) return rejected;
+  try {
   if (adminConfigured()) {
     // Logout is allowed even after role revocation / token expiry.
     const client = await createClient();
@@ -13,4 +14,5 @@ export async function POST(request: NextRequest) {
     if (error) return authRedirect(request, '/admin/login?error=logout');
   }
   return authRedirect(request, '/admin/login?notice=logout');
+  } catch { return authRedirect(request, '/admin/login?error=logout'); }
 }

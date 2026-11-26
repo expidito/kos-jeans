@@ -1,0 +1,38 @@
+{
+  "status": "pass",
+  "checks": [
+    {
+      "check": "Draft banner image remains inaccessible through visitor Storage and public proxy",
+      "status": "pass"
+    },
+    {
+      "check": "Published photo and title render immediately; edits and identical retries work without deployment",
+      "status": "pass"
+    },
+    {
+      "check": "Unsafe links and stale versions rejected; future/hidden banners and photos are inaccessible",
+      "status": "pass"
+    },
+    {
+      "check": "Verified fictitious contact updates footer and contacts page immediately",
+      "status": "pass"
+    },
+    {
+      "check": "Information/catalog/product metadata, canonical, OG and noindex verified; robots disallows all and sitemap exposes no test URLs",
+      "status": "pass"
+    },
+    {
+      "check": "Anonymous/ordinary role and unauthenticated API denied; cross-origin POST rejected",
+      "status": "pass"
+    },
+    {
+      "check": "Only exact test contact restored; owned banner archived and media private; no existing assortment removed",
+      "status": "pass"
+    }
+  ],
+  "productionEnvironmentChanged": false,
+  "existingAssortmentRemoved": false,
+  "rolesAssigned": false,
+  "recheckedInBlock": 15,
+  "recheckedOn": "2026-11-26"
+}

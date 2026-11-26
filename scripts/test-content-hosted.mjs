@@ -5,7 +5,7 @@ import { readFile, writeFile } from "node:fs/promises";
 import { devContext } from "./catalog-dev-fixtures.mjs";
 const id = randomUUID(),
   checks = [],
-  base = "http://127.0.0.1:3014";
+  base = (process.env.AUDIT_TEST_BASE ?? "http://127.0.0.1:3014");
 let c,
   admin,
   version,

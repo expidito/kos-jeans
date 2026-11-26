@@ -1,3 +1,6 @@
+import {preparePhoto} from '@/lib/media/transform';
+
+import {FormError} from "@/lib/form-error";
 import type { NextRequest } from "next/server";
 import { createHash } from "node:crypto";
 import {
@@ -25,9 +28,11 @@ export async function POST(request: NextRequest) {
       imageId = uuid(form.get("image_id")),
       file = form.get("image");
     if (!(file instanceof File) || !file.size || file.size > maxCategoryImage)
-      throw Error("Фото має бути JPEG, PNG або WebP до 3 МБ.");
-    const bytes = new Uint8Array(await file.arrayBuffer()),
-      extension = imageExtension(file.type, bytes),
+      throw new FormError("Фото має бути JPEG, PNG або WebP до 3 МБ.");
+    const original = new Uint8Array(await file.arrayBuffer());
+    imageExtension(file.type,original);
+    const bytes = await preparePhoto(original,file.type),
+      extension = "webp",
       digest = createHash("sha256").update(bytes).digest("hex");
     await cleanupProductMedia(client);
     const args = {
@@ -41,7 +46,7 @@ export async function POST(request: NextRequest) {
     const upload = await client.storage
       .from("store-media")
       .upload(staged.data, bytes, {
-        contentType: file.type,
+        contentType: "image/webp",
         upsert: false,
         cacheControl: "0",
       });
@@ -67,7 +72,7 @@ export async function POST(request: NextRequest) {
     return json(
       {
         error:
-          error instanceof Error
+          error instanceof FormError
             ? error.message
             : "Не вдалося завантажити фото.",
       },

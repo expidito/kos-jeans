@@ -1,0 +1,41 @@
+{
+  "checks": [
+    {
+      "check": "Published category page and protected private-bucket image load anonymously",
+      "status": "pass"
+    },
+    {
+      "check": "Anonymous/ordinary cannot invoke writer, insert/update/delete categories or upload photos; metadata does not grant role",
+      "status": "pass"
+    },
+    {
+      "check": "Old category URL redirects 308 to current slug and preserves query",
+      "status": "pass"
+    },
+    {
+      "check": "Hiding parent closes child/current URL/old URL and private Storage image immediately",
+      "status": "pass"
+    },
+    {
+      "check": "Detached photo is no longer publicly downloadable; object stays private",
+      "status": "pass"
+    },
+    {
+      "check": "Anonymous admin routes redirect without category HTML; admin image route returns 404",
+      "status": "pass"
+    },
+    {
+      "check": "Existing product assortment count unchanged",
+      "status": "pass"
+    },
+    {
+      "check": "Temporary ordinary Auth account removed; only new disposable categories archived",
+      "status": "pass"
+    }
+  ],
+  "status": "pass",
+  "existingAssortmentRemoved": false,
+  "permanentRolesChanged": false,
+  "recheckedInBlock": 15,
+  "recheckedOn": "2026-11-26"
+}
