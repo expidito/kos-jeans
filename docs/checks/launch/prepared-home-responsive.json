@@ -1,0 +1,40 @@
+{
+  "mode": "local Production simulation; not deployed to live Production",
+  "checks": [
+    {
+      "broken": 0,
+      "demoProductButtons": 0,
+      "emptyCollection": true,
+      "scroll": 320,
+      "width": 320
+    },
+    {
+      "broken": 0,
+      "demoProductButtons": 0,
+      "emptyCollection": true,
+      "scroll": 390,
+      "width": 390
+    },
+    {
+      "broken": 0,
+      "demoProductButtons": 0,
+      "emptyCollection": true,
+      "scroll": 768,
+      "width": 768
+    },
+    {
+      "broken": 0,
+      "demoProductButtons": 0,
+      "emptyCollection": true,
+      "scroll": 1024,
+      "width": 1024
+    },
+    {
+      "broken": 0,
+      "demoProductButtons": 0,
+      "emptyCollection": true,
+      "scroll": 1440,
+      "width": 1440
+    }
+  ]
+}

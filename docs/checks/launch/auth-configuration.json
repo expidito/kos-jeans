@@ -1,0 +1,9 @@
+{
+  "project": "kos-jeans-dev",
+  "siteURL": "http://localhost:3000",
+  "noRedirectURLs": true,
+  "loginFlow": "server email/password; same-origin redirect to /admin, no OAuth callback",
+  "observedHighCpuNotice": true,
+  "settingsChanged": false,
+  "productionProjectCreated": false
+}

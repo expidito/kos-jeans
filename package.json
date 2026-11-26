@@ -27,7 +27,10 @@
     "orders:test:hosted": "node --env-file=.env.local scripts/test-admin-orders-hosted.mjs",
     "orders:cleanup:ui": "node --env-file=.env.local scripts/cleanup-admin-order-ui.mjs",
     "content:test:hosted": "node --env-file=.env.local scripts/test-content-hosted.mjs",
-    "content:cleanup:ui": "node --env-file=.env.local scripts/cleanup-content-ui.mjs"
+    "content:cleanup:ui": "node --env-file=.env.local scripts/cleanup-content-ui.mjs",
+    "launch:check:production": "node --env-file-if-exists=.env.local scripts/launch/check-production.mjs",
+    "launch:check:env": "node --env-file=.env.local scripts/launch/check-local-environment.mjs",
+    "test:production-mode": "node scripts/launch/test-production-mode.mjs"
   },
   "dependencies": {
     "@fontsource-variable/manrope": "5.3.0",

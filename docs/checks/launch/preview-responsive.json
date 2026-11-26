@@ -1,0 +1,447 @@
+{
+  "preview": "https://kos-jeans-git-feat-block-16-launch-preparation-fedir-team.vercel.app",
+  "commit": "634e27e",
+  "environment": "Preview with kos-jeans-dev",
+  "checks": [
+    {
+      "broken": 0,
+      "canonical": "https://kos-jeans.vercel.app/catalog",
+      "heading": "Каталог",
+      "noindex": "noindex, nofollow",
+      "path": "/catalog",
+      "scroll": 320,
+      "width": 320
+    },
+    {
+      "broken": 0,
+      "canonical": "https://kos-jeans.vercel.app/catalog",
+      "heading": "Каталог",
+      "noindex": "noindex, nofollow",
+      "path": "/catalog",
+      "scroll": 390,
+      "width": 390
+    },
+    {
+      "broken": 0,
+      "canonical": "https://kos-jeans.vercel.app/catalog",
+      "heading": "Каталог",
+      "noindex": "noindex, nofollow",
+      "path": "/catalog",
+      "scroll": 768,
+      "width": 768
+    },
+    {
+      "broken": 0,
+      "canonical": "https://kos-jeans.vercel.app/catalog",
+      "heading": "Каталог",
+      "noindex": "noindex, nofollow",
+      "path": "/catalog",
+      "scroll": 1024,
+      "width": 1024
+    },
+    {
+      "broken": 0,
+      "canonical": "https://kos-jeans.vercel.app/catalog",
+      "heading": "Каталог",
+      "noindex": "noindex, nofollow",
+      "path": "/catalog",
+      "scroll": 1440,
+      "width": 1440
+    },
+    {
+      "broken": 0,
+      "canonical": "https://kos-jeans.vercel.app/",
+      "heading": "Твій ритм.Твій денім.",
+      "noindex": "noindex, nofollow",
+      "path": "/",
+      "scroll": 320,
+      "width": 320
+    },
+    {
+      "broken": 0,
+      "canonical": "https://kos-jeans.vercel.app/",
+      "heading": "Твій ритм.Твій денім.",
+      "noindex": "noindex, nofollow",
+      "path": "/",
+      "scroll": 390,
+      "width": 390
+    },
+    {
+      "broken": 0,
+      "canonical": "https://kos-jeans.vercel.app/",
+      "heading": "Твій ритм.Твій денім.",
+      "noindex": "noindex, nofollow",
+      "path": "/",
+      "scroll": 768,
+      "width": 768
+    },
+    {
+      "broken": 0,
+      "canonical": "https://kos-jeans.vercel.app/",
+      "heading": "Твій ритм.Твій денім.",
+      "noindex": "noindex, nofollow",
+      "path": "/",
+      "scroll": 1024,
+      "width": 1024
+    },
+    {
+      "broken": 0,
+      "canonical": "https://kos-jeans.vercel.app/",
+      "heading": "Твій ритм.Твій денім.",
+      "noindex": "noindex, nofollow",
+      "path": "/",
+      "scroll": 1440,
+      "width": 1440
+    },
+    {
+      "broken": 0,
+      "canonical": "https://kos-jeans.vercel.app/product/test-wide-leg-blue",
+      "heading": "ТЕСТ · Джинси Wide Leg Blue",
+      "noindex": "noindex, nofollow",
+      "path": "/product/test-wide-leg-blue",
+      "scroll": 320,
+      "width": 320
+    },
+    {
+      "broken": 0,
+      "canonical": "https://kos-jeans.vercel.app/product/test-wide-leg-blue",
+      "heading": "ТЕСТ · Джинси Wide Leg Blue",
+      "noindex": "noindex, nofollow",
+      "path": "/product/test-wide-leg-blue",
+      "scroll": 390,
+      "width": 390
+    },
+    {
+      "broken": 0,
+      "canonical": "https://kos-jeans.vercel.app/product/test-wide-leg-blue",
+      "heading": "ТЕСТ · Джинси Wide Leg Blue",
+      "noindex": "noindex, nofollow",
+      "path": "/product/test-wide-leg-blue",
+      "scroll": 768,
+      "width": 768
+    },
+    {
+      "broken": 0,
+      "canonical": "https://kos-jeans.vercel.app/product/test-wide-leg-blue",
+      "heading": "ТЕСТ · Джинси Wide Leg Blue",
+      "noindex": "noindex, nofollow",
+      "path": "/product/test-wide-leg-blue",
+      "scroll": 1024,
+      "width": 1024
+    },
+    {
+      "broken": 0,
+      "canonical": "https://kos-jeans.vercel.app/product/test-wide-leg-blue",
+      "heading": "ТЕСТ · Джинси Wide Leg Blue",
+      "noindex": "noindex, nofollow",
+      "path": "/product/test-wide-leg-blue",
+      "scroll": 1440,
+      "width": 1440
+    },
+    {
+      "broken": 0,
+      "canonical": "https://kos-jeans.vercel.app/contacts",
+      "heading": "Контакти",
+      "noindex": "noindex, nofollow",
+      "path": "/contacts",
+      "scroll": 320,
+      "width": 320
+    },
+    {
+      "broken": 0,
+      "canonical": "https://kos-jeans.vercel.app/contacts",
+      "heading": "Контакти",
+      "noindex": "noindex, nofollow",
+      "path": "/contacts",
+      "scroll": 390,
+      "width": 390
+    },
+    {
+      "broken": 0,
+      "canonical": "https://kos-jeans.vercel.app/contacts",
+      "heading": "Контакти",
+      "noindex": "noindex, nofollow",
+      "path": "/contacts",
+      "scroll": 768,
+      "width": 768
+    },
+    {
+      "broken": 0,
+      "canonical": "https://kos-jeans.vercel.app/contacts",
+      "heading": "Контакти",
+      "noindex": "noindex, nofollow",
+      "path": "/contacts",
+      "scroll": 1024,
+      "width": 1024
+    },
+    {
+      "broken": 0,
+      "canonical": "https://kos-jeans.vercel.app/contacts",
+      "heading": "Контакти",
+      "noindex": "noindex, nofollow",
+      "path": "/contacts",
+      "scroll": 1440,
+      "width": 1440
+    },
+    {
+      "broken": 0,
+      "canonical": "https://kos-jeans.vercel.app/delivery",
+      "heading": "Доставка та оплата",
+      "noindex": "noindex, nofollow",
+      "path": "/delivery",
+      "scroll": 320,
+      "width": 320
+    },
+    {
+      "broken": 0,
+      "canonical": "https://kos-jeans.vercel.app/delivery",
+      "heading": "Доставка та оплата",
+      "noindex": "noindex, nofollow",
+      "path": "/delivery",
+      "scroll": 390,
+      "width": 390
+    },
+    {
+      "broken": 0,
+      "canonical": "https://kos-jeans.vercel.app/delivery",
+      "heading": "Доставка та оплата",
+      "noindex": "noindex, nofollow",
+      "path": "/delivery",
+      "scroll": 768,
+      "width": 768
+    },
+    {
+      "broken": 0,
+      "canonical": "https://kos-jeans.vercel.app/delivery",
+      "heading": "Доставка та оплата",
+      "noindex": "noindex, nofollow",
+      "path": "/delivery",
+      "scroll": 1024,
+      "width": 1024
+    },
+    {
+      "broken": 0,
+      "canonical": "https://kos-jeans.vercel.app/delivery",
+      "heading": "Доставка та оплата",
+      "noindex": "noindex, nofollow",
+      "path": "/delivery",
+      "scroll": 1440,
+      "width": 1440
+    },
+    {
+      "broken": 0,
+      "canonical": "https://kos-jeans.vercel.app/returns",
+      "heading": "Обмін та повернення",
+      "noindex": "noindex, nofollow",
+      "path": "/returns",
+      "scroll": 320,
+      "width": 320
+    },
+    {
+      "broken": 0,
+      "canonical": "https://kos-jeans.vercel.app/returns",
+      "heading": "Обмін та повернення",
+      "noindex": "noindex, nofollow",
+      "path": "/returns",
+      "scroll": 390,
+      "width": 390
+    },
+    {
+      "broken": 0,
+      "canonical": "https://kos-jeans.vercel.app/returns",
+      "heading": "Обмін та повернення",
+      "noindex": "noindex, nofollow",
+      "path": "/returns",
+      "scroll": 768,
+      "width": 768
+    },
+    {
+      "broken": 0,
+      "canonical": "https://kos-jeans.vercel.app/returns",
+      "heading": "Обмін та повернення",
+      "noindex": "noindex, nofollow",
+      "path": "/returns",
+      "scroll": 1024,
+      "width": 1024
+    },
+    {
+      "broken": 0,
+      "canonical": "https://kos-jeans.vercel.app/returns",
+      "heading": "Обмін та повернення",
+      "noindex": "noindex, nofollow",
+      "path": "/returns",
+      "scroll": 1440,
+      "width": 1440
+    },
+    {
+      "broken": 0,
+      "canonical": "https://kos-jeans.vercel.app/privacy",
+      "heading": "Політика конфіденційності",
+      "noindex": "noindex, nofollow",
+      "path": "/privacy",
+      "scroll": 320,
+      "width": 320
+    },
+    {
+      "broken": 0,
+      "canonical": "https://kos-jeans.vercel.app/privacy",
+      "heading": "Політика конфіденційності",
+      "noindex": "noindex, nofollow",
+      "path": "/privacy",
+      "scroll": 390,
+      "width": 390
+    },
+    {
+      "broken": 0,
+      "canonical": "https://kos-jeans.vercel.app/privacy",
+      "heading": "Політика конфіденційності",
+      "noindex": "noindex, nofollow",
+      "path": "/privacy",
+      "scroll": 768,
+      "width": 768
+    },
+    {
+      "broken": 0,
+      "canonical": "https://kos-jeans.vercel.app/privacy",
+      "heading": "Політика конфіденційності",
+      "noindex": "noindex, nofollow",
+      "path": "/privacy",
+      "scroll": 1024,
+      "width": 1024
+    },
+    {
+      "broken": 0,
+      "canonical": "https://kos-jeans.vercel.app/privacy",
+      "heading": "Політика конфіденційності",
+      "noindex": "noindex, nofollow",
+      "path": "/privacy",
+      "scroll": 1440,
+      "width": 1440
+    },
+    {
+      "broken": 0,
+      "canonical": "https://kos-jeans.vercel.app/terms",
+      "heading": "Умови користування",
+      "noindex": "noindex, nofollow",
+      "path": "/terms",
+      "scroll": 320,
+      "width": 320
+    },
+    {
+      "broken": 0,
+      "canonical": "https://kos-jeans.vercel.app/terms",
+      "heading": "Умови користування",
+      "noindex": "noindex, nofollow",
+      "path": "/terms",
+      "scroll": 390,
+      "width": 390
+    },
+    {
+      "broken": 0,
+      "canonical": "https://kos-jeans.vercel.app/terms",
+      "heading": "Умови користування",
+      "noindex": "noindex, nofollow",
+      "path": "/terms",
+      "scroll": 768,
+      "width": 768
+    },
+    {
+      "broken": 0,
+      "canonical": "https://kos-jeans.vercel.app/terms",
+      "heading": "Умови користування",
+      "noindex": "noindex, nofollow",
+      "path": "/terms",
+      "scroll": 1024,
+      "width": 1024
+    },
+    {
+      "broken": 0,
+      "canonical": "https://kos-jeans.vercel.app/terms",
+      "heading": "Умови користування",
+      "noindex": "noindex, nofollow",
+      "path": "/terms",
+      "scroll": 1440,
+      "width": 1440
+    },
+    {
+      "broken": 0,
+      "heading": "Кошик (0)",
+      "noindex": "noindex, nofollow",
+      "path": "/cart",
+      "scroll": 320,
+      "width": 320
+    },
+    {
+      "broken": 0,
+      "heading": "Кошик (0)",
+      "noindex": "noindex, nofollow",
+      "path": "/cart",
+      "scroll": 390,
+      "width": 390
+    },
+    {
+      "broken": 0,
+      "heading": "Кошик (0)",
+      "noindex": "noindex, nofollow",
+      "path": "/cart",
+      "scroll": 768,
+      "width": 768
+    },
+    {
+      "broken": 0,
+      "heading": "Кошик (0)",
+      "noindex": "noindex, nofollow",
+      "path": "/cart",
+      "scroll": 1024,
+      "width": 1024
+    },
+    {
+      "broken": 0,
+      "heading": "Кошик (0)",
+      "noindex": "noindex, nofollow",
+      "path": "/cart",
+      "scroll": 1440,
+      "width": 1440
+    },
+    {
+      "broken": 0,
+      "heading": "Ваш магазин.Під контролем.",
+      "noindex": "noindex, nofollow",
+      "path": "/admin/login",
+      "scroll": 320,
+      "width": 320
+    },
+    {
+      "broken": 0,
+      "heading": "Ваш магазин.Під контролем.",
+      "noindex": "noindex, nofollow",
+      "path": "/admin/login",
+      "scroll": 390,
+      "width": 390
+    },
+    {
+      "broken": 0,
+      "heading": "Ваш магазин.Під контролем.",
+      "noindex": "noindex, nofollow",
+      "path": "/admin/login",
+      "scroll": 768,
+      "width": 768
+    },
+    {
+      "broken": 0,
+      "heading": "Ваш магазин.Під контролем.",
+      "noindex": "noindex, nofollow",
+      "path": "/admin/login",
+      "scroll": 1024,
+      "width": 1024
+    },
+    {
+      "broken": 0,
+      "heading": "Ваш магазин.Під контролем.",
+      "noindex": "noindex, nofollow",
+      "path": "/admin/login",
+      "scroll": 1440,
+      "width": 1440
+    }
+  ]
+}

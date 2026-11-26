@@ -35,7 +35,8 @@ export default async function HomePage() {
     footer: <ContentFooter content={content} />,
     aboutText: String(content.about.text),
   };
-  if (publicCatalogClient())
+  // Production never falls back to illustrative products/prices while its database is disconnected.
+  if (publicCatalogClient() || process.env.VERCEL_ENV === "production")
     return (
       <StorefrontHome
         {...contentProps}
@@ -49,7 +50,7 @@ export default async function HomePage() {
         photoCredits={photoCredits}
       />
     );
-  // Demo data is isolated here; later blocks replace this adapter with server catalog data.
+  // Demo adapter is available only for unconfigured local/Preview design review.
   return (
     <StorefrontHome
       {...contentProps}

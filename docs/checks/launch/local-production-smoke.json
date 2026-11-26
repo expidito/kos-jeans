@@ -1,0 +1,123 @@
+{
+  "status": "passed",
+  "checkedAtUTC": "2026-11-26T13:06:51.091Z",
+  "productionOrigin": "http://127.0.0.1:3020",
+  "mode": "local-production",
+  "emptyHomeRequired": true,
+  "methods": [
+    "GET"
+  ],
+  "productionDataChanged": false,
+  "httpsCertificateValidated": false,
+  "httpRedirectsToHttps": false,
+  "robotsDisallowAll": true,
+  "sitemapNoTestURLs": true,
+  "privateOptimizerDenied": true,
+  "staticPhotoLoaded": true,
+  "checkedBrowserChunks": 18,
+  "browserChunkBytes": 657408,
+  "localCredentialComparisons": 0,
+  "credentialValuesPrinted": false,
+  "checks": [
+    {
+      "path": "/",
+      "status": 200,
+      "title": "Денім та повсякденний одяг | KOS JEANS",
+      "descriptionPresent": true,
+      "noindex": true
+    },
+    {
+      "path": "/catalog",
+      "status": 200,
+      "title": "Каталог | KOS JEANS",
+      "descriptionPresent": true,
+      "noindex": true
+    },
+    {
+      "path": "/cart",
+      "status": 200,
+      "title": "Кошик | KOS JEANS",
+      "descriptionPresent": true,
+      "noindex": true
+    },
+    {
+      "path": "/checkout",
+      "status": 200,
+      "title": "Оформлення замовлення | KOS JEANS",
+      "descriptionPresent": true,
+      "noindex": true
+    },
+    {
+      "path": "/contacts",
+      "status": 200,
+      "title": "Контакти | KOS JEANS",
+      "descriptionPresent": true,
+      "noindex": true
+    },
+    {
+      "path": "/delivery",
+      "status": 200,
+      "title": "Доставка та оплата | KOS JEANS",
+      "descriptionPresent": true,
+      "noindex": true
+    },
+    {
+      "path": "/returns",
+      "status": 200,
+      "title": "Обмін та повернення | KOS JEANS",
+      "descriptionPresent": true,
+      "noindex": true
+    },
+    {
+      "path": "/privacy",
+      "status": 200,
+      "title": "Політика конфіденційності | KOS JEANS",
+      "descriptionPresent": true,
+      "noindex": true
+    },
+    {
+      "path": "/terms",
+      "status": 200,
+      "title": "Умови користування | KOS JEANS",
+      "descriptionPresent": true,
+      "noindex": true
+    },
+    {
+      "path": "/admin/login",
+      "status": 200,
+      "title": "Адміністрування | KOS JEANS",
+      "descriptionPresent": true,
+      "noindex": true
+    },
+    {
+      "path": "/quality-launch-missing",
+      "status": 404
+    },
+    {
+      "path": "/catalog/test-jeans",
+      "status": 404
+    },
+    {
+      "path": "/product/test-wide-leg-blue",
+      "status": 404
+    },
+    {
+      "path": "/checkout/success",
+      "status": 404
+    },
+    {
+      "path": "/media/a0000000-0000-4000-8000-000000000003",
+      "status": 404
+    },
+    {
+      "path": "/admin/orders",
+      "status": 307,
+      "redirectsToLogin": true
+    },
+    {
+      "path": "/api/checkout/session",
+      "status": 503,
+      "checkoutDisabled": true
+    }
+  ]
+}

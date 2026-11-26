@@ -1,0 +1,51 @@
+{
+  "status": "passed",
+  "checkedOn": "2026-11-26",
+  "localProjectName": "kos-jeans-dev",
+  "localEnvIgnoredByGit": true,
+  "variables": [
+    {
+      "name": "NEXT_PUBLIC_SUPABASE_URL",
+      "present": true
+    },
+    {
+      "name": "NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY",
+      "present": true
+    },
+    {
+      "name": "SUPABASE_CHECKOUT_SECRET_KEY",
+      "present": true
+    },
+    {
+      "name": "NEXT_PUBLIC_SITE_URL",
+      "present": false
+    },
+    {
+      "name": "VERCEL_ENV",
+      "present": false
+    }
+  ],
+  "linkedProjectMatchesDev": true,
+  "productionProjectVisible": false,
+  "migrationFiles": [
+    "20261124000100_store_foundation.sql",
+    "20261124000200_media_storage.sql",
+    "20261124000300_catalog_search.sql",
+    "20261124000400_admin_categories.sql",
+    "20261124000500_admin_products.sql",
+    "20261125000600_checkout.sql",
+    "20261125000700_admin_orders.sql",
+    "20261125000800_content_seo.sql",
+    "20261126000100_quality_hardening.sql"
+  ],
+  "registeredDevMigrationVersions": [
+    "20261124000100",
+    "20261124000200",
+    "20261124000300",
+    "20261124000400",
+    "20261124000500",
+    "20261125000600"
+  ],
+  "credentialValuesPrinted": false,
+  "remoteChanges": false
+}

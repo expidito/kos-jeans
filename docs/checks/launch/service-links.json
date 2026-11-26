@@ -1,0 +1,20 @@
+{
+  "status": "passed",
+  "checks": [
+    {
+      "url": "https://github.com/expidito/kos-jeans",
+      "status": 200,
+      "mayRequireOwnerSignIn": false
+    },
+    {
+      "url": "https://vercel.com/fedir-team/kos-jeans",
+      "status": 200,
+      "mayRequireOwnerSignIn": true
+    },
+    {
+      "url": "https://supabase.com/dashboard/projects",
+      "status": 307,
+      "mayRequireOwnerSignIn": true
+    }
+  ]
+}

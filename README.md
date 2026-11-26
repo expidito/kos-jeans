@@ -1,365 +1,107 @@
 # KOS JEANS
 
-Интернет-магазин одежды для Украины. Интерфейс — на украинском языке,
-валюта — гривна (UAH / ₴); документация — на русском.
+Магазин одежды для Украины: украинский интерфейс, гривна (₴), собственная
+минималистичная дизайн-система. Техническая документация — на русском.
 
-## Текущее состояние
+## Состояние
 
-Создан публичный репозиторий: [expidito/kos-jeans](https://github.com/expidito/kos-jeans).
-Блоки 01–03 создали приложение и дизайн-систему. Блок 04 добавил полноценную
-адаптивную главную, навигацию, footer и явно помеченные демоподборки.
-Стартовая страница опубликована: **[kos-jeans.vercel.app](https://kos-jeans.vercel.app)**.
-Vercel связан с GitHub; автоматическая production-публикация merge PR #2 проверена.
-Основа Supabase блока 05 подключена и проверена на отдельном тестовом kos-jeans-dev.
-Каталог блока 06 получает данные из Supabase на local/Preview. Production изолирован от dev.
-Защищённая админка управляет категориями; редактор товаров блока 10 прошёл приёмку. Заказы ещё не реализованы; проект не готов к торговле.
+**[Публичный сайт — kos-jeans.vercel.app](https://kos-jeans.vercel.app)** работает
+в безопасном режиме подготовки. Каталог Production пуст, dev-база не подключена,
+рабочая админка/checkout и индексация отключены. Это не действующий коммерческий магазин.
+Информационные страницы — явно помеченные черновики, без выдуманных реквизитов.
 
-PR #1 слит в `main` с разрешения владельца. Блок 02 выполнен в ветке
-`feat/block-02-vercel-preview`: production из `main`, автоматический preview
-из feature-ветки и успешный CI проверены.
-[Адреса и порядок публикации](docs/VERCEL_SETUP.md).
+В local/Preview с `kos-jeans-dev` реализованы и проверены настоящий каталог,
+категории/фильтры/варианты, private фото, корзина, тестовое атомарное оформление и
+отмена, защищённая админка, товары/склад/контент. Блок15 прошёл сквозную приёмку.
+Блок16 завершает подготовку документации и окружений; отдельная prod-база и домен ещё не создавались.
+[Отчёт и ограничения](docs/LAUNCH_PREPARATION_REPORT.md).
 
-- [Техническое задание и порядок работы](AGENTS.md)
-- [Прогресс по блокам](PROJECT_PROGRESS.md)
+- [Preview блока16](https://kos-jeans-git-feat-block-16-launch-preparation-fedir-team.vercel.app) · [PR #16](https://github.com/expidito/kos-jeans/pull/16)
+- [GitHub](https://github.com/expidito/kos-jeans)
+- [Vercel project](https://vercel.com/fedir-team/kos-jeans)
+- [Supabase Dashboard](https://supabase.com/dashboard/projects)
+- [Прогресс](PROJECT_PROGRESS.md) · [Техническое задание](AGENTS.md)
 
-Разработка выполняется строго по одному блоку за команду. После отчёта
-работа останавливается до сообщения владельца «Работу над блоком окончено».
-PR #3 слит с разрешения владельца; production проверен. Блок 04 завершён
-в отдельной ветке `feat/block-04-storefront-home`: [PR #4](https://github.com/expidito/kos-jeans/pull/4).
-[Preview главной](https://kos-jeans-git-feat-block-04-storefront-home-fedir-team.vercel.app)
-требует стандартного входа в Vercel. Блок 05 завершён: миграции, RLS и Storage проверены на тестовом проекте. Блок 06 завершён в feat/block-06-real-catalog; Preview с данными проверен.
+## Владельцу
 
-## Стек
+1. [Как войти и управлять магазином](docs/OWNER_GUIDE.md).
+2. [Что уже готово, что предоставить и что запрещено включать](docs/LAUNCH_CHECKLIST.md).
+3. [Подключение домена](docs/DOMAIN_SETUP.md).
+4. [Будущий kos-jeans-prod: миграции, роль и резервирование](docs/SUPABASE_PRODUCTION.md).
+5. [Окружения и публикации Vercel](docs/VERCEL_SETUP.md).
 
-Next.js 16.4.6 (App Router), React 19.3.1, TypeScript 6.0.3, Tailwind CSS 4.3.5,
-ESLint 9.39.5 и GitHub Actions. Версии закреплены в `package.json` и
-`package-lock.json`. TypeScript 7 и ESLint 10 пока не используются из-за
-ограничений совместимости линтеров.
-Vercel подключён. Для Supabase применены SQL-миграции, RLS, Storage и типизированные SSR-клиенты; hosted dev проверен. Формы имеют серверную валидацию; RPC и ограничения PostgreSQL повторно проверяют данные.
+Изменения товаров в подключённой базе не требуют commit/deploy. Изменения дизайна
+идут через feature-ветку → проверки/PR/Preview → подтверждение владельца → main.
+Production-публикация блока16 допустима только после отдельного согласования merge.
+Она не означает разрешение принимать реальные заказы или включать индексацию.
 
-## Локальная работа
+## Разработка
 
-Рабочая папка — корень этого репозитория; вложенную папку `kos-jeans` создавать
-не нужно. Рекомендуется Node.js 24 LTS (версия указана в `.nvmrc`), npm.
-Допустимый диапазон Node.js указан в `package.json`; CI использует Node.js 24.
+Next.js16.4.6 App Router, React19.3.1, TypeScript6.0.3, Tailwind4.3.5,
+Supabase Auth/PostgreSQL/RLS/Storage, Vercel и GitHub Actions. Версии фиксируются
+package-lock. Node24LTS из `.nvmrc`; engines поддерживает24–26.
+Рабочая папка — корень этого репозитория, вложенную kos-jeans создавать не нужно.
 
 ```bash
-# Если установлен nvm:
-nvm install
-nvm use
-
-# Установка из lock-файла и запуск:
 npm ci
 npm run dev
 ```
 
-Открыть [http://localhost:3000](http://localhost:3000).
-Библиотека дизайн-системы: [http://localhost:3000/design-system](http://localhost:3000/design-system).
-Главная и дизайн-система работают без переменных окружения. Для Supabase следуйте инструкции ниже.
-Остановить сервер: `Ctrl+C` в его терминале.
-
-Проверки и production-сборка:
+[Localhost](http://localhost:3000), [дизайн-система](http://localhost:3000/design-system).
+Для dev данных скопировать `.env.example` в `.env.local` и заполнить самостоятельно.
+Настоящие значения не отправлять в чат/Git. Публичный fallback работает без ключей.
 
 ```bash
 npm run lint
-npm test
 npm run typecheck
+npm test
 npm run build
+npm run test:production-mode
 npm start
 ```
 
-`typecheck` сначала генерирует типы маршрутов Next.js, затем запускает
-`tsc --noEmit`, поэтому работает и до первой сборки. ESLint вызывается
-напрямую; предупреждения приводят к неуспешному завершению.
-`npm start` запускает уже готовую production-сборку на том же порту 3000.
-Не запускайте dev и production одновременно на одном порту.
-`npm test` проверяет UAH, конфигурацию Supabase и применяет SQL-миграции к
-изолированному PostgreSQL PGlite: ограничения, RLS и Storage SQL policies.
-Hosted Auth/Storage API и оформление заказа этими проверками не покрываются.
+В среде, запрещающей внутренний порт Turbopack, обычный локальный build может
+завершиться OS error1 при PostCSS. Альтернатива: `npm run build -- --webpack`.
+CI/Vercel используют обычный build; их результат проверяется отдельно. Не отключать
+lint/тесты ради успешной сборки.
 
-## Структура
-
-```text
-src/
-  app/
-    (store)/page.tsx           # Главная /, группа не добавляется к URL
-    globals.css               # Tailwind и базовые стили
-    layout.tsx                # Корневой layout, язык uk, metadata
-    not-found.tsx             # Украинская страница 404
-  components/
-    development-notice.tsx     # Сообщение о тестовом состоянии
-.github/workflows/ci.yml       # npm ci → lint → test → typecheck → build
-```
-
-## Дизайн-система (блок 03)
-
-- [UX-анализ Spazio и решения KOS JEANS](docs/REFERENCE_AND_UX.md).
-- [Палитра, типографика, сетка, компоненты и доступность](docs/DESIGN_SYSTEM.md).
-- `src/styles/tokens.css` — семантические Tailwind/CSS-токены.
-- `src/components/ui/` — Button, Badge, TextField, SizeSelector, Price, Breadcrumbs и Accordion.
-- `/design-system` — украинская адаптивная библиотека с рабочими образцами.
-- [Vercel Preview дизайн-системы](https://kos-jeans-git-feat-block-03-ux-design-system-fedir-team.vercel.app/design-system) (может потребоваться вход в Vercel).
-- Превью в репозитории: [desktop](docs/previews/design-system-desktop.jpg), [mobile](docs/previews/design-system-mobile.jpg).
-
-Шрифт Manrope поставляется локально через `@fontsource-variable/manrope`
-(лицензия OFL-1.1, кириллица), не требует доступа к Google Fonts при сборке.
-Векторные иллюстрации созданы для проекта; демонстрационные карточки не являются
-реальными товарами. Категории в компонентах не зашиты: контракты будущего
-дерева и меню описаны в UX-документе. Главная магазина блока 04 использует эти же токены.
-
-Компоненты серверные по умолчанию. Клиентские компоненты добавляются только
-для интерактивности. Новые страницы — в `src/app`, общие компоненты —
-в `src/components`; alias `@/*` ссылается на `src/*`.
-Дерево категорий не зашито в каркас. Фотографии и внешние запросы шрифтов
-не используются: сборка не требует доступа к сервисам шрифтов.
-Стартовая версия помечена `noindex, nofollow` до этапа настройки SEO.
-
-## CI
-
-GitHub Actions выполняет чистую установку, lint, тесты, проверку типов и сборку
-для push в `main`, `feat/**`, `fix/**`, `chore/**`, а также для PR в `main`.
-Есть ручной запуск `workflow_dispatch`. Workflow использует Node.js 24,
-права только на чтение кода; секреты для проверок каркаса не нужны.
-Проверки локально выполняются теми же npm-командами.
-
-## Состояние Git
-
-Проверить состояние репозитория:
+## Безопасные проверки подготовки запуска
 
 ```bash
-git status --short --branch
-git remote -v
+npm run launch:check:production
+npm run launch:check:env
 ```
 
-## Переменные окружения
+Первый скрипт делает только GET-запросы к действующему публичному сайту и его JS:
+HTTPS, страницы/404, SEO/noindex, отсутствие dev credentials, отключённые admin/checkout.
+Не создаёт заказы и не пишет в БД. При будущем домене можно передать `LAUNCH_ORIGIN`
+только для этого CLI smoke, это не настройка приложения.
+Второй требует локальный `.env.local` и авторизацию Supabase CLI; проверяет присутствие
+переменных/игнорирование Git/dev target/ledger без значений ключей и изменений БД.
+Результаты — `docs/checks/launch/`.
+`test:production-mode` после сборки запускает локальный Next на loopback3020,
+проверяет пустую главную и отключённые Auth/checkout, затем останавливает сервер.
+Эта регрессия также включена в CI. В PR16 главная Production больше не подставляет
+демоцены при отключённой БД; текущая публикация main до разрешения merge16 ещё
+содержит явно подписанные статические иллюстрации раннего макета.
 
-`.env.example` содержит только пустые значения. Когда начнётся подключение
-сервисов, скопируйте его в локальный файл:
+В package.json есть hosted проверки прошлых блоков. Они создают TEST fixtures,
+поэтому допускаются **только в подтверждённом kos-jeans-dev** с прочитанным сценарием
+восстановления. Не запускать seed, cleanup, scale или hosted order tests на Production.
+`tests/helpers/supabase-platform.sql` — только PGlite.
 
-```bash
-cp .env.example .env.local
-```
+## Техническая документация
 
-| Переменная | Назначение |
-| --- | --- |
-| `NEXT_PUBLIC_SITE_URL` | Реальный адрес сайта после публикации |
-| `NEXT_PUBLIC_SUPABASE_URL` | URL соответствующего Supabase-проекта |
-| `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | Публичный ключ Supabase; доступ ограничивается RLS |
-| `SUPABASE_SERVICE_ROLE_KEY` | Секретный серверный ключ, только для защищённых серверных операций |
+- [Supabase и ограничения истории dev-миграций](docs/SUPABASE_SETUP.md)
+- [Аудит качества/безопасности](docs/QUALITY_AND_SECURITY_AUDIT.md)
+- [Каталог](docs/CATALOG.md) · [товар](docs/PRODUCT_DETAIL.md) · [корзина](docs/SHOPPING_CART.md)
+- [Оформление](docs/CHECKOUT.md) · [заказы](docs/ADMIN_ORDERS.md)
+- [Auth](docs/ADMIN_AUTH.md) · [категории](docs/ADMIN_CATEGORIES.md) · [товары](docs/ADMIN_PRODUCTS.md)
+- [Контент/SEO](docs/CONTENT_AND_SEO.md) · [источники изображений](docs/IMAGE_SOURCES.md)
+- [UX-референс](docs/REFERENCE_AND_UX.md) · [дизайн-система](docs/DESIGN_SYSTEM.md)
 
-Реальные ключи не хранить в Git, документации или клиентском коде.
-`.env.local` и остальные `.env.*` исключены из Git, кроме `.env.example`.
-В Vercel значения добавляются в настройках проекта → Environment Variables;
-для Preview и Production нужно использовать соответствующие изолированные
-окружения. Vercel подключён в блоке 02; Supabase будет подключён в блоке 05.
-
-## Git и публикация
-
-Первая публикация блока 00 — в `main`. Дальнейшие изменения:
-feature-ветка → проверки → commit → push → PR/preview → merge после
-подтверждения владельца. Force push и удаление чужих данных запрещены без
-отдельного разрешения.
-
-GitHub хранит код. Стартовая версия доступна на [Vercel](https://kos-jeans.vercel.app). После реализации админки ассортимент и остатки будут изменяться
-через `/admin` без commit, push и deployment.
-
-## Публичная оболочка (блок 04)
-
-- [Главная, состояния и границы демоверсии](docs/STOREFRONT_HOME.md).
-- [Лицензии и источники фотографий](docs/IMAGE_SOURCES.md).
-- `src/data/demo-storefront.ts` — отдельные временные данные, не база и не сиды.
-- `src/lib/storefront.ts` — контракт дерева навигации и образцов.
-- `src/components/storefront/` — шапка, рекурсивные меню, dialog и главная.
-
-В блоке 04 server page передавала демоданные через props. В режиме без базы
-категории и поиск по-прежнему работают с подписанными образцами; эти образцы нельзя
-купить. В local/Preview теперь используются реальные каталог и товары блоков 06–07,
-а шапка открывает настоящую корзину блока 11. Оформление заказа пока отключено.
-Фотографии хранятся локально и оптимизируются Next/Image.
-
-
-## Supabase: блок 05 — done
-
-[Полная инструкция подключения, схема, роли и границы тестов](docs/SUPABASE_SETUP.md).
-[PR #5](https://github.com/expidito/kos-jeans/pull/5): миграции применены в dev,
-[hosted-проверки](docs/checks/block05-hosted.json) пройдены.
-
-- `supabase/migrations/` — две транзакционные миграции: таблицы/RLS и private Storage.
-- `supabase/config.toml` — локальный CLI-проект, регистрация отключена.
-- `supabase/seed.sql` — только синтетические draft-товары для изолированного dev.
-- `src/lib/supabase/` — браузерный и серверный SSR-клиенты с publishable key/RLS;
-  заготовка обновления сессии для будущего Auth proxy. Главная их пока не вызывает.
-- `tests/database.test.mjs` — реальные SQL-проверки на PGlite; минимальные auth/storage
-  таблицы тестового harness находятся в tests/helpers и не применяются в Supabase.
-
-Тестовый `kos-jeans-dev` создан владельцем; URL/Publishable key в локальном
-`.env.local` проверены без вывода значений. CLI авторизован, миграции применены
-к этому тестовому проекту.
-Ключи/пароль не отправлять в чат и не коммитить. Production-БД не изменялась.
-
-После применения миграций: `npm run db:check` — read-only API smoke.
-API smoke, hosted RLS под реальными JWT и проверки загрузки/размера/MIME
-через Storage API прошли. `npm run db:test:hosted -- --dev-only` повторяет
-интеграционные проверки только на kos-jeans-dev с временными данными и cleanup.
-Постоянный администратор не назначался. Каталог и админка — следующие блоки.
-
-
-## Каталог (блок 06 — done)
-
-[Архитектура, параметры URL, изображения и Preview setup](docs/CATALOG.md).
-
-- [Локальный каталог](http://127.0.0.1:3005/catalog).
-- Миграция 20261124000300 применена к dev; catalog_search соблюдает RLS.
-- `npm test` — 21 локальная проверка; `npm run catalog:test:hosted -- --dev-only` — интеграционные проверки.
-- ТЕСТ-набор в dev создан сценарием `npm run catalog:seed -- --dev-only`.
-- Vercel Production к dev не подключается; Preview env настраивается отдельно по инструкции.
-- Страница товара завершена в блоке 07, корзина — в блоке 11. Оформление заказа относится к блоку 12.
-
-[PR #6](https://github.com/expidito/kos-jeans/pull/6),
-[Preview каталога](https://kos-jeans-git-feat-block-06-real-catalog-fedir-team.vercel.app/catalog).
-CI прошёл, deployment Ready. Реальные dev-данные на Preview проверены:
-фильтры, изображения и обновления цены/навигации без деплоя работают.
-
-
-## Страница товара (блок 07)
-
-[Архитектура, варианты, галерея и проверки](docs/PRODUCT_DETAIL.md).
-
-- `/product/[slug]` — реальный опубликованный товар из Supabase, RLS и private media.
-- Галерея/zoom, цвет/размер/stock, состав/характеристики, похожие по категории.
-- CartSelection подготовлен; покупка явно недоступна до блока 11.
-- `npm run product:seed -- --dev-only` — расширение ТЕСТ-товара для галереи и вариантов.
-- `npm run product:test:hosted -- --dev-only` — реальные dev/API/HTTP проверки.
-- [Локальный пример](http://127.0.0.1:3005/product/test-catalog-1).
-- 24 локальных теста входят в CI; production Supabase не подключается.
-
-## Административная панель — блок 08
-
-`/admin/login` — вход Supabase Auth, `/admin` — защищённый Dashboard.
-Постоянный администратор назначается только по проверенному UUID с подтверждением
-владельца; публичной регистрации нет. [Процедура и архитектура](docs/ADMIN_AUTH.md).
-Новых переменных окружения не требуется. Dev доступен локально и в Preview,
-Production изолирован. Каркас будущих разделов не изменяет данные.
-`npm run admin:test:hosted -- --dev-only` проверяет отрицательные сценарии на порту
-3008 и удаляет только собственный временный ordinary account. Настоящий успешный
-вход, reload, мобильный Dashboard и logout проверены в Preview с владельцем.
-Пароль в чат/код/логи не передавался. PR #8 ожидает review; блок 09 не начат.
-
-## Управление категориями — блок 09
-
-`/admin/categories`: дерево, создание/редактирование, вложенность, порядок,
-видимость, фото и подтверждаемое архивирование без потери товаров. История slug
-сохраняет старые ссылки; данные меняются без commit/push/deploy.
-[Инструкция, миграция и ограничения](docs/ADMIN_CATEGORIES.md).
-Фото JPEG/PNG/WebP до 3 MiB. Новых env не требуется; работа только с kos-jeans-dev.
-
-Живая приёмка категорий пройдена в [Preview](https://kos-jeans-git-feat-block-09-admin-categories-fedir-team.vercel.app/admin/categories):
-создание с фото, вложенность, редактирование/slug/порядок, скрытие, архив и восстановление.
-[Отчёт](docs/checks/block09-acceptance.json). PR #9 ожидает review.
-Ручной Production deploy уже слитой main c571bfd выполнен по отдельному
-разрешению владельца: Ready / Current, [сайт](https://kos-jeans.vercel.app).
-Dev к Production не подключён; управление категориями PR #9 остаётся в Preview
-до отдельного подтверждения слияния. Блок 09 done, блок 10 не начат.
-
-## Блок 10 — товары и склад
-
-[Инструкция владельца и архитектура](docs/ADMIN_PRODUCTS.md). Редактор `/admin/products` работает с настоящими данными только в local/Preview. Пять и более фото, стабильные варианты, атомарная публикация, контроль конкурентных изменений. Подключение тестовой базы к Production запрещено.
-
-[Preview управления товарами](https://kos-jeans-git-feat-block-10-admin-products-fedir-team.vercel.app/admin/products) · [ТЕСТ-товар](https://kos-jeans-git-feat-block-10-admin-products-fedir-team.vercel.app/product/test-wide-leg-blue). Preview может требовать вход Vercel; затем для админки используется постоянная учётная запись владельца. Это тестовое окружение, покупки недоступны.
-
-## Блок 11 — корзина
-
-[Инструкция и ограничения](docs/SHOPPING_CART.md). Покупатель выбирает размер/цвет,
-добавляет доступный вариант, меняет количество и видит актуальную сумму. Корзина
-сохраняет только ID и количество в браузере, сервер повторно проверяет данные через RLS.
-[Preview корзины](https://kos-jeans-git-feat-block-11-shopping-cart-fedir-team.vercel.app/cart)
-и [тестовый товар](https://kos-jeans-git-feat-block-11-shopping-cart-fedir-team.vercel.app/product/test-wide-leg-blue).
-Оформление заказа отключено, склад не списывается. Production к dev не подключён.
-
-## Блок 12 — оформление заказа (приёмка)
-
-[Архитектура, Preview-переменная и тестовый teardown](docs/CHECKOUT.md).
-`/checkout` и приватный `/checkout/success`, атомарная SQL-транзакция, снимки,
-идемпотентность и rate limit реализованы. Миграция применена только в kos-jeans-dev;
-локальный UI и hosted-тесты пройдены. Production checkout принудительно отключён.
-
-[Preview оформления](https://kos-jeans-git-feat-block-12-checkout-fedir-team.vercel.app/checkout)
-подключён к kos-jeans-dev и прошёл настоящий браузерный сценарий: нехватка остатка,
-изменение цены с повторным согласием, один заказ при двойном нажатии, повторное
-открытие подтверждения и пустая корзина. Вымышленные тестовые заказы отменены,
-цены/остатки восстановлены; существующие товары и фото сохранены.
-
-62 теста, lint, typecheck, production build и hosted-проверки успешны.
-[Отчёт Preview](docs/checks/block12-preview-ui.json) ·
-[Восстановление](docs/checks/block12-preview-restored.json) ·
-[PR #12](https://github.com/expidito/kos-jeans/pull/12).
-Preview может требовать вход Vercel. Реальные покупки и Production checkout отключены.
-Блок 13 не начат.
-
-## Блок 13 — заказы и статусы
-
-`/admin/orders`: поиск номера, фильтры статуса/даты, сортировка и пагинация;
-`/admin/orders/[id]`: контакты, доставка и исторические снимки заказа.
-Статусы изменяются подтверждаемой серверной транзакцией с проверкой версии;
-отмена возвращает исходные варианты один раз. Прямые изменения таблиц запрещены.
-[Инструкция и ограничения](docs/ADMIN_ORDERS.md). Только kos-jeans-dev/Preview,
-Production env не меняется; платежи и API доставки не подключены.
-
-[Preview заказов](https://kos-jeans-git-feat-block-13-admin-orders-fedir-team.vercel.app/admin/orders)
-прошёл реальный сценарий публичного заказа → обработка → отправка и отдельную отмену
-с повтором из устаревшей вкладки. Склад возвращается один раз, снимок цены не меняется.
-69 тестов и hosted-проверки успешны; тестовые изменения восстановлены, история сохранена.
-[Отчёт](docs/checks/block13-preview-ui.json) · [PR #13](https://github.com/expidito/kos-jeans/pull/13).
-
-## Блок 14 — контент и SEO
-
-`/admin/banners` управляет фото, текстом, целью кнопки, порядком, периодом и архивом.
-`/admin/settings` — названием, проверенными контактами/social links и редактируемыми
-информационными текстами. Изменения читаются без деплоя; фото неопубликованных баннеров приватны.
-Публичные страницы: `/contacts`, `/delivery`, `/returns`, `/privacy`, `/terms`.
-[Инструкция, ограничения и данные для запуска](docs/CONTENT_AND_SEO.md).
-Индексация остаётся заблокированной: noindex, robots Disallow, пустой sitemap.
-Product JSON-LD не публикуется для тестового ассортимента. Production env не меняется.
-
-Сквозная Preview-приёмка блока 14 пройдена: создание/загрузка/публикация/редактирование/
-скрытие баннера, контакт/social URL в footer без деплоя, пять информационных страниц,
-адаптивность и клавиатура. Тестовые настройки восстановлены, баннер архивирован,
-его фото приватно. [UI-отчёт](docs/checks/block14-preview-ui.json) ·
-[SEO-отчёт](docs/checks/block14-seo.json) · [PR #14](https://github.com/expidito/kos-jeans/pull/14).
-Индексация не включена; реальные контактные и юридические сведения нужны до запуска.
-
-### Аудит качества — блок 15
-
-Результаты и ограничения: [QUALITY_AND_SECURITY_AUDIT.md](docs/QUALITY_AND_SECURITY_AUDIT.md).
-Дополнительные проверки запускаются после production build и `npm start -- --port 3018`:
-
-```bash
-QUALITY_BASE=http://127.0.0.1:3018 node scripts/quality/http-checks.mjs
-node --env-file=.env.local scripts/quality/client-secrets.mjs
-node --env-file=.env.local scripts/quality/scan-history.mjs
-node --env-file=.env.local scripts/quality/scale.mjs
-```
-
-`http-checks` читает Production без изменений; остальные hosted проверки допускаются
-только для подтверждённого `kos-jeans-dev`. `scale` создаёт 1000 временных товаров,
-вариантов и заказов внутри откатываемой транзакции, не меняет sequence номеров.
-Сканер истории использует локальный `/tmp/kos-block15-npm-audit.json`, который получают
-через `npm audit --json > /tmp/kos-block15-npm-audit.json`. Значения секретов не печатаются.
-
-Миграция `20261126000100_quality_hardening.sql` применена к dev: отклонённые запросы
-не расходуют глобальный checkout лимит, deferred guard проверяет оба заказа при
-переносе строки доверенной операцией. Production БД/переменные не менялись.
-Приватные фото запрещены в Next optimizer; уменьшение выполняется за проверками
-RLS и Storage, ответ всегда private/no-store. Новые загрузки декодируются Sharp,
-проверяются на повреждения и предел 32 млн пикселей, нормализуются в WebP без EXIF.
-
-Приёмка блока15 завершена на настоящем Preview: новый товар/категория, пять фото,
-цена1499→1299, M0, две позиции корзины, заказ и повторная отмена, контент и выход.
-[Результаты UI](docs/checks/quality/ui-acceptance.json),
-[сохранность данных](docs/checks/quality/ui-restored.json).
-После проверки выполнен выход из административной сессии; вход обычным способом
-на `/admin/login`. Постоянная учётная запись не менялась. Тестовый товар архивирован,
-поэтому его прямая ссылка404 ожидаема; для просмотра используйте `/catalog`.
-`scripts/quality/finish-ui.mjs --dev-only` — проверка конкретных fixtures этой приёмки,
-требует временные исходные fingerprints/settings из `/tmp`, не является общей очисткой БД.
-Коммерческий запуск блокируют реальные реквизиты/условия и согласованное production окружение.
+`.env.local`, токены, `.vercel`, backups, дампы и персональные данные не коммитятся.
+Три Supabase env сейчас ограничены Preview; в Production их нет. Даже случайное
+добавление dev env не включает доступ: каталог/Auth/checkout запрещены кодом в Production.
+Отключение этих ограничений и `indexingEnabled()` — отдельный проверяемый PR после
+письменного разрешения. Платные услуги, домен, DNS и новые prod-ключи не подключаются автоматически.
