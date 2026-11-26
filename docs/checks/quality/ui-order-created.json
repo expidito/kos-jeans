@@ -1,0 +1,32 @@
+{
+  "environment": "kos-jeans-dev",
+  "rows": [
+    {
+      "state": {
+        "orders": 1,
+        "stocks": [
+          {
+            "color": "Графіт",
+            "size": "S",
+            "stock": 1
+          },
+          {
+            "color": "Синій",
+            "size": "L",
+            "stock": 3
+          },
+          {
+            "color": "Синій",
+            "size": "M",
+            "stock": 0
+          },
+          {
+            "color": "Синій",
+            "size": "S",
+            "stock": 4
+          }
+        ]
+      }
+    }
+  ]
+}

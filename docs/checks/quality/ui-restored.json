@@ -1,0 +1,40 @@
+{
+  "status": "passed",
+  "settingsValuesAndVisibilityRestored": true,
+  "existingProductsVariantsImagesFingerprintsUnchanged": true,
+  "ownPhotosRetainedPrivate": true,
+  "permanentAccountUntouched": true,
+  "productionModified": false,
+  "state": {
+    "bannerArchived": true,
+    "categoryArchived": true,
+    "orderCount": 1,
+    "orderReleased": true,
+    "product": {
+      "photos": 5,
+      "status": "archived"
+    },
+    "stocks": [
+      {
+        "color": "Графіт",
+        "size": "S",
+        "stock": 2
+      },
+      {
+        "color": "Синій",
+        "size": "L",
+        "stock": 5
+      },
+      {
+        "color": "Синій",
+        "size": "M",
+        "stock": 0
+      },
+      {
+        "color": "Синій",
+        "size": "S",
+        "stock": 4
+      }
+    ]
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "ownerLoginVerified": true,
+  "dashboardReloadVerified": true,
+  "logoutVerified": true,
+  "previousPrivateTabAfterReload": "redirect to /admin/login?error=session",
+  "directOrderURLAfterLogout": "redirect to /admin/login",
+  "privateOrderDataVisibleAfterLogout": false,
+  "invalidCredentialsMessage": "generic account/password error",
+  "noOwnerPasswordAccessed": true
+}
